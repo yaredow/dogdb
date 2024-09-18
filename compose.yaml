@@ -2,10 +2,10 @@ services:
   backend:
     build:
       context: .
-      dockerfile: ./dogdb-backend/Dockerfile
+      dockerfile: ./dogdb-backend/Dockerfile.back
     image: ghcr.io/yaredow/dogdb-backend:latest
     env_file:
-      - .env
+      - ./dogdb-backend/.env
     restart: always
     ports:
       - ${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}
@@ -21,17 +21,20 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: ./dogdb-frontend/Dockerfile
+      dockerfile: ./dogdb-frontend/Dockerfile.front
     image: ghcr.io/yaredow/dogdb-frontend:latest
+    env_file:
+      - ./dogdb-frontend/.env.local
     restart: always
     ports:
       - 3000:3000
-    platform: linux/amd64
+    networks:
+      - backend
 
   db:
     image: postgres:latest
     env_file:
-      - .env
+      - ./dogdb-backend/.env
     environment:
       POSTGRES_DB: ${POSTGRESDB_DATABASE}
       POSTGRES_USER: ${POSTGRESDB_USER}
