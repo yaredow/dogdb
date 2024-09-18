@@ -1,0 +1,57 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./dogdb-backend/Dockerfile
+    image: ghcr.io/yaredow/dogdb-backend:latest
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - ${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRESDB_USER}:${POSTGRESDB_ROOT_PASSWORD}@db:${POSTGRESDB_DOCKER_PORT}/${POSTGRESDB_DATABASE}
+    command: |
+      sh -c "npx prisma migrate deploy && npm run start"
+    networks:
+      - backend
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./dogdb-frontend/Dockerfile
+    image: ghcr.io/yaredow/dogdb-frontend:latest
+    restart: always
+    ports:
+      - 3000:3000
+    platform: linux/amd64
+
+  db:
+    image: postgres:latest
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRESDB_DATABASE}
+      POSTGRES_USER: ${POSTGRESDB_USER}
+      POSTGRES_PASSWORD: ${POSTGRESDB_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRESDB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - ${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}
+    expose:
+      - 5432
+    networks:
+      - backend
+
+volumes:
+  db-data:
+
+networks:
+  backend:
