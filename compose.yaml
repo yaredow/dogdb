@@ -1,8 +1,8 @@
 services:
   backend:
     build:
-      context: .
-      dockerfile: ./dogdb-backend/Dockerfile.back
+      context: ./dogdb-backend
+      dockerfile: Dockerfile.back
     image: ghcr.io/yaredow/dogdb-backend:latest
     env_file:
       - ./dogdb-backend/.env
@@ -20,8 +20,8 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: ./dogdb-frontend/Dockerfile.front
+      context: ./dogdb-frontend
+      dockerfile: Dockerfile.front
     image: ghcr.io/yaredow/dogdb-frontend:latest
     env_file:
       - ./dogdb-frontend/.env.local
