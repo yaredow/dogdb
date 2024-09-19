@@ -1,0 +1,61 @@
+# Use the official Node.js image as the base image
+ARG NODE_VERSION=20.17.0
+FROM node:${NODE_VERSION}-alpine AS base
+
+# Set working directory
+WORKDIR /usr/src/app
+
+# Install dependencies in a separate stage
+FROM base AS deps
+
+# Copy only the package.json and package-lock.json to leverage Docker cache for npm install
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci
+
+# Build the app in a separate stage
+FROM base AS builder
+
+# Copy over the installed node_modules from the deps stage
+COPY --from=deps /usr/src/app/node_modules ./node_modules
+
+# Copy the rest of the source code
+COPY . .
+
+# Build the application
+RUN npm run build
+
+# Create the final stage for production
+FROM base AS runner
+
+# Set NODE_ENV to production
+ENV NODE_ENV=production
+
+# Create a non-root user to run the application securely
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nextjs
+
+# Copy the built application and node_modules from the builder stage
+COPY --from=builder /usr/src/app/public ./public
+COPY --from=builder /usr/src/app/.next/standalone ./
+COPY --from=builder /usr/src/app/.next/static ./.next/static
+
+
+# Remove unnecessary devDependencies
+RUN npm prune --production
+
+# Set permissions for Next.js build output
+RUN chown nextjs:nodejs -R ./
+
+# Switch to the non-root user
+USER nextjs
+
+# Expose the port
+EXPOSE 3000
+
+# Set environment variables
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Start the application
+CMD ["node", "server.js"]
