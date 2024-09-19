@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { logout as logoutUser } from "@/services/authService";
 import { useRouter } from "next/navigation";
+import { logout as logoutUser } from "@/services/authServices";
 
 export default function useLogout() {
   const router = useRouter();
