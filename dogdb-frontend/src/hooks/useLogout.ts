@@ -9,7 +9,7 @@ export default function useLogout() {
     onSuccess: () => {
       router.push("/");
     },
-    onError: (error: any) => {
+    onError: (error) => {
       console.error("Logout failed", error);
     },
   });

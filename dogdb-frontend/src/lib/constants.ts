@@ -1,4 +1,4 @@
-import { Option } from "@/components/ui/multi-select";
+import { Option } from "@/components/ui/mutli-select";
 
 export const navLinks = [
   {
