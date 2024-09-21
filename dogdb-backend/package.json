@@ -6,6 +6,7 @@
     "start": "node ./dist/server.js",
     "dev": "nodemon src/index.ts",
     "build": "npx tsc",
+    "start:migrate:dev": "npx prisma migrate dev --name init && npm run dev",
     "start:migrate:prod": "prisma migrate deploy && npm start "
   },
   "keywords": [],
