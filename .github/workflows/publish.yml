@@ -20,13 +20,19 @@ jobs:
 
       # Log in to GitHub Container Registry
       - name: Login to GitHub Container Registry
-        run: |
-          echo "${{ secrets.GH_SECRET }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin      # Build and push server image
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{github.actor}}
+          password: ${{secrets.GH_SECRET}}
 
       - name: Build and Publish Server Image
-        run: |
-          docker build -f ../../dogdb-backend/Dockerfile.back -t ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }} ../../dogdb-backend
-          docker push ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
+        uses: docker/build-push-action@v3
+        with:
+          context: ./dogdb-backend
+          file: ./dogdb-backend/Dockerfile.back
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
 
       # Build and push database image
       - name: Build and Publish Database Image
@@ -37,6 +43,9 @@ jobs:
 
       # Build and push frontend image
       - name: Build and Publish Frontend Image
-        run: |
-          docker build -f ../../dogdb-frontend/Dockerfile.front -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }} ../../dogdb-frontend
-          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+        uses: docker/build-push-action@v3
+        with:
+          context: ./dogdb-frontend/
+          file: ./dogdb-frontend/Dockerfile.front
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
