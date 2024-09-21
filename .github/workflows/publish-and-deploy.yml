@@ -1,4 +1,4 @@
-name: Publish
+name: Publish and Deploy
 
 on:
   push:
@@ -23,9 +23,10 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{secrets.GH_USER}}
-          password: ${{secrets.GH_SECRET}}
+          username: ${{ secrets.GITHUB_ACTOR }}
+          password: ${{ secrets.GH_SECRET }}
 
+      # Build and push backend image
       - name: Build and Publish Server Image
         uses: docker/build-push-action@v3
         with:
@@ -49,3 +50,21 @@ jobs:
           file: ./dogdb-frontend/Dockerfile.front
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: publish
+
+    steps:
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }} # Using the private key for authentication
+          port: 22
+          script: |
+            cd ${{ secrets.WORK_DIR }} 
+            sudo docker compose pull
+            sudo docker compose up -d
