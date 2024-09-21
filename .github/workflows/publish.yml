@@ -26,17 +26,18 @@ jobs:
       # Build and push server image
       - name: Build and Publish Server Image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }} ../../dogdb-backend/Dockerfile.back
+          docker build -f ../../dogdb-backend/Dockerfile.back -t ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }} ../../dogdb-backend
           docker push ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
 
       # Build and push database image
       - name: Build and Publish Database Image
         run: |
-          docker pull postgres@latest
-          docker tag postgres:latest ${{ env.DB_IMAGE_NAME }}
-          docker push ${{ env.DB_IMAGE_NAME }}
+          docker pull postgres:latest
+          docker tag postgres:latest ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
+          docker push ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
+
+      # Build and push frontend image
       - name: Build and Publish Frontend Image
         run: |
-          docker build -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }} ../../dogdb-frontend/Dockerfile.front
-
+          docker build -f ../../dogdb-frontend/Dockerfile.front -t ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }} ../../dogdb-frontend
           docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
