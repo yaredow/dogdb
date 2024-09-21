@@ -10,7 +10,6 @@ import { Metadata } from "next";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
