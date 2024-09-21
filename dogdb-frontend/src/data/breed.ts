@@ -14,7 +14,6 @@ export const getAllbreeds = async () => {
     }
 
     const data = await response.json();
-    console.log({ data });
 
     return data.breeds;
   } catch (error) {
