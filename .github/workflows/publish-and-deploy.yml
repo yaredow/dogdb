@@ -14,6 +14,9 @@ jobs:
   publish:
     name: Publish images
     runs-on: ubuntu-latest
+    permision:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v3
@@ -24,8 +27,9 @@ jobs:
         with:
           registry: ${{env.REGISTRY}}
           username: ${{secrets.GH_USER}}
-          password: ${{secrets.GH_SECRET}} # Build and push backend image
+          password: ${{secrets.GH_SECRET}}
 
+        # build and publish the backend
       - name: Build and Publish Server Image
         uses: docker/build-push-action@v3
         with:
@@ -54,6 +58,9 @@ jobs:
     name: Deploy to VPS
     runs-on: ubuntu-latest
     needs: publish
+    permision:
+      contents: read
+      packages: write
 
     steps:
       - name: Deploy using SSH
