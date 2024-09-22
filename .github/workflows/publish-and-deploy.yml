@@ -57,13 +57,13 @@ jobs:
     needs: publish
 
     steps:
-      - name: Deploy using SSH
-        uses: appleboy/ssh-action@master@v1.0.3
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PRIVATE_KEY }} # Using the private key for authentication
-          port: 22
+          password: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
           script: |
             cd ${{ secrets.WORK_DIR }} 
             sudo docker compose pull
