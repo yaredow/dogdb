@@ -6,9 +6,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  SERVER_IMAGE_NAME: ${{ github.actor }}/dogdb-backend:latest
-  DB_IMAGE_NAME: ${{ github.actor }}/dogdb-postgres:latest
-  FRONTEND_IMAGE_NAME: ${{ github.actor }}/dogdb-frontend:latest
+  SERVER_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-backend:latest
+  DB_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-postgres:latest
+  FRONTEND_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-frontend:latest
 
 jobs:
   publish:
@@ -62,7 +62,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }} # Using the private key for authentication
+          key: ${{ secrets.SSH_KEYS }} # Using the private key for authentication
           port: 22
           script: |
             cd ${{ secrets.WORK_DIR }} 
