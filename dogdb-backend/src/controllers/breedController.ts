@@ -2,6 +2,7 @@ import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
 import prisma from "../utils/prisma";
 import { Request, Response, NextFunction } from "express";
+import { log } from "console";
 
 export const getAllBreeds = catchAsync(
   async (resquest: Request, response: Response, next: NextFunction) => {
@@ -22,6 +23,8 @@ export const getBreed = catchAsync(
         id,
       },
     });
+
+    console.log({ breed });
 
     if (!breed) {
       return next(new AppError("No breed found witht that id", 400));
