@@ -14,7 +14,6 @@ const fetchBreeds = async () => {
 
 export default async function BreedPage() {
   const breeds = await fetchBreeds();
-  console.log({ breeds });
 
   if (!breeds) {
     return <div>No breeds found</div>;

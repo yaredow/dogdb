@@ -22,11 +22,10 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ghcr.io
-          username: ${{ secrets.GH_USER }}
-          password: ${{ secrets.GH_SECRET }}
+          registry: ${{env.REGISTRY}}
+          username: ${{secret.GH_USER}}
+          password: ${{secret.GH_SECRET}} # Build and push backend image
 
-      # Build and push backend image
       - name: Build and Publish Server Image
         uses: docker/build-push-action@v3
         with:
