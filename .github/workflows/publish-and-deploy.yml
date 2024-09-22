@@ -9,9 +9,6 @@ env:
   SERVER_IMAGE_NAME: ${{ github.actor }}/dogdb-backend:latest
   DB_IMAGE_NAME: ${{ github.actor }}/dogdb-postgres:latest
   FRONTEND_IMAGE_NAME: ${{ github.actor }}/dogdb-frontend:latest
-permisions:
-  contents: read
-  packages: write
 
 jobs:
   publish:
