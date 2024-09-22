@@ -6,9 +6,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  SERVER_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-backend:latest
-  DB_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-postgres:latest
-  FRONTEND_IMAGE_NAME: ${{env.REGISTRY}}/yaredow/dogdb-frontend:latest
+  SERVER_IMAGE_NAME: ${{ github.actor }}/dogdb-backend:latest
+  DB_IMAGE_NAME: ${{ github.actor }}/dogdb-postgres:latest
+  FRONTEND_IMAGE_NAME: ${{ github.actor }}/dogdb-frontend:latest
 
 jobs:
   publish:
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # Log in to GitHub Container Registry
+      # Log in to GitHub Container Registryy
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -50,6 +50,7 @@ jobs:
           file: ./dogdb-frontend/Dockerfile.front
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
