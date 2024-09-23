@@ -1,7 +1,7 @@
 import { catchAsync } from "../utils/catchAsync";
 import AppError from "../utils/appError";
-import prisma from "../utils/prisma";
 import { Request, Response, NextFunction } from "express";
+import prisma from "../lib/db/db";
 
 export const getAllBreeds = catchAsync(
   async (resquest: Request, response: Response, next: NextFunction) => {
@@ -16,14 +16,12 @@ export const getAllBreeds = catchAsync(
 
 export const getBreed = catchAsync(
   async (request: Request, response: Response, next: NextFunction) => {
-    const id = request.params.id as string;
+    const slug = request.params.slug as string;
     const breed = await prisma.breed.findUnique({
       where: {
-        id,
+        slug,
       },
     });
-
-    console.log({ breed });
 
     if (!breed) {
       return next(new AppError("No breed found witht that id", 400));

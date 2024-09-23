@@ -4,5 +4,5 @@ import { getAllBreeds, getBreed } from "../controllers/breedController";
 const router = Router();
 
 router.get("/", getAllBreeds);
-router.get("/:id", getBreed);
+router.get("/:slug", getBreed);
 export default router;

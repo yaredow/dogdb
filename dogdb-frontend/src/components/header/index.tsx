@@ -33,7 +33,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "text-secondary-body sticky inset-0 inset-y-0 right-0 z-10 w-full border-b bg-background px-4 py-3 md:px-12",
+        "sticky px-4 py-3  inset-0 inset-y-0 right-0 z-10 w-full border-b bg-background text-foreground shadow-sm md:px-16 ",
         { "hidden md:block": isConversation },
       )}
     >
