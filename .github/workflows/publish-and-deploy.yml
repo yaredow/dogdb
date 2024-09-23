@@ -26,7 +26,7 @@ jobs:
           username: ${{secrets.GH_USER}}
           password: ${{secrets.GH_SECRET}}
 
-        # build and publish the backend
+        # build and publish the backendd
       - name: Build and Publish Server Image
         uses: docker/build-push-action@v3
         with:
