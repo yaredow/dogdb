@@ -42,7 +42,7 @@ jobs:
           docker tag postgres:latest ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
           docker push ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
 
-      # Build and push frontend imagee
+      # Build and push frontend image
       - name: Build and Publish Frontend Image
         uses: docker/build-push-action@v3
         with:
