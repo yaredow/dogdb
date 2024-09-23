@@ -46,7 +46,7 @@ export const dogBreeds: Option[] = [
   { value: "Boston Terrier", label: "Boston Terrier" },
 ];
 
-export const EXPRESS_URL = process.env.NEXT_PUBLIC_EXPRESS_API_BASE_URL;
+export const EXPRESS_URL = "http://localhost:5000";
 export type SocketResponseType = {
   success: string;
   error: string;
