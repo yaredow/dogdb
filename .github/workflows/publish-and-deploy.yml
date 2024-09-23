@@ -35,7 +35,7 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
 
-      # Pull and tag postgres imagee
+      # Pull and tag postgres image
       - name: Build and Publish Database Image
         run: |
           docker pull postgres:latest
