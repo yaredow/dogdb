@@ -67,7 +67,7 @@ jobs:
           script: |
             cd ${{ env.WORK_DIR }}
             # Log in to GitHub Container Registry on the VPS
-            echo ${{ secrets.GH_SECRET }} | docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
+            echo ${{ secrets.GH_SECRET }} | sudo docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
             # Pull the newly built images from GitHub Packages
             sudo docker compose pull
             # Apply the changes and restart the services
