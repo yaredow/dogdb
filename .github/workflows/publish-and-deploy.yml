@@ -65,7 +65,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
           script: |
-            cd ${{ env.WORK_DIR }}
+            cd ${{ secrets.WORK_DIR }}
             # Log in to GitHub Container Registry on the VPS
             echo ${{ secrets.GH_SECRET }} | sudo docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
             # Pull the newly built images from GitHub Packages
