@@ -33,10 +33,10 @@ jobs:
           docker compose -f ./docker-compose.yml build
 
           # Push backend image
-          docker push ghcr.io/yaredow/dogdb-backend:latest
+          docker push ${{env.REGISTRY}}/${{env.SERVER_IMAGE_NAME}}
 
           # Push frontend image
-          docker push ghcr.io/yaredow/dogdb-frontend:latest
+          docker push ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
 
       # Tag and Push PostgreSQL image to GitHub Container Registry
       - name: Tag and Push Postgres Image
@@ -45,10 +45,10 @@ jobs:
           docker pull postgres:latest
 
           # Tag it with your GitHub Container Registry namespace
-          docker tag postgres:latest ghcr.io/yaredow/dogdb-postgres:latest
+          docker tag postgres:latest ${{env.REGISTRY}}/${{env.DB_IMAGE_NAME}}
 
           # Push the tagged image to GitHub Container Registry
-          docker push ghcr.io/yaredow/dogdb-postgres:latest
+          docker push ${{env.REGISTRY}}/${{env.DB_IMAGE_NAME}}
 
   deploy:
     name: Deploy to VPS
