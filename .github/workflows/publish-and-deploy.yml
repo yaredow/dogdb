@@ -6,9 +6,9 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  SERVER_IMAGE_NAME: yaredow/dogdb-backend:latest
-  DB_IMAGE_NAME: yaredow/dogdb-postgres:latest
-  FRONTEND_IMAGE_NAME: yaredow/dogdb-frontend:latest
+  SERVER_IMAGE_NAME: ${{github.actor}}/dogdb-backend:latest
+  DB_IMAGE_NAME: ${{github.actor}}/dogdb-postgres:latest
+  FRONTEND_IMAGE_NAME: ${{github.actor}}/dogdb-frontend:latest
 
 jobs:
   publish:
