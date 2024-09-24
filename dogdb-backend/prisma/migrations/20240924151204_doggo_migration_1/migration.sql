@@ -24,7 +24,7 @@ CREATE TABLE "users" (
     "emailVerificationExpires" TIMESTAMP(3),
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
-);Error: P3009
+);
 
 -- CreateTable
 CREATE TABLE "password_reset_token" (
