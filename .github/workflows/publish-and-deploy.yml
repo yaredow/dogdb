@@ -26,30 +26,23 @@ jobs:
           username: ${{secrets.GH_USER}}
           password: ${{secrets.GH_SECRET}}
 
-        # build and publish the backendd
-      - name: Build and Publish Server Image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./dogdb-backend
-          file: ./dogdb-backend/Dockerfile.back
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
-
-      # Pull and tag postgres image
-      - name: Build and Publish Database Image
+      # Build and Push Docker Compose Images
+      - name: Build and Push Docker Compose Images
         run: |
-          docker pull postgres:latest
+          # Use docker-compose to build all images
+          docker compose -f ./docker-compose.yml build
+
+          # Tag and push backend image
+          docker tag dogdb-backend ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
+          docker push ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
+
+          # Tag and push frontend image
+          docker tag dogdb-frontend ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+
+          # Tag and push postgres image
           docker tag postgres:latest ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
           docker push ${{ env.REGISTRY }}/${{ env.DB_IMAGE_NAME }}
-
-      # Build and push frontend image
-      - name: Build and Publish Frontend Image
-        uses: docker/build-push-action@v3
-        with:
-          context: ./dogdb-frontend/
-          file: ./dogdb-frontend/Dockerfile.front
-          push: true
-          tags: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
 
   deploy:
     name: Deploy to VPS
