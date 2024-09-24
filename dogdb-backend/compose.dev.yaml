@@ -1,13 +1,13 @@
 services:
   postgres:
-    image: ghcr.io/yaredow/dogdb-postgres:latest
+    image: postgres:latest
     container_name: dev-postgres
     environment:
-      POSTGRES_USER: yada
-      POSTGRES_PASSWORD: yada
-      POSTGRES_DB: yada
+      POSTGRES_DB: ${POSTGRESDB_DATABASE}
+      POSTGRES_USER: ${POSTGRESDB_USER}
+      POSTGRES_PASSWORD: ${POSTGRESDB_ROOT_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5432:5432" # Correctly placed outside of the environment section
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
