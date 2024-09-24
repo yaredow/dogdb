@@ -30,7 +30,7 @@ jobs:
       - name: Build and Push Docker Compose Images
         run: |
           # Use docker-compose to build and tag the images
-          docker-compose -f ./docker-compose.yml build
+          docker compose -f ./docker-compose.yml build
 
           # Push backend image
           docker push ghcr.io/yaredow/dogdb-backend:latest
