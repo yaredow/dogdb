@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:latest
+    image: ghcr.io/yaredow/dogdb-postgres:latest
     container_name: dev-postgres
     environment:
       POSTGRES_DB: ${POSTGRESDB_DATABASE}
