@@ -68,7 +68,7 @@ jobs:
             cd ${{ secrets.WORK_DIR }}
             # Log in to GitHub Container Registry on the VPS
             echo ${{ secrets.GH_SECRET }} | sudo docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
-            # Stop and remove all running containers and networks
+            # Stop and remove all running containers and network
             sudo docker compose down
             # Remove all unused images to free up space
             sudo docker image prune -a -f
