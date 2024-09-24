@@ -1,29 +1,31 @@
+import { EXPRESS_URL } from "@/lib/constants";
+
 export const getAllbreeds = async () => {
-  const response = await fetch("http://backend:5000/api/v1/breed", {
-    method: "GET",
-  });
-  if (!response.ok) {
-    throw new Error("failed to fetch data");
+  try {
+    const response = await fetch(`${EXPRESS_URL}/api/v1/breed`);
+    if (!response.ok) return [];
+
+    const data = await response.json();
+
+    return data.breeds;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
-
-  const data = await response.json();
-
-  return data.breeds;
 };
 
 export const getBreedWithSlug = async (slug: string) => {
   try {
-    const response = await fetch(`http://backend:5000/api/v1/breed/${slug}`, {
-      method: "GET",
-    });
+    const response = await fetch(`${EXPRESS_URL}/api/v1/breed/${slug}`);
 
-    if (!response.ok) return null;
+    if (!response.ok) return [];
 
     const data = await response.json();
 
     return data.breed;
   } catch (error) {
     console.error(error);
-    return null;
+
+    return [];
   }
 };

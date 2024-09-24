@@ -26,6 +26,7 @@ const plus_jakarta_sans = Plus_Jakarta_Sans({
   weight: ["400", "500", "600", "700"],
   variable: "--font-plus-jakarta-sans",
 });
+
 export const metadata: Metadata = {
   title: "Doggo",
   description: "description",
