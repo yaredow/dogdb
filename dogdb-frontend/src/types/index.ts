@@ -43,8 +43,6 @@ export type User = {
   conversations: Conversation[];
   seenMessages: Message[];
   messages: Message[];
-  blockedUsers: Block[];
-  blockedBy: Block[];
   active: boolean;
   verified: boolean;
   passwordChangedAt?: Date | null;
@@ -84,10 +82,6 @@ export type Conversation = {
   name?: string | null;
   messages: Message[]; // Array of messages in the conversation
   users: User[]; // Array of users participating in the conversation
-};
-
-export type Block = {
-  // Define fields for the Block relationship
 };
 
 export type DecodedToken = {
