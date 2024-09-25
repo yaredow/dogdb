@@ -28,8 +28,9 @@ jobs:
 
       # Build and Push Docker Compose Images
       - name: Build and Push Docker Compose Images
-        working_directory: ./
         run: |
+          cd ${{github.workspace}}
+
           # Use docker-compose to build and tag the images
           docker compose -f ./docker-compose.yml build
 
