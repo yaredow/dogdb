@@ -1,8 +1,7 @@
 export const getAllbreeds = async () => {
   try {
-    const response = await fetch("http://localhost:5000/api/v1/breed", {
+    const response = await fetch("http://backend:5000/api/v1/breed", {
       method: "GET",
-      cache: "no-cache",
     });
     if (!response.ok) return [];
 
@@ -17,9 +16,8 @@ export const getAllbreeds = async () => {
 
 export const getBreedWithSlug = async (slug: string) => {
   try {
-    const response = await fetch(`http://localhost:5000/api/v1/breed/${slug}`, {
+    const response = await fetch(`http://backend:5000/api/v1/breed/${slug}`, {
       method: "GET",
-      cache: "no-cache",
     });
 
     if (!response.ok) return [];
