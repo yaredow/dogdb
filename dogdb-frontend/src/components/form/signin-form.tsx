@@ -1,3 +1,5 @@
+"use client";
+
 import { SigninDataType, SigninFormSchema } from "@/lib/schemas";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +15,7 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import useSignin from "@/hooks/useSignin";
 
-export default function LoginForm() {
+export default function SigninForm() {
   const { signin, isPending } = useSignin();
 
   const form = useForm<z.infer<typeof SigninFormSchema>>({

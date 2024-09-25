@@ -127,7 +127,6 @@ export async function isUserFollowing(userId: string) {
     }
 
     const data = await response.json();
-    console.log({ data });
     return data.isFollowing;
   } catch (error) {
     console.error(error);

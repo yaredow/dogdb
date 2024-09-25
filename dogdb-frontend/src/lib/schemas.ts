@@ -123,7 +123,7 @@ export const SignupFormSchema = z
     },
   );
 
-export type SignupFormData = z.infer<typeof SignupFormSchema>;
+export type SignupFormDataType = z.infer<typeof SignupFormSchema>;
 
 export const ContactUsFromSchema = z.object({
   name: z
