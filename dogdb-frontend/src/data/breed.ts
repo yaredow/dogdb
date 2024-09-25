@@ -1,6 +1,6 @@
 export const getAllbreeds = async () => {
   try {
-    const response = await fetch("http://dogdb_backend:5000/api/v1/breed", {
+    const response = await fetch("http://dogdb-backend-1:5000/api/v1/breed", {
       method: "GET",
     });
     if (!response.ok) return [];
@@ -17,7 +17,7 @@ export const getAllbreeds = async () => {
 export const getBreedWithSlug = async (slug: string) => {
   try {
     const response = await fetch(
-      `http://dogdb_backend:5000/api/v1/breed/${slug}`,
+      `http://dogdb-backend-1:5000/api/v1/breed/${slug}`,
       {
         method: "GET",
       },
