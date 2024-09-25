@@ -9,7 +9,7 @@ export default async function HomePage() {
 
   return (
     <section className="mb-10">
-      <BreedGrid />
+      <BreedGrid breeds={breeds} />
     </section>
   );
 }
