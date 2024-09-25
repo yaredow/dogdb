@@ -8,7 +8,7 @@ services:
       - ./dogdb-backend/.env
     restart: always
     ports:
-      - ${NODE_LOCAL_PORT}:${NODE_DOCKER_PORT}
+      - ${NODE_DOCKER_PORT}
     depends_on:
       - db
     environment:
@@ -27,7 +27,7 @@ services:
       - ./dogdb-frontend/.env.local
     restart: always
     ports:
-      - 3000:3000
+      - 3000
     networks:
       - backend
 
@@ -50,6 +50,15 @@ services:
       - ${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}
     expose:
       - 5432
+    networks:
+      - backend
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
     networks:
       - backend
 
