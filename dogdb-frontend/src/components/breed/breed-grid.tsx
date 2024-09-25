@@ -1,14 +1,20 @@
 "use client";
 
-import { Breed } from "@/types";
 import { nanoid } from "@reduxjs/toolkit";
 import BreedCard from "./breed-card";
+import useGetBreeds from "@/hooks/useGetBreeds";
+import { Breed } from "@/types";
 
-type BreedGridProps = {
+type UseGetBreeds = {
   breeds: Breed[];
+  isFetching: boolean;
 };
 
-function BreedGrid({ breeds }: BreedGridProps) {
+export default function BreedGrid() {
+  const { breeds, isFetching }: UseGetBreeds = useGetBreeds();
+
+  if (isFetching) return <div>Loading..</div>;
+
   return (
     <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
       {breeds.map(({ slug, breedName, breedImages, breedShortDescription }) => (
@@ -24,5 +30,3 @@ function BreedGrid({ breeds }: BreedGridProps) {
     </div>
   );
 }
-
-export default BreedGrid;

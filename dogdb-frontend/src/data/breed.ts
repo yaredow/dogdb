@@ -1,11 +1,12 @@
+import { EXPRESS_URL } from "@/lib/constants";
+
 export const getAllbreeds = async () => {
   try {
-    const response = await fetch("http://dogdb-backend-1:5000/api/v1/breed", {
-      method: "GET",
-    });
+    const response = await fetch(`${EXPRESS_URL}/api/v1/breed`);
     if (!response.ok) return [];
 
     const data = await response.json();
+    console.log({ data });
 
     return data.breeds;
   } catch (error) {
@@ -16,12 +17,7 @@ export const getAllbreeds = async () => {
 
 export const getBreedWithSlug = async (slug: string) => {
   try {
-    const response = await fetch(
-      `http://dogdb-backend-1:5000/api/v1/breed/${slug}`,
-      {
-        method: "GET",
-      },
-    );
+    const response = await fetch(`${EXPRESS_URL}/api/v1/breed/${slug}`);
 
     if (!response.ok) return [];
 
