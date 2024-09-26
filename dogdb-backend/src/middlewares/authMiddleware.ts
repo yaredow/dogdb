@@ -34,6 +34,8 @@ export const verifyToken = async (
     );
   }
 
+  console.log({ accessToken });
+
   try {
     const decoded = jwt.verify(
       accessToken,

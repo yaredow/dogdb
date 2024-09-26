@@ -1,48 +1,18 @@
-import { Response, Request, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../utils/catchAsync";
-import { SigninFormDataType, SignupFormDataType } from "../utils/shcemas";
 import prisma from "../lib/db/db";
-import bcrypt from "bcryptjs";
+import { z } from "zod";
 import AppError from "../utils/appError";
-import { createTokenAndSend } from "../utils/cookie";
+import { SigninFormSchema, SignupFormSchema } from "../utils/shcemas";
+import bcrypt from "bcryptjs";
 import slugify from "slugify";
 import jwt from "jsonwebtoken";
 import { DecodedToken } from "../types";
-
-export const signin = catchAsync(
-  async (
-    request: Request<{}, {}, SigninFormDataType>,
-    response: Response,
-    next: NextFunction,
-  ) => {
-    const data = request.body;
-    const { password, email } = data;
-    const existingUser = await prisma.user.findFirst({
-      where: {
-        email: email,
-      },
-    });
-
-    if (!existingUser || !existingUser.password) {
-      return next(new AppError("User doesn't exist", 404));
-    }
-
-    const isPasswordCorrect = await bcrypt.compare(
-      password,
-      existingUser.password,
-    );
-
-    if (!isPasswordCorrect) {
-      return next(new AppError("Wrong credentials", 401));
-    }
-
-    createTokenAndSend(existingUser, 200, response);
-  },
-);
+import { createTokenAndSend } from "../utils/cookie";
 
 export const signUp = catchAsync(
   async (
-    request: Request<{}, {}, SignupFormDataType>,
+    request: Request<{}, {}, z.infer<typeof SignupFormSchema>>,
     response: Response,
     next: NextFunction,
   ) => {
@@ -111,6 +81,37 @@ export const signUp = catchAsync(
       }
     }
     createTokenAndSend(user, 201, response);
+  },
+);
+
+export const signin = catchAsync(
+  async (
+    request: Request<{}, {}, z.infer<typeof SigninFormSchema>>,
+    response: Response,
+    next: NextFunction,
+  ) => {
+    const data = request.body;
+    const { password, email } = data;
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!existingUser || !existingUser.password) {
+      return next(new AppError("User doesn't exist", 404));
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password,
+    );
+
+    if (!isPasswordCorrect) {
+      return next(new AppError("Wrong credentials", 401));
+    }
+
+    createTokenAndSend(existingUser, 200, response);
   },
 );
 

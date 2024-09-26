@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { catchAsync } from "../utils/catchAsync";
-import AppError from "../utils/appError";
 import prisma from "../lib/db/db";
+import AppError from "../utils/appError";
 
 export const getAllUsers = catchAsync(
   async (request: Request, response: Response, next: NextFunction) => {

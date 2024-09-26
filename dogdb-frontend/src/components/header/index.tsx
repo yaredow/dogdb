@@ -17,10 +17,9 @@ import ConversationToggle from "@/components/conversations/conversation-toggle";
 import { usePathname } from "next/navigation";
 import useConversation from "@/hooks/useConversation";
 import { cn } from "@/lib/utils";
-import { LoginButton } from "../auth/login-button";
-import { SignupButton } from "../auth/signup-button";
 import useGetUser from "@/hooks/useGetUser";
 import UserAvatarSkeleton from "../skeletons/user-avatr-skeleton";
+import AuthButtons from "../auth/authButtons";
 
 type HeaderProps = {
   isAuthenticated: boolean;
@@ -68,8 +67,7 @@ export default function Header({ isAuthenticated }: HeaderProps) {
               <UserAvatarSkeleton />
             ) : !user ? (
               <div className="flex flex-row gap-2">
-                <LoginButton />
-                <SignupButton />
+                <AuthButtons />
               </div>
             ) : (
               <UserMenu user={user} />
