@@ -18,7 +18,6 @@ const db_1 = __importDefault(require("../lib/db/db"));
 const appError_1 = __importDefault(require("../utils/appError"));
 const verifyToken = (request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     let accessToken;
-    // Check for accessToken in Authorization header
     if (request.headers.authorization &&
         request.headers.authorization.startsWith("Bearer ")) {
         accessToken = request.headers.authorization.split("Bearer ")[1];

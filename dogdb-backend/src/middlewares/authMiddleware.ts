@@ -18,7 +18,6 @@ export const verifyToken = async (
 ) => {
   let accessToken: string;
 
-  // Check for accessToken in Authorization header
   if (
     request.headers.authorization &&
     request.headers.authorization.startsWith("Bearer ")
@@ -33,8 +32,6 @@ export const verifyToken = async (
       new AppError("You are not logged in. Please log in first", 401),
     );
   }
-
-  console.log({ accessToken });
 
   try {
     const decoded = jwt.verify(

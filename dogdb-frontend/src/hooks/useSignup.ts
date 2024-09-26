@@ -8,7 +8,7 @@ export default function useSignup() {
   const router = useRouter();
   const { mutate: signup, isPending } = useMutation({
     mutationFn: (data: SignupFormDataType) => signupApi(data),
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast({
         description: "Account created successfully",
       });

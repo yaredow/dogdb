@@ -12,31 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyRefreshToken = exports.logout = exports.signUp = exports.signin = void 0;
+exports.verifyRefreshToken = exports.logout = exports.signin = exports.signUp = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
 const db_1 = __importDefault(require("../lib/db/db"));
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const appError_1 = __importDefault(require("../utils/appError"));
-const cookie_1 = require("../utils/cookie");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const slugify_1 = __importDefault(require("slugify"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-exports.signin = (0, catchAsync_1.catchAsync)((request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = request.body;
-    const { password, email } = data;
-    const existingUser = yield db_1.default.user.findFirst({
-        where: {
-            email: email,
-        },
-    });
-    if (!existingUser || !existingUser.password) {
-        return next(new appError_1.default("User doesn't exist", 404));
-    }
-    const isPasswordCorrect = yield bcryptjs_1.default.compare(password, existingUser.password);
-    if (!isPasswordCorrect) {
-        return next(new appError_1.default("Wrong credentials", 401));
-    }
-    (0, cookie_1.createTokenAndSend)(existingUser, 200, response);
-}));
+const cookie_1 = require("../utils/cookie");
 exports.signUp = (0, catchAsync_1.catchAsync)((request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     const body = request.body;
     const { firstName, lastName, password, passwordConfirm, email, breed } = body;
@@ -88,6 +71,23 @@ exports.signUp = (0, catchAsync_1.catchAsync)((request, response, next) => __awa
         }
     }
     (0, cookie_1.createTokenAndSend)(user, 201, response);
+}));
+exports.signin = (0, catchAsync_1.catchAsync)((request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const data = request.body;
+    const { password, email } = data;
+    const existingUser = yield db_1.default.user.findFirst({
+        where: {
+            email: email,
+        },
+    });
+    if (!existingUser || !existingUser.password) {
+        return next(new appError_1.default("User doesn't exist", 404));
+    }
+    const isPasswordCorrect = yield bcryptjs_1.default.compare(password, existingUser.password);
+    if (!isPasswordCorrect) {
+        return next(new appError_1.default("Wrong credentials", 401));
+    }
+    (0, cookie_1.createTokenAndSend)(existingUser, 200, response);
 }));
 exports.logout = (0, catchAsync_1.catchAsync)((request, response) => __awaiter(void 0, void 0, void 0, function* () {
     response.clearCookie("accessToken", {

@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isFollowing = exports.isBlocked = exports.unblockUser = exports.blockUser = exports.unfollowUser = exports.followUser = exports.getBreedOwners = exports.getUserById = exports.getUserByEmail = exports.getUser = exports.getAllUsers = void 0;
 const catchAsync_1 = require("../utils/catchAsync");
-const appError_1 = __importDefault(require("../utils/appError"));
 const db_1 = __importDefault(require("../lib/db/db"));
+const appError_1 = __importDefault(require("../utils/appError"));
 exports.getAllUsers = (0, catchAsync_1.catchAsync)((request, response, next) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield db_1.default.user.findMany();
     if (!users) {

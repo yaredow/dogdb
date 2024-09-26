@@ -1,6 +1,6 @@
-import { toast } from "@/components/ui/use-toast";
 import { followUser } from "@/services/userService";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "./use-toast";
 
 export default function useFollowUser() {
   const { isPending, mutate: follow } = useMutation({

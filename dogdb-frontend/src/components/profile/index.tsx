@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { MailIcon, MapPinIcon, UserPlus, UsersIcon } from "lucide-react";
+import { MailIcon, MapPinIcon, UsersIcon } from "lucide-react";
 import Image from "next/image";
 import BannerPlaceholder from "@/../public/images/secondary-banner-placeholder.jpg";
 import DefaultPfp from "@/../public/images/Default_pfp.svg";
