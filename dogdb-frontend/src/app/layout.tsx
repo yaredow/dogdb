@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import QueryProviders from "@/components/providers/query-provider";
 import { Metadata } from "next";
+import { getTokens } from "@/lib/cookie";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +38,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { accessToken } = getTokens();
+  const isAuthenticated = !!accessToken;
+
   return (
     <html lang="en">
       <body
@@ -50,7 +54,7 @@ export default async function RootLayout({
         >
           <QueryProviders>
             <NextTopLoader />
-            <Header />
+            <Header isAuthenticated={isAuthenticated} />
             <div className="m-6 md:mx-12 md:my-6">{children}</div>
             <Toaster />
           </QueryProviders>

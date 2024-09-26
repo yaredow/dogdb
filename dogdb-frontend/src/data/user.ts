@@ -2,12 +2,16 @@ import { EXPRESS_URL } from "@/lib/constants";
 import { getTokens } from "@/lib/cookie";
 
 export const getUserById = async (id: string) => {
+  const { accessToken } = getTokens();
   const response = await fetch(
     `http://localhost:5000/api/v1/user/get-user-by-id/${id}`,
     {
-      cache: "no-cache",
       method: "GET",
-      credentials: "include",
+      cache: "no-cache",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
   );
 

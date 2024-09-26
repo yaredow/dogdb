@@ -22,10 +22,15 @@ import { SignupButton } from "../auth/signup-button";
 import useGetUser from "@/hooks/useGetUser";
 import UserAvatarSkeleton from "../skeletons/user-avatr-skeleton";
 
-export default function Header() {
+type HeaderProps = {
+  isAuthenticated: boolean;
+};
+
+export default function Header({ isAuthenticated }: HeaderProps) {
   const path = usePathname();
   const { conversationId } = useConversation();
-  const { user, isFetching } = useGetUser();
+  const { user, isFetching } = useGetUser(isAuthenticated);
+  console.log({ user });
 
   const isConversation =
     path === `/conversations/${conversationId}` || path === "/conversations";
@@ -40,7 +45,7 @@ export default function Header() {
       <nav className="flex items-center justify-between">
         <Link href="/" className="flex items-center justify-center gap-2">
           <Image src={Logo} height={40} width={40} alt="An image of a dog" />
-          <span className="text-xl font-semibold">Doggo</span>
+          <span className="text-xl font-semibold font-logo">dogdb</span>
         </Link>
         <div className="flex flex-row items-center justify-center gap-8">
           <div className="hidden md:flex">
