@@ -56,7 +56,7 @@ export default function SignupForm() {
                 return (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="firstName" type="text" />
+                      <Input {...field} placeholder="First Name" type="text" />
                     </FormControl>
                     <FormMessage className="mx-2" />
                   </FormItem>
@@ -71,7 +71,7 @@ export default function SignupForm() {
                 return (
                   <FormItem>
                     <FormControl>
-                      <Input {...field} placeholder="lastName" type="text" />
+                      <Input {...field} placeholder="Last Name" type="text" />
                     </FormControl>
                     <FormMessage className="mx-2" />
                   </FormItem>
@@ -102,7 +102,7 @@ export default function SignupForm() {
               return (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} placeholder="password" type="password" />
+                    <Input {...field} placeholder="Password" type="password" />
                   </FormControl>
                   <FormMessage className="mx-2" />
                 </FormItem>

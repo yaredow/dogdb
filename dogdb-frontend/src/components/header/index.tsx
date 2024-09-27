@@ -20,16 +20,13 @@ import { cn } from "@/lib/utils";
 import useGetUser from "@/hooks/useGetUser";
 import UserAvatarSkeleton from "../skeletons/user-avatr-skeleton";
 import AuthButtons from "../auth/authButtons";
+import { useAuth } from "@/context/AuthContext";
 
-type HeaderProps = {
-  isAuthenticated: boolean;
-};
-
-export default function Header({ isAuthenticated }: HeaderProps) {
+export default function Header() {
   const path = usePathname();
   const { conversationId } = useConversation();
+  const { isAuthenticated } = useAuth();
   const { user, isFetching } = useGetUser(isAuthenticated);
-  console.log({ user });
 
   const isConversation =
     path === `/conversations/${conversationId}` || path === "/conversations";
@@ -65,14 +62,14 @@ export default function Header({ isAuthenticated }: HeaderProps) {
           <div className="hidden cursor-pointer md:flex md:flex-row md:items-center md:gap-8">
             {isFetching ? (
               <UserAvatarSkeleton />
-            ) : !user ? (
+            ) : !isAuthenticated ? (
               <div className="flex flex-row gap-2">
                 <AuthButtons />
               </div>
             ) : (
               <UserMenu user={user} />
             )}
-          </div>{" "}
+          </div>
         </div>
 
         {/* Mobile navigation */}
