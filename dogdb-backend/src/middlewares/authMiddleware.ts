@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import AppError from "../utils/appError";
-import { User } from "@prisma/client";
 import prisma from "../lib/db/db";
+import AppError from "../utils/appError";
 import { DecodedToken } from "../types";
+import { User } from "@prisma/client";
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -18,7 +18,6 @@ export const verifyToken = async (
 ) => {
   let accessToken: string;
 
-  // Check for accessToken in Authorization header
   if (
     request.headers.authorization &&
     request.headers.authorization.startsWith("Bearer ")

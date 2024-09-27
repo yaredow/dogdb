@@ -1,22 +1,16 @@
 "use client";
 
+import { Breed } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface BreedCardProps {
-  slug: string;
-  breedName: string;
-  breedImages: string[];
-  breedShortDescription: string;
+  breed: Breed;
 }
 
-const BreedCard = ({
-  slug,
-  breedName,
-  breedImages,
-  breedShortDescription,
-}: BreedCardProps) => {
+const BreedCard = ({ breed }: BreedCardProps) => {
   const router = useRouter();
+  const { breedImages, breedName, breedShortDescription, slug } = breed;
 
   const handleClick = () => {
     router.push(`/breed/${slug}`);

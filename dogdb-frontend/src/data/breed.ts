@@ -7,7 +7,6 @@ export const getAllbreeds = async () => {
     if (!response.ok) return [];
 
     const data = await response.json();
-    console.log({ data });
 
     return data.breeds;
   } catch (error) {

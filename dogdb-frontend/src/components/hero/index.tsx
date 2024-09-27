@@ -36,7 +36,7 @@ function Hero() {
 
         <div className="flex flex-col items-center justify-center md:items-start md:pl-6">
           <h2 className="tracking-regular font-main text-secondary-body hidden text-[40px] font-bold leading-none md:block md:leading-tight">
-            Doggo. Find your perfect dog breed
+            dogdb. Find your perfect dog breed
           </h2>
           <p className="font-regular text-secondary-body px-10 py-6 text-center font-sans text-3xl leading-8 md:px-0 md:py-0 md:text-left md:text-sm">
             Discover the ideal companion for your lifestyle

@@ -2,40 +2,54 @@ import { EXPRESS_URL } from "@/lib/constants";
 import { getTokens } from "@/lib/cookie";
 
 export const getUserById = async (id: string) => {
-  const response = await fetch(
-    `http://localhost:5000/api/v1/user/get-user-by-id/${id}`,
-    {
-      cache: "no-cache",
-      method: "GET",
-      credentials: "include",
-    },
-  );
+  try {
+    const { accessToken } = getTokens();
+    const response = await fetch(
+      `http://localhost:5000/api/v1/user/get-user-by-id/${id}`,
+      {
+        method: "GET",
+        cache: "no-cache",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    return data.user;
+  } catch (error) {
+    console.error(error);
     return null;
   }
-
-  const data = await response.json();
-
-  return data.user;
 };
 
 export const getUserByEmail = async (email: string) => {
-  const response = await fetch(
-    `${EXPRESS_URL}/api/v1/user/get-user-by-email?email=${email}`,
-    {
-      method: "GET",
-      cache: "no-cache",
-    },
-  );
+  try {
+    const response = await fetch(
+      `${EXPRESS_URL}/api/v1/user/get-user-by-email?email=${email}`,
+      {
+        method: "GET",
+        cache: "no-cache",
+      },
+    );
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+
+    return data.user;
+  } catch (error) {
+    console.error(error);
     return null;
   }
-
-  const data = await response.json();
-
-  return data.user;
 };
 
 export const getBreedOwners = async (breedId: string, email: string) => {
@@ -74,23 +88,27 @@ export const refreshAccessToken = async () => {
 };
 
 export async function loggedInUser() {
-  const { accessToken } = getTokens();
+  try {
+    const { accessToken } = getTokens();
 
-  const response = await fetch(`${EXPRESS_URL}/api/v1/user/get-user`, {
-    method: "GET",
-    cache: "no-cache",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+    const response = await fetch(`${EXPRESS_URL}/api/v1/user/get-user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-  if (!response.ok) {
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    return data.user;
+  } catch (error) {
+    console.error(error);
     return null;
   }
-
-  const data = await response.json();
-  return data.user;
 }
 
 export async function logout() {
@@ -100,7 +118,6 @@ export async function logout() {
   });
 
   if (response.ok) {
-    // Redirect to login page or homepage after successful logout
     window.location.href = "/";
   } else {
     console.error("Logout failed");
@@ -127,7 +144,6 @@ export async function isUserFollowing(userId: string) {
     }
 
     const data = await response.json();
-    console.log({ data });
     return data.isFollowing;
   } catch (error) {
     console.error(error);

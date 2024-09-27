@@ -17,15 +17,17 @@ import ConversationToggle from "@/components/conversations/conversation-toggle";
 import { usePathname } from "next/navigation";
 import useConversation from "@/hooks/useConversation";
 import { cn } from "@/lib/utils";
-import { LoginButton } from "../auth/login-button";
-import { SignupButton } from "../auth/signup-button";
 import useGetUser from "@/hooks/useGetUser";
 import UserAvatarSkeleton from "../skeletons/user-avatr-skeleton";
+import AuthButtons from "../auth/authButtons";
+import useAuthState from "@/store/auth-store";
 
 export default function Header() {
   const path = usePathname();
   const { conversationId } = useConversation();
-  const { user, isFetching } = useGetUser();
+  const isAuthenticated = useAuthState((state) => state.isAuthenticated);
+  const { user, isFetching } = useGetUser(isAuthenticated);
+  console.log({ isAuthenticated });
 
   const isConversation =
     path === `/conversations/${conversationId}` || path === "/conversations";
@@ -40,7 +42,7 @@ export default function Header() {
       <nav className="flex items-center justify-between">
         <Link href="/" className="flex items-center justify-center gap-2">
           <Image src={Logo} height={40} width={40} alt="An image of a dog" />
-          <span className="text-xl font-semibold">Doggo</span>
+          <span className="text-xl font-semibold font-logo">dogdb</span>
         </Link>
         <div className="flex flex-row items-center justify-center gap-8">
           <div className="hidden md:flex">
@@ -61,15 +63,14 @@ export default function Header() {
           <div className="hidden cursor-pointer md:flex md:flex-row md:items-center md:gap-8">
             {isFetching ? (
               <UserAvatarSkeleton />
-            ) : !user ? (
+            ) : !isAuthenticated ? (
               <div className="flex flex-row gap-2">
-                <LoginButton />
-                <SignupButton />
+                <AuthButtons />
               </div>
             ) : (
               <UserMenu user={user} />
             )}
-          </div>{" "}
+          </div>
         </div>
 
         {/* Mobile navigation */}
