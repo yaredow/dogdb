@@ -1,11 +1,9 @@
-import { User, FullConversationType } from "@/types";
+import { User } from "@/types";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import useUnblockUser from "@/hooks/useUnblockuser";
 import useFollowUser from "@/hooks/useFollowUser";
 import useUnfollowUser from "@/hooks/useUnfollowUser";
-import { useRouter } from "next/navigation";
-import { socket } from "@/socket";
 import { UserCheck, UserPlus } from "lucide-react";
 
 type UserButtonsProps = {
@@ -15,13 +13,13 @@ type UserButtonsProps = {
   debounceBlockStatus: () => void;
   debounceFollowStatus: () => void;
 };
-
-type SocketResponseType = {
-  success: boolean;
-  error: string;
-  conversation: FullConversationType;
-};
-
+//
+// type SocketResponseType = {
+//   success: boolean;
+//   error: string;
+//   conversation: FullConversationType;
+// };
+//
 type ButtonVariant =
   | "destructive"
   | "default"
@@ -120,11 +118,7 @@ export default function UserButtons({
 
   return (
     <div className="flex flex-row gap-2">
-      {!isBlocked && (
-        <Button variant="outline" onClick={handleStartConversation}>
-          Message
-        </Button>
-      )}
+      {!isBlocked && <Button variant="outline">Message</Button>}
       <Button
         variant={buttonConfig.variant}
         onClick={buttonConfig.onClick}

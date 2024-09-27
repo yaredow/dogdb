@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "./use-toast";
 import { SignupFormDataType } from "@/lib/schemas";
 import { User } from "@/types";
-import { useAuth } from "@/context/AuthContext";
+import useAuthState from "@/store/auth-store";
 
 export default function useSignup() {
   const router = useRouter();
-  const { setUser, setIsAuthenticated } = useAuth();
+  const setUser = useAuthState((state) => state.setUser);
+
   const { mutate: signup, isPending } = useMutation({
     mutationFn: (data: SignupFormDataType) => signupApi(data),
     onSuccess: (data: User) => {
@@ -16,7 +17,6 @@ export default function useSignup() {
         description: "Account created successfully",
       });
       setUser(data);
-      setIsAuthenticated(true);
       router.push(`/profile/${data.id}`);
     },
     onError: (error) => {
