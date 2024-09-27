@@ -20,13 +20,14 @@ import { cn } from "@/lib/utils";
 import useGetUser from "@/hooks/useGetUser";
 import UserAvatarSkeleton from "../skeletons/user-avatr-skeleton";
 import AuthButtons from "../auth/authButtons";
-import { useAuth } from "@/context/AuthContext";
+import useAuthState from "@/store/auth-store";
 
 export default function Header() {
   const path = usePathname();
   const { conversationId } = useConversation();
-  const { isAuthenticated } = useAuth();
+  const isAuthenticated = useAuthState((state) => state.isAuthenticated);
   const { user, isFetching } = useGetUser(isAuthenticated);
+  console.log({ isAuthenticated });
 
   const isConversation =
     path === `/conversations/${conversationId}` || path === "/conversations";

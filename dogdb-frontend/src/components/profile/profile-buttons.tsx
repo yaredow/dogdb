@@ -42,23 +42,6 @@ export default function UserButtons({
   const { isPending: followPending, follow } = useFollowUser();
   const { isPending: unfollowPending, unfollow } = useUnfollowUser();
   const [hoverState, setHoverState] = useState("");
-  const router = useRouter();
-
-  const handleStartConversation = () => {
-    socket?.emit(
-      "startConversation",
-      { userId: user.id },
-      (response: SocketResponseType) => {
-        if (response.success) {
-          const { conversation }: { conversation: FullConversationType } =
-            response;
-          router.push(`/conversations/${conversation.id}`);
-        } else {
-          console.error(response.error);
-        }
-      },
-    );
-  };
 
   const getButtonConfig = () => {
     if (isBlocked) {

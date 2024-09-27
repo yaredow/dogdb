@@ -1,16 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { logout as logoutUser } from "@/services/authServices";
-import { useAuth } from "@/context/AuthContext";
+import useAuthState from "@/store/auth-store";
 
 export default function useLogout() {
+  const clearAuth = useAuthState((state) => state.clearAuth);
   const router = useRouter();
-  const { setUser, setIsAuthenticated } = useAuth();
+
   const { isPending, mutate: logout } = useMutation({
     mutationFn: logoutUser,
     onSuccess: () => {
-      setUser(null);
-      setIsAuthenticated(false);
+      clearAuth();
       router.push("/");
     },
     onError: (error) => {
