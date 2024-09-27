@@ -13,9 +13,9 @@ export const useAuthState = create<UserStoreType>((set) => ({
   user: null,
   isAuthenticated: false,
   setUser: (user: User | null) => {
-    set({ user });
+    set({ user, isAuthenticated: !!user });
     localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("isAuthenticated", String(!!user));
   },
   setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
   clearAuth: () => {
