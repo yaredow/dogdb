@@ -6,7 +6,6 @@ import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import QueryProviders from "@/components/providers/query-provider";
 import { Metadata } from "next";
-import { initializeAuthState } from "@/store/auth-store";
 import ClientAuthProvider from "@/components/providers/client-auth-provider";
 
 const inter = Inter({

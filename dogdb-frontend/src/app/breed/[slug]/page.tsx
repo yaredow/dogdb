@@ -14,7 +14,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = params;
   const breed = await getBreedWithSlug(slug);
-  console.log({ breed });
 
   return { title: `Breed ${breed?.breedName}` };
 }
