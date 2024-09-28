@@ -64,7 +64,7 @@ export default function MessageItem({
 
         {message.body ? (
           <div className="flex flex-col gap-2">
-            <span className="max-w-xs rounded-md bg-accent p-3">
+            <span className="max-w-xs rounded-md bg-primary p-3">
               {message.body}
             </span>
             <div className="flex flex-row items-center justify-between">

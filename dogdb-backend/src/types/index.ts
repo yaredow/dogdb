@@ -1,3 +1,5 @@
+import { Breed, User } from "@prisma/client";
+
 export type UserType = {
   id: string;
   email: string;
@@ -17,4 +19,12 @@ export type DecodedToken = {
   iat: number;
   email: string;
   name: string;
+};
+
+export type BreedOwners = {
+  id: string;
+  breedId: string;
+  userId: string;
+  user: User;
+  breed: Breed;
 };

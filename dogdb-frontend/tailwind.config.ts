@@ -10,102 +10,83 @@ const config = {
   ],
   prefix: "",
   theme: {
-  	screens: {
-  		md: '1000px',
-  		'2xl': '1400px'
-  	},
-  	container: {
-  		center: 'true',
-  		padding: '1rem',
-  		screens: {
-  			sm: '600px',
-  			md: '1000px'
-  		}
-  	},
-  	extend: {
-  		colors: {
-  			border: 'hsl(var(--border))',
-  			input: 'hsl(var(--input))',
-  			ring: 'hsl(var(--ring))',
-  			background: 'hsl(var(--background))',
-  			foreground: 'hsl(var(--foreground))',
-  			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
-  			},
-  			secondary: {
-  				body: 'var(--secondary-body)',
-  				article: 'var(--secondary-article)',
-  				foreground: 'hsl(var(--secondary-foreground))',
-  				DEFAULT: 'hsl(var(--secondary))'
-  			},
-  			destructive: {
-  				DEFAULT: 'hsl(var(--destructive))',
-  				foreground: 'hsl(var(--destructive-foreground))'
-  			},
-  			muted: {
-  				DEFAULT: 'hsl(var(--muted))',
-  				foreground: 'hsl(var(--muted-foreground))'
-  			},
-  			accent: {
-  				DEFAULT: 'hsl(var(--accent))',
-  				hover: 'hsl(var(--accent))',
-  				foreground: 'hsl(var(--accent-foreground))'
-  			},
-  			popover: {
-  				DEFAULT: 'hsl(var(--popover))',
-  				foreground: 'hsl(var(--popover-foreground))'
-  			},
-  			card: {
-  				'card-background': 'var(--card-background)',
-  				'card-foreground': 'var(--card-foreground)',
-  				DEFAULT: 'hsl(var(--card))',
-  				foreground: 'hsl(var(--card-foreground))'
-  			},
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
-  		},
-  		borderRadius: {
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)',
-  			img: 'var(--radius-image)',
-  			btn: 'var(--radius-button)',
-  			input: '32px',
-  			lg: 'var(--radius)'
-  		},
-  		keyframes: {
-  			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
-  			},
-  			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
-  		},
-  		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
-  		},
-  		fontFamily: {
-  			sans: ["var(--font-inter)"],
-  			logo: ["var(--font-league-spartan)"],
-  			main: ["var(--font-plus-jakarta-sans)"]
-  		}
-  	}
+    screens: {
+      md: "1000px",
+      "2xl": "1400px",
+    },
+    container: {
+      center: true,
+      padding: "1rem",
+      screens: {
+        sm: "600px",
+        md: "1000px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "var(--input)",
+        ring: "hsl(var(--ring))",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          body: "var(--secondary-body)",
+          article: "var(--secondary-article)",
+          foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          hover: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        card: {
+          "card-background": "var(--card-background)",
+          "card-foreground": "var(--card-foreground)",
+        },
+      },
+      borderRadius: {
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        img: "var(--radius-image)",
+        btn: "var(--radius-button)",
+        input: "32px",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        logo: ["var(--font-league-spartan)"],
+        main: ["var(--font-plus-jakarta-sans)"],
+      },
+    },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

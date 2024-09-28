@@ -17,6 +17,7 @@ type ConversationItemProps = {
   currentLoggedInUserId: string;
   isSelectedConversation: boolean;
 };
+
 export default function ConversationItem({
   conversation: initialConversation,
   currentLoggedInUserId,
@@ -53,8 +54,8 @@ export default function ConversationItem({
 
   return (
     <Link
-      href={`/conversations/${conversation.id}`}
-      className="w-full shrink rounded-lg dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white md:max-w-28"
+      href={`/conversation/${conversation.id}`}
+      className="w-full shrink rounded-lg dark:bg-muted/10 dark:text-white dark:hover:bg-muted dark:hover:text-white md:max-w-28"
     >
       <div
         className={cn(

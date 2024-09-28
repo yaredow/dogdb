@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { SmileIcon } from "lucide-react";
 import Picker from "@emoji-mart/react";
-import data from "@emoji-mart/data";
+import data, { Emoji } from "@emoji-mart/data";
 
 interface EmojiPickerProps {
   onChange: (value: string) => void;
@@ -25,7 +25,7 @@ export const EmojiPicker = ({ onChange }: EmojiPickerProps) => {
           theme="light"
           data={data}
           maxFrequentRows={1}
-          onEmojiSelect={(emoji: any) => onChange(emoji.native)}
+          onEmojiSelect={(emoji: Emoji) => onChange(emoji.native)}
         />
       </PopoverContent>
     </Popover>

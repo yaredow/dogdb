@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import DefaultPfp from "@/../public/images/Default_pfp.svg";
@@ -17,7 +19,7 @@ export default function ConversationTopbar({
   selectedUser,
   conversationId,
 }: ChatTopbarProps) {
-  const { deleteConvo, isPending } = useDeleteConversation();
+  const { deleteConvo } = useDeleteConversation();
 
   const handleConversationDelete = (
     event: React.MouseEvent<HTMLButtonElement>,

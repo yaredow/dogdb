@@ -6,6 +6,8 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { User } from "@/types";
 
 function DogOwnerCard({ user }: { user: User }) {
+  console.log({ user });
+
   return (
     <Link
       href={`/profile/${user.id}`}
@@ -36,7 +38,9 @@ export default function DogOwner({ breedOwners }: { breedOwners: User[] }) {
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {breedOwners &&
-          breedOwners.map((user) => <DogOwnerCard key={user.id} user={user} />)}
+          breedOwners.map((user: User) => (
+            <DogOwnerCard key={user.id} user={user} />
+          ))}
       </div>
     </div>
   );

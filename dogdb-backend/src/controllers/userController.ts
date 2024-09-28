@@ -69,20 +69,33 @@ export const getBreedOwners = catchAsync(
     const breedId = request.params.breedId as string;
     const email = request.query.email as string;
 
-    const owners = await prisma.userBreed.findMany({
+    const owners = await prisma.user.findMany({
       where: {
-        breedId,
-        user: {
-          email: {
-            not: email,
+        breeds: {
+          some: {
+            breedId,
           },
+        },
+        email: {
+          not: email,
         },
       },
       include: {
-        user: true,
-        breed: true,
+        breeds: {
+          include: {
+            breed: true,
+          },
+        },
       },
     });
+
+    console.log({ owners });
+
+    if (!owners) {
+      return next(new AppError("This breed has no owners", 404));
+    }
+
+    console.log({ owners });
 
     if (!owners) {
       return next(new AppError("This breed has no owners", 404));
