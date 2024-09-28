@@ -3,7 +3,6 @@ export const publicRoutes = [
   "/contact",
   "/about",
   "/breed/*",
-  "/conversations/*",
   "/api/*",
   "/buy-pets",
 ];

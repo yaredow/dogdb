@@ -1,10 +1,12 @@
-import { User } from "@/types";
+import { FullConversationType, User } from "@/types";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import useUnblockUser from "@/hooks/useUnblockuser";
 import useFollowUser from "@/hooks/useFollowUser";
 import useUnfollowUser from "@/hooks/useUnfollowUser";
 import { UserCheck, UserPlus } from "lucide-react";
+import { socket } from "@/socket";
+import { useRouter } from "next/navigation";
 
 type UserButtonsProps = {
   user: User;
@@ -13,13 +15,13 @@ type UserButtonsProps = {
   debounceBlockStatus: () => void;
   debounceFollowStatus: () => void;
 };
-//
-// type SocketResponseType = {
-//   success: boolean;
-//   error: string;
-//   conversation: FullConversationType;
-// };
-//
+
+type SocketResponseType = {
+  success: boolean;
+  error: string;
+  conversation: FullConversationType;
+};
+
 type ButtonVariant =
   | "destructive"
   | "default"
@@ -40,6 +42,23 @@ export default function UserButtons({
   const { isPending: followPending, follow } = useFollowUser();
   const { isPending: unfollowPending, unfollow } = useUnfollowUser();
   const [hoverState, setHoverState] = useState("");
+  const router = useRouter();
+
+  const handleStartConversation = () => {
+    socket?.emit(
+      "startConversation",
+      { userId: user.id },
+      (response: SocketResponseType) => {
+        if (response.success) {
+          const { conversation }: { conversation: FullConversationType } =
+            response;
+          router.push(`/conversations/${conversation.id}`);
+        } else {
+          console.error(response.error);
+        }
+      },
+    );
+  };
 
   const getButtonConfig = () => {
     if (isBlocked) {
@@ -118,7 +137,11 @@ export default function UserButtons({
 
   return (
     <div className="flex flex-row gap-2">
-      {!isBlocked && <Button variant="outline">Message</Button>}
+      {!isBlocked && (
+        <Button variant="outline" onClick={handleStartConversation}>
+          Message
+        </Button>
+      )}
       <Button
         variant={buttonConfig.variant}
         onClick={buttonConfig.onClick}
