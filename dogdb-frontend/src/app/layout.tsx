@@ -6,6 +6,8 @@ import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import QueryProviders from "@/components/providers/query-provider";
 import { Metadata } from "next";
+import { initializeAuthState } from "@/store/auth-store";
+import ClientAuthProvider from "@/components/providers/client-auth-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
   description: "description",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -50,6 +52,7 @@ export default async function RootLayout({
         >
           <QueryProviders>
             <NextTopLoader />
+            <ClientAuthProvider />
             <Header />
             <div className="m-6 md:mx-12 md:my-6">{children}</div>
             <Toaster />

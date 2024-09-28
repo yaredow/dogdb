@@ -12,15 +12,12 @@ import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import Defaultpfp from "@/../public/images/Default_pfp.svg";
-import { User } from "@/types";
 import useLogout from "@/hooks/useLogout";
+import useAuthState from "@/store/auth-store";
 
-type UserMenuProps = {
-  user: User;
-};
-
-export default function UserMenu({ user }: UserMenuProps) {
+export default function UserMenu() {
   const { logout } = useLogout();
+  const user = useAuthState((state) => state.user);
 
   return (
     <DropdownMenu>
@@ -40,10 +37,10 @@ export default function UserMenu({ user }: UserMenuProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{`${user.firstName} ${user.lastName}`}</DropdownMenuLabel>
+        <DropdownMenuLabel>{`${user?.firstName} ${user?.lastName}`}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Link href={`/profile/${user.id}`}>Profile</Link>
+          <Link href={`/profile/${user?.id}`}>Profile</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
