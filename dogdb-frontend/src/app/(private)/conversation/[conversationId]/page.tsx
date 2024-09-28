@@ -2,6 +2,7 @@ import { getConversationById } from "@/data/conversation";
 import MessageList from "@/components/conversations/message-list";
 import { loggedInUser } from "@/data/user";
 import { User, FullConversationType } from "@/types";
+import ConversationTopbar from "@/components/conversations/conversation-top-bar";
 
 type Iparam = {
   params: { conversationId: string };

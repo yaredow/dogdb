@@ -52,7 +52,7 @@ export default function UserButtons({
         if (response.success) {
           const { conversation }: { conversation: FullConversationType } =
             response;
-          router.push(`/conversations/${conversation.id}`);
+          router.push(`/conversation/${conversation.id}`);
         } else {
           console.error(response.error);
         }

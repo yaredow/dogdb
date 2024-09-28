@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "./use-toast";
 import { deleteConversation } from "@/services/conversationService";
+import { toast } from "./use-toast";
 
 export default function useDeleteConversation() {
   const { isPending, mutate: deleteConvo } = useMutation({
