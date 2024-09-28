@@ -69,23 +69,18 @@ export const getBreedOwners = catchAsync(
     const breedId = request.params.breedId as string;
     const email = request.query.email as string;
 
-    const owners = await prisma.user.findMany({
+    const owners = await prisma.userBreed.findMany({
       where: {
-        breeds: {
-          some: {
-            breedId,
+        breedId,
+        user: {
+          email: {
+            not: email,
           },
-        },
-        email: {
-          not: email,
         },
       },
       include: {
-        breeds: {
-          include: {
-            breed: true,
-          },
-        },
+        user: true,
+        breed: true,
       },
     });
 

@@ -66,6 +66,7 @@ export const getBreedOwners = async (breedId: string, email: string) => {
       return null;
     }
     const data = await response.json();
+    console.log({ data });
 
     return data.owners;
   } catch (error) {

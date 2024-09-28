@@ -14,6 +14,7 @@ export default async function BreedDetails({
   email,
 }: BreedDetailsProps) {
   const dogOwners = await getBreedOwners(breed.id, email);
+  console.log({ dogOwners });
 
   if (!breed) return <div>No breed available</div>;
 
