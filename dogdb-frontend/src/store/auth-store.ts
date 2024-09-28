@@ -4,6 +4,7 @@ import { create } from "zustand";
 type UserStoreType = {
   user: User | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
   setUser: (user: User) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   clearAuth: () => void;
@@ -12,8 +13,8 @@ type UserStoreType = {
 export const useAuthState = create<UserStoreType>((set) => ({
   user: null,
   isAuthenticated: false,
+  isLoading: false,
 
-  // Set the user and update local storage
   setUser: (user: User | null) => {
     set({ user, isAuthenticated: !!user });
     if (typeof window !== "undefined") {
@@ -43,6 +44,7 @@ export const initializeAuthState = () => {
       useAuthState.setState({
         user,
         isAuthenticated: storedAuthState === "true",
+        isLoading: false,
       });
     }
   }
