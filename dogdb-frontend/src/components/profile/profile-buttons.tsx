@@ -4,7 +4,6 @@ import { useState } from "react";
 import useUnblockUser from "@/hooks/useUnblockuser";
 import useFollowUser from "@/hooks/useFollowUser";
 import useUnfollowUser from "@/hooks/useUnfollowUser";
-import { UserCheck, UserPlus } from "lucide-react";
 import { socket } from "@/socket";
 import { useRouter } from "next/navigation";
 
@@ -86,7 +85,7 @@ export default function UserButtons({
     }
 
     return {
-      text: isHovering ? "Unfollow" : "Follow",
+      text: "Follow", // Keep as "Follow" when not following
       onClick: () => {
         follow(user.id);
         debounceFollowStatus();

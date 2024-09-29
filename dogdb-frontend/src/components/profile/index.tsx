@@ -150,24 +150,7 @@ export default function UserPublicProfile({
               </p>
             </div>
             <div></div>
-            <div className="col-span-2 rounded-lg p-4 shadow">
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div>
-                  <h4 className="text-sm font-semibold">Marketing expertise</h4>
-                  <p className="mt-1 text-sm text-blue-500"></p>
-                  <p className="mt-2 text-sm font-semibold">
-                    Open to networking
-                  </p>
-                  <p className="text-green-500">Yes</p>
-                </div>
-                <div>
-                  <h4 className="text-sm font-semibold">Marketing interests</h4>
-                  <p className="mt-1 text-sm text-blue-500"></p>
-                  <p className="mt-2 text-sm font-semibold">Open to advising</p>
-                  <p className="text-green-500">Yes</p>
-                </div>
-              </div>
-            </div>
+            <div className="col-span-2 rounded-lg p-4 shadow"></div>
           </div>
 
           <div className="mt-4 w-full rounded-lg p-4 shadow">

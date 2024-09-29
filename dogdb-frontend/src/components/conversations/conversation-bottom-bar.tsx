@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Textarea } from "@/components/ui/textarea";
-
+import { EmojiPicker } from "../emoji-picker";
 import {
   Popover,
   PopoverContent,
@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/popover";
 import { SocketResponseType } from "@/lib/constants";
 import { socket } from "@/socket";
-import EmojiPicker from "@emoji-mart/react";
 
 type ConversationBottombarProps = {
   conversationId: string;
@@ -224,7 +223,7 @@ export default function ConversationBottombar({
           ></Textarea>
           <div className="absolute bottom-0.5 right-2">
             <EmojiPicker
-              onChange={(value: string) => {
+              onChange={(value) => {
                 setMessage(message + value);
                 if (inputRef.current) {
                   inputRef.current.focus();
