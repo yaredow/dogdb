@@ -41,7 +41,7 @@ export default function UserButtons({
   const { isPending: unblockPending, unblock } = useUnblockUser();
   const { isPending: followPending, follow } = useFollowUser();
   const { isPending: unfollowPending, unfollow } = useUnfollowUser();
-  const [hoverState, setHoverState] = useState("");
+  const [isHovering, setIsHovering] = useState(false);
   const router = useRouter();
 
   const handleStartConversation = () => {
@@ -60,80 +60,41 @@ export default function UserButtons({
     );
   };
 
-  const getButtonConfig = () => {
+  const buttonConfig = (() => {
     if (isBlocked) {
       return {
-        text: (
-          <>
-            {hoverState === "following" ? (
-              <div className="flex items-center gap-2">
-                Block <UserPlus size={16} />
-              </div>
-            ) : (
-              <div className="flex items-center gap-2">
-                Unblock <UserCheck size={16} />
-              </div>
-            )}
-          </>
-        ),
+        text: isHovering ? "Unblock" : "Blocked",
         onClick: () => {
           unblock(user.id);
           debounceBlockStatus();
         },
         disabled: unblockPending,
-        variant:
-          hoverState === "blocked"
-            ? "destructive"
-            : ("default" as ButtonVariant),
-        hoverState: "blocked",
+        variant: isHovering ? "default" : "destructive",
       };
     }
 
     if (isFollowing) {
       return {
-        text: (
-          <>
-            {hoverState === "following" ? (
-              <div className="flex items-center gap-1">
-                Following <UserCheck size={16} />
-              </div>
-            ) : (
-              <div className="flex items-center gap-1">
-                Follow <UserCheck size={16} />
-              </div>
-            )}
-          </>
-        ),
+        text: isHovering ? "Unfollow" : "Following",
         onClick: () => {
           unfollow(user.id);
           debounceFollowStatus();
         },
         disabled: unfollowPending,
-        variant:
-          hoverState === "following"
-            ? "destructive"
-            : ("default" as ButtonVariant),
-        hoverState: "following",
+        variant: isHovering ? "destructive" : "default",
       };
     }
 
     return {
-      text: (
-        <div className="flex items-center gap-2">
-          Follow <UserPlus size={16} />
-        </div>
-      ),
+      text: isHovering ? "Unfollow" : "Follow",
       onClick: () => {
         follow(user.id);
         debounceFollowStatus();
       },
       disabled: followPending,
-      variant: "default" as ButtonVariant,
-      hoverState: "following",
+      variant: "default",
     };
-  };
-
-  const buttonConfig = getButtonConfig();
+  })();
 
   return (
     <div className="flex flex-row gap-2">
@@ -143,11 +104,11 @@ export default function UserButtons({
         </Button>
       )}
       <Button
-        variant={buttonConfig.variant}
+        variant={buttonConfig.variant as ButtonVariant}
         onClick={buttonConfig.onClick}
         disabled={buttonConfig.disabled}
-        onMouseEnter={() => setHoverState(buttonConfig.hoverState)}
-        onMouseLeave={() => setHoverState("")}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         className="flex w-[88px] items-center justify-center"
       >
         {buttonConfig.text}
