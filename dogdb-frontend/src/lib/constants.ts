@@ -46,7 +46,7 @@ export const dogBreeds: Option[] = [
   { value: "Boston Terrier", label: "Boston Terrier" },
 ];
 
-export const EXPRESS_URL = "http://198.244.232.203";
+export const EXPRESS_URL = "http://localhost:5000";
 export type SocketResponseType = {
   success: string;
   error: string;

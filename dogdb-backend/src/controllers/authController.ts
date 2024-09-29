@@ -91,6 +91,7 @@ export const signin = catchAsync(
     next: NextFunction,
   ) => {
     const data = request.body;
+
     const { password, email } = data;
     const existingUser = await prisma.user.findFirst({
       where: {

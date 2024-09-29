@@ -4,6 +4,7 @@ import { signin as signinApi } from "@/services/authServices";
 import { User } from "@/types";
 import { useRouter } from "next/navigation";
 import useAuthState from "@/store/auth-store";
+import { toast } from "./use-toast";
 
 export default function useSignin() {
   const router = useRouter();
@@ -14,6 +15,12 @@ export default function useSignin() {
     onSuccess: (data: User) => {
       setUser(data);
       router.push(`/profile/${data.id}`);
+    },
+    onError: (error) => {
+      toast({
+        description: error.message,
+        variant: "destructive",
+      });
     },
   });
 
