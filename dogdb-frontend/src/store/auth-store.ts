@@ -5,7 +5,6 @@ type UserStoreType = {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
   setUser: (user: User) => void;
   setIsAuthenticated: (isAuthenticated: boolean) => void;
   clearAuth: () => void;
@@ -17,7 +16,7 @@ export const useAuthState = create<UserStoreType>((set) => ({
   isLoading: false,
 
   setUser: (user: User | null) => {
-    set({ user, isAuthenticated: !!user, isLoading: false });
+    set({ user, isAuthenticated: !!user });
     if (typeof window !== "undefined") {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("isAuthenticated", String(!!user));
@@ -25,7 +24,6 @@ export const useAuthState = create<UserStoreType>((set) => ({
   },
 
   setIsAuthenticated: (isAuthenticated: boolean) => set({ isAuthenticated }),
-  setIsLoading: (isLoading: boolean) => set({ isLoading }),
 
   clearAuth: () => {
     set({ user: null, isAuthenticated: false });
@@ -46,10 +44,7 @@ export const initializeAuthState = () => {
       useAuthState.setState({
         user,
         isAuthenticated: storedAuthState === "true",
-        isLoading: false,
       });
-    } else {
-      useAuthState.setState({ isLoading: true });
     }
   }
 };

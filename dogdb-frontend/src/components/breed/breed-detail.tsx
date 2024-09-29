@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { getBreedOwners } from "@/data/user";
-import DogOwner from "../profile/dog-owner";
 import { Breed } from "@/types";
+import BreedOwner from "./breed-owner";
 
 type BreedDetailsProps = {
   breed: Breed;
@@ -128,7 +128,7 @@ export default async function BreedDetails({
           </div>
         </div>
 
-        <DogOwner breedOwners={dogOwners} />
+        <BreedOwner breedOwners={dogOwners} />
       </div>
     </section>
   );

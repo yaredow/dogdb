@@ -5,10 +5,10 @@ import Link from "next/link";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { User } from "@/types";
 
-function DogOwnerCard({ user }: { user: User }) {
+function BreedOwnerCard({ user }: { user: User }) {
   return (
     <Link
-      href={`/profile/${user.id}`}
+      href={`/profile/${user?.id}`}
       className="flex flex-row items-center justify-center gap-6 rounded-lg border py-2 hover:bg-muted"
     >
       <Avatar>
@@ -19,14 +19,16 @@ function DogOwnerCard({ user }: { user: User }) {
         />
       </Avatar>
       <div className="px-2">
-        <h1>{user.firstName}</h1>
+        <h1>{`${user.firstName} ${user.lastName}`}</h1>
         <span className="text-sm text-muted-foreground">{`@${user.userName?.toLowerCase()}`}</span>
       </div>
     </Link>
   );
 }
 
-export default function DogOwner({ breedOwners }: { breedOwners: User[] }) {
+export default function BreedOwner({ breedOwners }: { breedOwners: User[] }) {
+  console.log({ breedOwners });
+
   return (
     <div className="w-full bg-background py-4">
       <h2 className="mb-6 text-xl font-bold md:text-2xl">
@@ -36,7 +38,9 @@ export default function DogOwner({ breedOwners }: { breedOwners: User[] }) {
       </h2>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {breedOwners &&
-          breedOwners.map((user) => <DogOwnerCard key={user.id} user={user} />)}
+          breedOwners.map((user: User) => (
+            <BreedOwnerCard key={user.id} user={user} />
+          ))}
       </div>
     </div>
   );

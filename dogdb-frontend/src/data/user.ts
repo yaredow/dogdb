@@ -8,7 +8,6 @@ export const getUserById = async (id: string) => {
       `http://localhost:5000/api/v1/user/get-user-by-id/${id}`,
       {
         method: "GET",
-        cache: "no-cache",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
@@ -35,7 +34,6 @@ export const getUserByEmail = async (email: string) => {
       `${EXPRESS_URL}/api/v1/user/get-user-by-email?email=${email}`,
       {
         method: "GET",
-        cache: "no-cache",
       },
     );
 
@@ -58,7 +56,6 @@ export const getBreedOwners = async (breedId: string, email: string) => {
       `${EXPRESS_URL}/api/v1/user/breed-owner/${breedId}?email=${email}`,
       {
         method: "GET",
-        cache: "no-cache",
       },
     );
 

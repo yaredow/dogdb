@@ -10,33 +10,27 @@ const config = {
   ],
   prefix: "",
   theme: {
-    screens: {
-      md: "1000px",
-      "2xl": "1400px",
-    },
     container: {
       center: true,
-      padding: "1rem",
+      padding: "2rem",
       screens: {
-        sm: "600px",
-        md: "1000px",
+        "2xl": "1400px",
       },
     },
     extend: {
       colors: {
         border: "hsl(var(--border))",
-        input: "var(--input)",
+        input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          body: "var(--secondary-body)",
-          article: "var(--secondary-article)",
-          foreground: "var(--secondary-foreground)",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -48,24 +42,21 @@ const config = {
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",
-          hover: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
         popover: {
-          DEFAULT: "var(--popover)",
-          foreground: "var(--popover-foreground)",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         card: {
-          "card-background": "var(--card-background)",
-          "card-foreground": "var(--card-foreground)",
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       },
       borderRadius: {
+        lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        img: "var(--radius-image)",
-        btn: "var(--radius-button)",
-        input: "32px",
       },
       keyframes: {
         "accordion-down": {
@@ -80,11 +71,6 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-      },
-      fontFamily: {
-        sans: ["var(--font-inter)"],
-        logo: ["var(--font-league-spartan)"],
-        main: ["var(--font-plus-jakarta-sans)"],
       },
     },
   },
