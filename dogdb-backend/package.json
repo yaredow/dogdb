@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/server.js",
+    "start": "NODE_ENV=production && node ./dist/server.js",
     "dev": "NODE_ENV=development && nodemon src/server.ts",
     "build": "npx tsc",
     "start:migrate:dev": "npx prisma migrate dev --name init && npm run dev",

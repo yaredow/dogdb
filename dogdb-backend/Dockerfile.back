@@ -12,7 +12,6 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 # Copy the Prisma schema and source files
-COPY .env .
 COPY prisma ./prisma
 COPY . .
 
