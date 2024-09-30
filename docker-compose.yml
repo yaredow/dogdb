@@ -59,6 +59,9 @@ services:
       - "80:80"
     networks:
       - backend
+    depends_on:
+      - frontend
+      - backend
 
 volumes:
   db-data:

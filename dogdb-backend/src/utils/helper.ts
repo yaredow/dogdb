@@ -1,6 +1,6 @@
 export const convertToMilliseconds = (time: string): number => {
-  const unit = time.slice(-1); // Get the last character (e.g., 'm', 'd')
-  const value = parseInt(time.slice(0, -1), 10); // Get the numeric part
+  const unit = time.slice(-1);
+  const value = parseInt(time.slice(0, -1), 10);
 
   switch (unit) {
     case "m":
