@@ -9,6 +9,13 @@ env:
   SERVER_IMAGE_NAME: ${{github.actor}}/dogdb-backend:latest
   DB_IMAGE_NAME: ${{github.actor}}/dogdb-postgres:latest
   FRONTEND_IMAGE_NAME: ${{github.actor}}/dogdb-frontend:latest
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  NODE_DOCKER_PORT: ${{ secrets.NODE_DOCKER_PORT }}
+  POSTGRESDB_DATABASE: ${{ secrets.POSTGRESDB_DATABASE }}
+  POSTGRESDB_USER: ${{ secrets.POSTGRESDB_USER }}
+  POSTGRESDB_ROOT_PASSWORD: ${{ secrets.POSTGRESDB_ROOT_PASSWORD }}
+  POSTGRESDB_LOCAL_PORT: ${{ secrets.POSTGRESDB_LOCAL_PORT }}
+  POSTGRESDB_DOCKER_PORT: ${{ secrets.POSTGRESDB_DOCKER_PORT }}
 
 jobs:
   publish:
@@ -31,12 +38,7 @@ jobs:
         run: |
           cd ${{github.workspace}}
 
-          # Pass environment variables directly in the command
-          DATABASE_URL=${{ secrets.DATABASE_URL }} \
-          NODE_DOCKER_PORT=${{ secrets.NODE_DOCKER_PORT }} \
-          POSTGRESDB_DATABASE=${{ secrets.POSTGRESDB_DATABASE }} \
-          POSTGRESDB_USER=${{ secrets.POSTGRESDB_USER }} \
-          POSTGRESDB_ROOT_PASSWORD=${{ secrets.POSTGRESDB_ROOT_PASSWORD }} \
+          # Use docker-compose to build and tag the images
           docker compose -f ./docker-compose.yml build
 
           # Push backend image
@@ -76,6 +78,9 @@ jobs:
             echo ${{ secrets.GH_SECRET }} | sudo docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
             # Stop and remove all running containers and network
             sudo docker compose down
+
+            # wait the docker to stop gracefully
+            sleep 5
             # Remove all unused images to free up space
             sudo docker image prune -a -f
             # Pull the newly built images from GitHub Packages
