@@ -44,7 +44,4 @@ USER node
 EXPOSE 5000
 
 # Start the app
-Error: User doesn't exist
-at /home/yared/Documents/code/dogdb/dogdb-backend/src/controllers/authController.ts:103:19
-at Generator.next (<anonymous>)
-at fulfilled (/home/yared/Documents/code/dogdb/dogdb-backend/src/controllers/authController.ts:5:58)
+CMD ["npm", "run", "start:migrate:prod"]
