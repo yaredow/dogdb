@@ -46,8 +46,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    ports:
-      - ${POSTGRESDB_LOCAL_PORT}:${POSTGRESDB_DOCKER_PORT}
     expose:
       - 5432
     networks:
