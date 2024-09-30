@@ -85,7 +85,7 @@ export default function UserButtons({
     }
 
     return {
-      text: "Follow", // Keep as "Follow" when not following
+      text: "Follow",
       onClick: () => {
         follow(user.id);
         debounceFollowStatus();

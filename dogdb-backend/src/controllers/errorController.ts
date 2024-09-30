@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import AppError from "../utils/appError";
 
 const handleTokenExpiredError = () =>
@@ -44,6 +44,7 @@ const globalErrorHandler = (
   error: AppError,
   req: Request,
   response: Response,
+  next: NextFunction,
 ) => {
   error.statusCode = error.statusCode || 500;
   error.status = error.status || "error";

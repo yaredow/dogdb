@@ -10,8 +10,8 @@ import morgan from "morgan";
 import globalErrorHandler from "./controllers/errorController";
 import AppError from "./utils/appError";
 import cookieParser from "cookie-parser";
-dotenv.config();
 
+dotenv.config();
 const app = express();
 app.use(cookieParser());
 
