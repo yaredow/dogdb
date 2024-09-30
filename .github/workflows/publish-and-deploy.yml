@@ -2,51 +2,60 @@ name: Publish and Deploy
 
 on:
   push:
-    branches:
-      - "main"
+    branches: ["main"]
 
 env:
   REGISTRY: ghcr.io
-  SERVER_IMAGE_NAME: ${{ github.actor }}/dogdb-backend:latest
-  DB_IMAGE_NAME: ${{ github.actor }}/dogdb-postgres:latest
-  FRONTEND_IMAGE_NAME: ${{ github.actor }}/dogdb-frontend:latest
+  SERVER_IMAGE_NAME: ${{github.actor}}/dogdb-backend:latest
+  DB_IMAGE_NAME: ${{github.actor}}/dogdb-postgres:latest
+  FRONTEND_IMAGE_NAME: ${{github.actor}}/dogdb-frontend:latest
 
 jobs:
   publish:
-    name: Publish Docker Images
+    name: Publish images
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      # Step 2: Log in to GitHub Container Registry
+      # Log in to GitHub Container Registry
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ${{env.REGISTRY}}
+          username: ${{secrets.GH_USER}}
+          password: ${{secrets.GH_SECRET}}
 
-      # Step 3: Build and push Docker images
+      # Build and Push Docker Compose Images
       - name: Build and Push Docker Compose Images
         run: |
-          # Navigate to the root directory
-          cd ${{ github.workspace }}
+          cd ${{github.workspace}}
 
-          # Use GitHub Secrets as environment variables during the build
-          docker compose -f ./docker-compose.yml build --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
-          --build-arg NODE_DOCKER_PORT=${{ secrets.NODE_DOCKER_PORT }} \
-          --build-arg POSTGRESDB_DATABASE=${{ secrets.POSTGRESDB_DATABASE }} \
-          --build-arg POSTGRESDB_USER=${{ secrets.POSTGRESDB_USER }} \
-          --build-arg POSTGRESDB_ROOT_PASSWORD=${{ secrets.POSTGRESDB_ROOT_PASSWORD }}
+          # Pass environment variables directly in the command
+          DATABASE_URL=${{ secrets.DATABASE_URL }} \
+          NODE_DOCKER_PORT=${{ secrets.NODE_DOCKER_PORT }} \
+          POSTGRESDB_DATABASE=${{ secrets.POSTGRESDB_DATABASE }} \
+          POSTGRESDB_USER=${{ secrets.POSTGRESDB_USER }} \
+          POSTGRESDB_ROOT_PASSWORD=${{ secrets.POSTGRESDB_ROOT_PASSWORD }} \
+          docker compose -f ./docker-compose.yml build
 
           # Push backend image
-          docker push ${{ env.REGISTRY }}/${{ env.SERVER_IMAGE_NAME }}
+          docker push ${{env.REGISTRY}}/${{env.SERVER_IMAGE_NAME}}
 
           # Push frontend image
-          docker push ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}
+          docker push ${{env.REGISTRY}}/${{env.FRONTEND_IMAGE_NAME}}
+
+      # Tag and Push PostgreSQL image to GitHub Container Registry
+      - name: Tag and Push Postgres Image
+        run: |
+          # Pull the latest postgres image from Docker Hub
+          docker pull postgres:latest
+
+          # Tag it with your GitHub Container Registry namespace
+          docker tag postgres:latest ${{env.REGISTRY}}/${{env.DB_IMAGE_NAME}}
+
+          # Push the tagged image to GitHub Container Registry
+          docker push ${{env.REGISTRY}}/${{env.DB_IMAGE_NAME}}
 
   deploy:
     name: Deploy to VPS
@@ -54,7 +63,7 @@ jobs:
     needs: publish
 
     steps:
-      - name: SSH and Deploy to VPS
+      - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -63,9 +72,13 @@ jobs:
           port: 22
           script: |
             cd ${{ secrets.WORK_DIR }}
+            # Log in to GitHub Container Registry on the VPS
             echo ${{ secrets.GH_SECRET }} | sudo docker login ghcr.io -u ${{ secrets.GH_USER }} --password-stdin
+            # Stop and remove all running containers and network
             sudo docker compose down
-            sleep 5
+            # Remove all unused images to free up space
             sudo docker image prune -a -f
+            # Pull the newly built images from GitHub Packages
             sudo docker compose pull
+            # Apply the changes and restart the services
             sudo docker compose up -d
