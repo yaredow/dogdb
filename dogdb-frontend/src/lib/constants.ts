@@ -2,18 +2,21 @@ import { Option } from "@/components/ui/mutli-select";
 
 export const navLinks = [
   {
-    src: "/breed",
-    title: "Breeds",
+    src: "/",
+    title: "Home",
   },
   {
-    src: "/buy-pets",
-    title: "Buy Pets",
+    src: "/breed",
+    title: "Breeds",
   },
   {
     src: "/about",
     title: "About",
   },
-
+  {
+    src: "/donation",
+    title: "Donate",
+  },
   {
     src: "/contact",
     title: "Contact",
@@ -46,7 +49,7 @@ export const dogBreeds: Option[] = [
   { value: "Boston Terrier", label: "Boston Terrier" },
 ];
 
-export const EXPRESS_URL = "http://198.244.232.203";
+export const EXPRESS_URL = "http://198.244.232.203:8080";
 export type SocketResponseType = {
   success: string;
   error: string;

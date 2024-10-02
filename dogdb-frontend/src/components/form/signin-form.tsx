@@ -38,7 +38,7 @@ export default function SigninForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full flex-grow items-center justify-center gap-4"
+        className="w-full flex-grow max-w-2xl items-center justify-center gap-4"
       >
         <div className="flex flex-col space-y-6">
           <FormField

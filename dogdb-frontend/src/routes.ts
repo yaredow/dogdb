@@ -2,9 +2,9 @@ export const publicRoutes = [
   "/",
   "/contact",
   "/about",
-  "/breed/*",
+  "/breed/:path*",
   "/api/*",
-  "/buy-pets",
+  "/donation",
 ];
 
 export const authRoutes = [
