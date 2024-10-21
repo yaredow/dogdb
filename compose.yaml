@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: dogdb-dev-postgres
+    environment:
+      POSTGRES_DB: dogdb
+      POSTGRES_USER: yaredow
+      POSTGRES_PASSWORD: dogdb123
+    ports:
+      - "5432:5432"
+    volumes:
+      - dogdb-pgdata:/var/lib/postgresql/data
+    networks:
+      - dogdb-dev-network
+
+volumes:
+  dogdb-pgdata:
+
+networks:
+  dogdb-dev-network:
