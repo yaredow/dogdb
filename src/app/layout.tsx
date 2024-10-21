@@ -23,21 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className}  relative flex min-h-screen flex-col`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <QueryProviders>
-            <NextTopLoader />
-            <div className="m-6 md:mx-12 md:my-6">{children}</div>
-            <Toaster />
-          </QueryProviders>
-        </ThemeProvider>
+      <body className={`${inter.className} min-h-screen antialiased`}>
+        <QueryProviders>
+          <NextTopLoader />
+          {children}
+          <Toaster />
+        </QueryProviders>
       </body>
     </html>
   );
