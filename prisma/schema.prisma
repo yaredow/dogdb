@@ -63,3 +63,32 @@ model Verification {
 
   @@map("verification")
 }
+
+model Breed {
+  id                    String   @id @default(cuid())
+  breedName             String
+  breedShortDescription String
+  breedLongDescription  String
+  breedCharacteristics  String[]
+  breedImages           String[]
+  traits                String[]
+  diseases              String[]
+  averageHeight         Float
+  averageWeight         Float
+  lifeExpectancy        Int
+  temperament           String
+  hairShedding          String
+  activity              String
+  sociability           String
+  intelligence          String
+  childFriendly         String
+  careLevel             String
+  healthProblems        String
+  geneticProfile        String
+  feedingHabits         String
+  slug                  String   @unique
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("breeds")
+}
