@@ -1,9 +1,9 @@
 "use client";
 
-import { Breed } from "@prisma/client";
 import BreedCard from "./breed-card";
 import { useGetBreeds } from "../api/use-get-breeds";
 import BreedSkeleton from "./breed-skeleton";
+import { useGetBreedFacts } from "../api/use-get-breed-facts";
 
 export default function BreedGrid() {
   const { breeds, isFetching } = useGetBreeds();

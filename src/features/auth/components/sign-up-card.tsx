@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-import DottedSeparator from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -29,6 +28,8 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
+import MultipleSelector from "@/components/ui/mutli-select";
+import { dogBreeds } from "@/features/breeds/constants";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,6 +41,7 @@ export default function SignupCard() {
       name: "",
       email: "",
       password: "",
+      breed: [],
     },
   });
 
@@ -135,6 +137,28 @@ export default function SignupCard() {
                       type="password"
                       placeholder="Enter your password"
                       {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="breed"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <MultipleSelector
+                      {...field}
+                      defaultOptions={dogBreeds}
+                      placeholder="Select a dog breed you own"
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
                     />
                   </FormControl>
                   <FormMessage />
