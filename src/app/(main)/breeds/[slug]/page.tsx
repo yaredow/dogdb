@@ -1,6 +1,8 @@
 import BreedDetails from "@/features/breeds/components/breed-detail";
+import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { Metadata } from "next";
+import { headers } from "next/headers";
 import { cache } from "react";
 
 type IParams = {

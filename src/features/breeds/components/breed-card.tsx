@@ -13,7 +13,7 @@ const BreedCard = ({ breed }: BreedCardProps) => {
   const { breedImages, breedName, breedShortDescription, slug } = breed;
 
   const handleClick = () => {
-    router.push(`/breed/${slug}`);
+    router.push(`/breeds/${slug}`);
   };
 
   return (

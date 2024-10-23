@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { useGetBreed } from "../api/use-get-breed";
 import { useGetSlug } from "../hooks/use-get-slug";
 import DogBreedChatWidget from "./breed-chat-widget";
-import BreedSkeleton from "./breed-skeleton";
 import { Loader2 } from "lucide-react";
 
 export default function BreedDetails() {

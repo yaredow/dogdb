@@ -24,6 +24,7 @@ model User {
 
   sessions Session[]
   accounts Account[]
+  breeds   UserBreed[]
 
   @@map("users")
 }
@@ -64,8 +65,20 @@ model Verification {
   @@map("verification")
 }
 
+model UserBreed {
+  id      String @id @default(cuid())
+  userId  String
+  breedId String
+
+  user  User  @relation(fields: [userId], references: [id])
+  breed Breed @relation(fields: [breedId], references: [id])
+
+  @@unique([userId, breedId])
+  @@map("user_breed")
+}
+
 model Breed {
-  id                    String   @id @default(cuid())
+  id                    String      @id @default(cuid())
   breedName             String
   breedShortDescription String
   breedLongDescription  String
@@ -86,9 +99,10 @@ model Breed {
   healthProblems        String
   geneticProfile        String
   feedingHabits         String
-  slug                  String   @unique
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  slug                  String      @unique
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  breed                 UserBreed[]
 
   @@map("breeds")
 }
