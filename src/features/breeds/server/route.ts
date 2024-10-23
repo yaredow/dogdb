@@ -1,11 +1,8 @@
 import prisma from "@/lib/prisma";
-import { SessionMiddleware } from "@/lib/session-middleware";
 import { Hono } from "hono";
-import { zValidator } from "@hono/zod-validator";
-import { z } from "zod";
 
 const app = new Hono()
-  .get("/", SessionMiddleware, async (c) => {
+  .get("/", async (c) => {
     const breeds = await prisma.breed.findMany();
 
     if (!breeds) {
@@ -16,17 +13,16 @@ const app = new Hono()
   })
   .get("/:slug", async (c) => {
     const { slug } = c.req.param();
+
     const breed = await prisma.breed.findFirst({
-      where: {
-        slug,
-      },
+      where: { slug },
     });
 
     if (!breed) {
-      c.json({ error: "No breed with that Id" }, 401);
+      return c.json({ error: "Breed not found" }, 404);
     }
 
-    c.json({ data: breed });
+    return c.json({ data: breed });
   });
 
 export default app;

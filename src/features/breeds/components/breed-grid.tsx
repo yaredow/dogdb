@@ -1,18 +1,19 @@
 "use client";
 
+import { Breed } from "@prisma/client";
 import BreedCard from "./breed-card";
-import { Breed } from "@/types";
+import { useGetBreeds } from "../api/use-get-breeds";
 
-type BreedGridProps = {
-  breeds: Breed[];
-};
+export default function BreedGrid() {
+  const { breeds, isFetching } = useGetBreeds();
 
-export default function BreedGrid({ breeds }: BreedGridProps) {
+  if (isFetching) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
-      {breeds.map((breed) => (
-        <BreedCard key={breed.id} breed={breed} />
-      ))}
+      {breeds?.map((breed) => <BreedCard key={breed.id} breed={breed} />)}
     </div>
   );
 }

@@ -4,10 +4,11 @@ import { getUserFromCookie } from "@/lib/session";
 import { DecodedToken, User } from "@/types";
 
 type IParams = {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 };
 
-export default async function Page({ params }: IParams) {
+export default async function Page(props: IParams) {
+  const params = await props.params;
   const { userId } = params;
   console.log({ userId });
 

@@ -5,10 +5,11 @@ import { User, FullConversationType } from "@/types";
 import ConversationTopbar from "@/components/conversations/conversation-top-bar";
 
 type Iparam = {
-  params: { conversationId: string };
+  params: Promise<{ conversationId: string }>;
 };
 
-export default async function Page({ params }: Iparam) {
+export default async function Page(props: Iparam) {
+  const params = await props.params;
   const { conversationId } = params;
   const conversation = (await getConversationById(
     conversationId,

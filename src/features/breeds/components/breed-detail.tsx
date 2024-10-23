@@ -1,21 +1,21 @@
+"use client";
+
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { getBreedOwners } from "@/data/user";
-import { Breed } from "@/types";
-import BreedOwner from "../../../components/breed/breed-owner";
+import { useGetBreed } from "../api/use-get-breed";
+import { useGetSlug } from "../hooks/use-get-slug";
 
-type BreedDetailsProps = {
-  breed: Breed;
-  email: string;
-};
+export default function BreedDetails() {
+  const slug = useGetSlug();
+  const { breed, isFetching } = useGetBreed({ slug });
 
-export default async function BreedDetails({
-  breed,
-  email,
-}: BreedDetailsProps) {
-  const dogOwners = await getBreedOwners(breed.id, email);
+  if (isFetching) {
+    return <div>Fetching...</div>;
+  }
 
-  if (!breed) return <div>No breed available</div>;
+  if (!breed) {
+    return <div>There is no breed with that Id</div>;
+  }
 
   return (
     <section>
@@ -127,8 +127,6 @@ export default async function BreedDetails({
             </div>
           </div>
         </div>
-
-        <BreedOwner breedOwners={dogOwners} />
       </div>
     </section>
   );

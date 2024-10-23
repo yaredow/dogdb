@@ -25,7 +25,9 @@ export default function MobileNavbar() {
       </SheetTrigger>
       <SheetContent side="left" className="p-0">
         {NavLinks.map((link) => (
-          <NavLink href={link.path}>{link.name}</NavLink>
+          <NavLink href={link.path} key={link.path}>
+            {link.name}
+          </NavLink>
         ))}
       </SheetContent>
     </Sheet>
