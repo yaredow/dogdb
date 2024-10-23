@@ -5,13 +5,19 @@ import { Badge } from "@/components/ui/badge";
 import { useGetBreed } from "../api/use-get-breed";
 import { useGetSlug } from "../hooks/use-get-slug";
 import DogBreedChatWidget from "./breed-chat-widget";
+import BreedSkeleton from "./breed-skeleton";
+import { Loader2 } from "lucide-react";
 
 export default function BreedDetails() {
   const slug = useGetSlug();
   const { breed, isFetching } = useGetBreed({ slug });
 
   if (isFetching) {
-    return <div>Fetching...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen animate-spin">
+        <Loader2 className="size-6" />
+      </div>
+    );
   }
 
   if (!breed) {

@@ -1,6 +1,5 @@
 import { client } from "@/lib/rpc";
-import { Breed } from "@prisma/client";
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export const useGetBreeds = () => {
   const { data: breeds, isFetching } = useQuery({

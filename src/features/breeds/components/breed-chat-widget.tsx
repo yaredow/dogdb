@@ -23,7 +23,7 @@ interface Message {
 export default function DogBreedChatWidget({
   breedName,
 }: DogBreedChatWidgetProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
   const [isTyping, setIsTyping] = useState<boolean>(false);
