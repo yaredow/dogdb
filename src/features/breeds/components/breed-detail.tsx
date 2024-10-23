@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { useGetBreed } from "../api/use-get-breed";
 import { useGetSlug } from "../hooks/use-get-slug";
+import DogBreedChatWidget from "./breed-chat-widget";
 
 export default function BreedDetails() {
   const slug = useGetSlug();
@@ -19,6 +20,7 @@ export default function BreedDetails() {
 
   return (
     <section>
+      <DogBreedChatWidget breedName={breed.breedName} />
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-8">
         <div className="relative mx-4 mt-4 h-[50vh] w-full overflow-hidden">
           <Image
