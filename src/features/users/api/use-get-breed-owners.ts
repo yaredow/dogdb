@@ -2,20 +2,16 @@ import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseGetBreedProps = {
-  email: string;
   breedId: string;
 };
 
-export const useGetBreed = ({ email, breedId }: UseGetBreedProps) => {
+export const useGetBreed = ({ breedId }: UseGetBreedProps) => {
   const { data: breed, isFetching } = useQuery({
     queryKey: ["breed", breedId],
     queryFn: async () => {
-      const response = await client.api.breeds["breed-owners"][":breedId"].$get(
-        {
-          param: { breedId },
-          query: { email },
-        },
-      );
+      const response = await client.api.users["breed-owners"][":breedId"].$get({
+        param: { breedId },
+      });
 
       if (!response.ok) {
         throw new Error("Failed to fetch breed");

@@ -3,9 +3,13 @@
 import DefaultPfp from "@/../public/images/Default_pfp.svg";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "../../../components/ui/avatar";
-import { User } from "@/types";
+import { User } from "@prisma/client";
 
-function BreedOwnerCard({ user }: { user: User }) {
+type BreedOwnerProps = {
+  user: User;
+};
+
+function BreedOwnerCard({ user }: BreedOwnerProps) {
   return (
     <Link
       href={`/profile/${user?.id}`}
@@ -14,21 +18,19 @@ function BreedOwnerCard({ user }: { user: User }) {
       <Avatar>
         <AvatarImage
           src={user.image || DefaultPfp.src}
-          alt={user.firstName || "dog owner image"}
+          alt={user.name || "dog owner image"}
           className="rounded-full"
         />
       </Avatar>
       <div className="px-2">
-        <h1>{`${user.firstName} ${user.lastName}`}</h1>
-        <span className="text-sm text-muted-foreground">{`@${user.userName?.toLowerCase()}`}</span>
+        <h1>{`${user.name}`}</h1>
+        <span className="text-sm text-muted-foreground">{`@${user.name?.toLowerCase()}`}</span>
       </div>
     </Link>
   );
 }
 
 export default function BreedOwner({ breedOwners }: { breedOwners: User[] }) {
-  console.log({ breedOwners });
-
   return (
     <div className="w-full bg-background py-4">
       <h2 className="mb-6 text-xl font-bold md:text-2xl">
