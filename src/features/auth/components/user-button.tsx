@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import UserAvatar from "./user-avatar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 type UserButtonProps = {
   className: string;
@@ -33,8 +34,11 @@ type UserButtonProps = {
 
 export default function UserButton({ className }: UserButtonProps) {
   const { data: session, isPending } = authClient.useSession();
-  const { name, email, image } = session?.user || {};
+  const { name, email, image, id } = session?.user || {};
+  console.log({ id });
+
   const { theme, setTheme } = useTheme();
+  const router = useRouter();
 
   if (isPending) {
     return (
@@ -62,7 +66,7 @@ export default function UserButton({ className }: UserButtonProps) {
       <DropdownMenuContent>
         <DropdownMenuLabel>Logged in as @{name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/users/${name}`}>
+        <Link href={`/users/${id}`}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 size-4" />
             Profile

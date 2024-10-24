@@ -2,10 +2,22 @@ import prisma from "@/lib/prisma";
 import { SessionMiddleware } from "@/lib/session-middleware";
 import { Hono } from "hono";
 
-const app = new Hono().get(
-  "/breed-owners/:breedId",
-  SessionMiddleware,
-  async (c) => {
+const app = new Hono()
+  .get("/:userId", async (c) => {
+    const { userId } = c.req.param();
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return c.json({ error: "User not found" }, 404);
+    }
+
+    return c.json({ data: user });
+  })
+  .get("/breed-owners/:breedId", SessionMiddleware, async (c) => {
     const { breedId } = c.req.param();
     const user = c.get("user");
 
@@ -50,7 +62,6 @@ const app = new Hono().get(
     }
 
     return c.json({ data: breedOwners });
-  },
-);
+  });
 
 export default app;

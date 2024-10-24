@@ -5,7 +5,7 @@ type UseGetBreedProps = {
   breedId: string;
 };
 
-export const useGetBreed = ({ breedId }: UseGetBreedProps) => {
+export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
   const { data: breed, isFetching } = useQuery({
     queryKey: ["breed", breedId],
     queryFn: async () => {
