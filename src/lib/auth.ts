@@ -4,6 +4,15 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "./prisma";
 
 export const auth = betterAuth({
+  user: {
+    additionalFields: {
+      breeds: {
+        type: "string[]",
+        required: false,
+        defaultValue: [],
+      },
+    },
+  },
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),

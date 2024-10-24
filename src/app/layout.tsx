@@ -5,6 +5,7 @@ import NextTopLoader from "nextjs-toploader";
 import QueryProviders from "@/components/providers/query-provider";
 import { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,9 +32,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <NextTopLoader />
-            {children}
-            <Toaster />
+            <NuqsAdapter>
+              <NextTopLoader />
+              {children}
+              <Toaster />
+            </NuqsAdapter>
           </ThemeProvider>
         </QueryProviders>
       </body>

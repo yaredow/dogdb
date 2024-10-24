@@ -5,18 +5,9 @@ import DefaultProfile from "@/assets/images/avatar-placeholder.png";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { User } from "better-auth";
 import { CameraIcon, Loader2 } from "lucide-react";
 import { useGetUser } from "../api/use-get-user";
-import ResponsiveModal from "@/components/responsive-modal";
 
 type UserProfileProps = {
   loggedInUser: User;
@@ -110,8 +101,6 @@ export default function UserProfile({ loggedInUser }: UserProfileProps) {
               <h4 className=" font-semibold">Password</h4>
               <p className=" text-sm">************</p>
             </div>
-
-            <ResponsiveModal></ResponsiveModal>
           </div>
         )}
       </div>
