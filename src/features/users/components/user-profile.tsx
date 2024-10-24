@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { User } from "better-auth";
 import { CameraIcon, Loader2 } from "lucide-react";
 import { useGetUser } from "../api/use-get-user";
+import ResponsiveModal from "@/components/responsive-modal";
 
 type UserProfileProps = {
   loggedInUser: User;
@@ -76,7 +77,7 @@ export default function UserProfile({ loggedInUser }: UserProfileProps) {
         <div className=" flex items-center justify-between">
           <div className=" h-12">
             <h4 className=" font-semibold">Full Name</h4>
-            <Input className=" mt-2" type="text" onChange={() => {}} />
+            <h1>{userData.name}</h1>
           </div>
           <Button className=" w-[85px]" onClick={() => {}} variant="outline">
             Change
@@ -86,7 +87,7 @@ export default function UserProfile({ loggedInUser }: UserProfileProps) {
         <div className=" flex items-center justify-between">
           <div className=" h-12">
             <h4 className=" font-semibold">Username</h4>
-            <Input className=" mt-2" type="text" onChange={() => {}} />
+            <h1>{userData.email.split("@")[0]}</h1>
           </div>
           <Button className=" w-[85px]" onClick={() => {}} variant="outline">
             Change
@@ -96,39 +97,32 @@ export default function UserProfile({ loggedInUser }: UserProfileProps) {
         <div className=" flex items-center justify-between">
           <div className=" h-12">
             <h4 className=" font-semibold ">Email Adress</h4>
-            <Input className="mt-2" type="text" onChange={() => {}} />
+            <h1>{userData.email}</h1>
           </div>
           <Button className=" w-[85px]" variant="outline" onClick={() => {}}>
             Change
           </Button>
         </div>
 
-        <div className=" flex items-center justify-between">
-          <div>
-            <h4 className=" font-semibold">Password</h4>
-            <p className=" text-sm">************</p>
+        {isLoggedInUser && (
+          <div className=" flex items-center justify-between">
+            <div>
+              <h4 className=" font-semibold">Password</h4>
+              <p className=" text-sm">************</p>
+            </div>
+
+            <ResponsiveModal></ResponsiveModal>
           </div>
+        )}
+      </div>
 
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" className="w-[85px]">
-                Reset
-              </Button>
-            </DialogTrigger>
-            <DialogContent className=" rounded-lg">
-              <DialogHeader>
-                <DialogTitle className=" mb-4">Reset your password</DialogTitle>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+      {isLoggedInUser && (
+        <div className=" mx-auto mt-8 flex items-center justify-center">
+          <Button className=" hover:text-red-400" variant="outline">
+            Log out
+          </Button>
         </div>
-      </div>
-
-      <div className=" mx-auto mt-8 flex items-center justify-center">
-        <Button className=" hover:text-red-400" variant="outline">
-          Log out
-        </Button>
-      </div>
+      )}
     </main>
   );
 }
