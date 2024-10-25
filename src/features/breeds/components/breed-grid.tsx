@@ -19,7 +19,17 @@ export default function BreedGrid() {
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 md:grid-cols-4">
-      {breeds?.map((breed) => <BreedCard key={breed.id} breed={breed} />)}
+      {breeds?.map(
+        ({ breedName, breedImages, breedShortDescription, slug }) => (
+          <BreedCard
+            key={slug}
+            breedName={breedName}
+            breedImages={breedImages}
+            breedShortDescription={breedShortDescription}
+            slug={slug}
+          />
+        ),
+      )}
     </div>
   );
 }

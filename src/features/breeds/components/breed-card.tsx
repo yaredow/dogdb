@@ -1,16 +1,22 @@
 "use client";
 
-import { Breed } from "@prisma/client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface BreedCardProps {
-  breed: Breed;
+  breedName: string;
+  breedImages: string[];
+  breedShortDescription: string;
+  slug: string;
 }
 
-const BreedCard = ({ breed }: BreedCardProps) => {
+const BreedCard = ({
+  breedName,
+  breedImages,
+  breedShortDescription,
+  slug,
+}: BreedCardProps) => {
   const router = useRouter();
-  const { breedImages, breedName, breedShortDescription, slug } = breed;
 
   const handleClick = () => {
     router.push(`/breeds/${slug}`);
