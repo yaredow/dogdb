@@ -1,7 +1,7 @@
 "use client";
 
 import { GetUserId } from "@/features/users/hooks/use-get-user-id";
-import DefaultProfile from "@/assets/images/avatar-placeholder.png";
+import DefaultProfile from "@/assets/images/Default_pfp.svg";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
