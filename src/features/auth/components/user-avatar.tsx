@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import DefaultUserAvatar from "@/assets/images/avatar-placeholder.png";
+import DefaultUserAvatar from "@/assets/images/Default_pfp.svg";
 
 type UserAvatarProps = {
   avatarUrl: string;
@@ -20,7 +20,7 @@ export default function UserAvatar({
       height={size || 48}
       alt="avatar"
       className={cn(
-        "aspect-square h-fit flex-none rounded-full bg-secondary object-cover",
+        "aspect-square h-fit flex-none rounded-full bg-background object-cover",
         className,
       )}
     />

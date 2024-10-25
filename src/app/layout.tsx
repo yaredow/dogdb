@@ -13,7 +13,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Doggo",
+  title: "dogdb",
   description: "description",
 };
 

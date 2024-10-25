@@ -26,30 +26,24 @@ import { cn } from "@/lib/utils";
 import UserAvatar from "./user-avatar";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { useRouter } from "next/navigation";
 
 type UserButtonProps = {
   className: string;
 };
 
 export default function UserButton({ className }: UserButtonProps) {
-  const { data: session, isPending } = authClient.useSession();
-  const { name, email, image, id } = session?.user || {};
-  console.log({ id });
+  const { data: session, isRefetching, isPending } = authClient.useSession();
+  const { name, image, id } = session?.user || {};
+  const isLoading = isRefetching || isPending;
 
   const { theme, setTheme } = useTheme();
-  const router = useRouter();
 
-  if (isPending) {
+  if (isLoading || !session) {
     return (
-      <div className="size-12 rounded-full flex items-center justify-center bg-secondary border border-neutral-200 ">
+      <div className="size-10 rounded-full flex items-center justify-center border border-neutral-200 ">
         <Loader2 className="animate-spin size-4 text-muted-foreground" />
       </div>
     );
-  }
-
-  if (!session) {
-    return null;
   }
 
   const handleSignOut = async () => {
@@ -63,7 +57,7 @@ export default function UserButton({ className }: UserButtonProps) {
           <UserAvatar avatarUrl={image || ""} size={40} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="mr-4">
         <DropdownMenuLabel>Logged in as @{name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <Link href={`/users/${id}`}>

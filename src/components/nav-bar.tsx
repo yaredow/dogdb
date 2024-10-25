@@ -7,8 +7,14 @@ import Image from "next/image";
 import UserButton from "@/features/auth/components/user-button";
 import Link from "next/link";
 import Logo from "@/assets/images/logo-light.svg";
+import { authClient } from "@/lib/auth-client";
+import { Button } from "./ui/button";
+import ConversationToggle from "@/features/conversations/components/conversation-toggle";
 
 export default function NavBar() {
+  const { data: session, isRefetching, isPending } = authClient.useSession();
+  const isLoading = isRefetching || isPending;
+
   return (
     <nav className="w-full px-6 py-4 flex items-center justify-between border-b">
       <Link href="/">
@@ -30,9 +36,16 @@ export default function NavBar() {
           </NavLink>
         ))}
 
-        <div className="flex items-center gap-x-4 ml-8">
+        <div className="flex items-center gap-x-6 ml-8">
+          {session && <ConversationToggle />}
           <MobileNavbar />
-          <UserButton className="size-12" />
+          {!session && !isRefetching ? (
+            <Button asChild>
+              <Link href="/signin">Sign in</Link>
+            </Button>
+          ) : (
+            <UserButton className="size-10" />
+          )}
         </div>
       </div>
     </nav>

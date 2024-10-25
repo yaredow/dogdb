@@ -1,6 +1,6 @@
 "use client";
 
-import { GetUserId } from "@/app/(main)/users/hooks/get-user-id";
+import { GetUserId } from "@/features/users/hooks/use-get-user-id";
 import DefaultProfile from "@/assets/images/avatar-placeholder.png";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
