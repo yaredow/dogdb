@@ -26,7 +26,7 @@ export default async function ConversationsLayout({
   return (
     <div className="flex h-full rounded-lg md:mx-6 md:border">
       <ConversationsSidebar
-        currentUser={session?.user}
+        currentUserId={session?.user.id}
         conversations={conversations}
       />
       <div className="flex-grow">{children}</div>;

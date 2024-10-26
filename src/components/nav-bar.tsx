@@ -17,17 +17,15 @@ export default function NavBar() {
 
   return (
     <nav className="w-full px-6 py-4 flex items-center justify-between border-b">
-      <Link href="/">
-        <div className="flex items-center justify-between space-x-3">
-          <Image
-            src={Logo}
-            alt="an image of a dog in an orange color"
-            width={40}
-            height={40}
-            priority
-          />
-          <h1 className="text-xl font-bold">dogdb</h1>
-        </div>
+      <Link href="/" className="flex items-center justify-between space-x-3">
+        <Image
+          src={Logo}
+          alt="an image of a dog in an orange color"
+          width={40}
+          height={40}
+          priority
+        />
+        <h1 className="text-xl font-bold">dogdb</h1>
       </Link>
       <div className="md:flex hidden flex-row items-center gap-x-4">
         {NavLinks.map((link) => (

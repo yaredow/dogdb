@@ -1,31 +1,52 @@
 "use client";
 
-import { Conversation } from "@prisma/client";
-import { User } from "better-auth";
-import { useState } from "react";
+import { MoreHorizontal } from "lucide-react";
+import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import {
-  DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
+import { find } from "lodash";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal } from "lucide-react";
+import { Conversation, Message, User } from "@prisma/client";
 import ConversationItem from "./conversation-item";
-import { useGetConversationId } from "../hooks/use-get-conversation-id";
+import { FullConversationType } from "@/lib/types";
 
-type ConversationsSidebarProps = {
-  currentUser: User;
-  conversations: Conversation[];
+type SidebarProps = {
+  conversations: FullConversationType[];
+  currentUserId: string;
 };
 
-export default function ConversationsSidebar({
-  currentUser,
+export default function ConversationSidebar({
+  currentUserId,
   conversations: initialConversations,
-}: ConversationsSidebarProps) {
+}: SidebarProps) {
   const [conversations, setConversations] = useState(initialConversations);
-  const conversationId = useGetConversationId();
+
+  // useEffect(() => {
+  //   if (!socket) return;
+  //
+  //   const handleConversationStarted = (
+  //     updatedConversation: FullConversationType,
+  //   ) => {
+  //     setConversations((prevConversations: FullConversationType[]) => {
+  //       if ((find(prevConversations), { id: updatedConversation.id })) {
+  //         return prevConversations;
+  //       }
+  //
+  //       return [...prevConversations, updatedConversation];
+  //     });
+  //   };
+  //
+  //   socket.on("conversationStarted", handleConversationStarted);
+  //
+  //   return () => {
+  //     socket.off("conversationStarted", handleConversationStarted);
+  //   };
+  // }, [currentUserId]);
 
   return (
     <div className="group relative hidden min-h-[80vh] flex-col gap-4 border-r md:flex md:w-[28%]">
@@ -55,14 +76,14 @@ export default function ConversationsSidebar({
         </div>
       </div>
 
-      {conversations.length > 0 ? (
+      {conversations && conversations.length > 0 ? (
         <div className="grid gap-1 px-2">
           <ul className="flex flex-col gap-1">
             {conversations.map((conversation, index) => (
               <li key={index} className="w-full">
                 <ConversationItem
+                  currentLoggedInUserId={currentUserId}
                   conversation={conversation}
-                  currentLoggedUserId={currentUser.id}
                   isSelectedConversation={conversationId === conversation.id}
                 />
               </li>

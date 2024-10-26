@@ -6,7 +6,7 @@ type UseGetBreedProps = {
 };
 
 export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
-  const { data: breed, isFetching } = useQuery({
+  const { data: breedOwners, isFetching } = useQuery({
     queryKey: ["breed", breedId],
     queryFn: async () => {
       const response = await client.api.users["breed-owners"][":breedId"].$get({
@@ -23,5 +23,5 @@ export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
     enabled: !!breedId,
   });
 
-  return { breed, isFetching };
+  return { breedOwners, isFetching };
 };
