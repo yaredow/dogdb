@@ -1,4 +1,5 @@
-import { Conversation, Message, User } from "@prisma/client";
+import { Conversation, Message } from "@prisma/client";
+import { User } from "better-auth";
 
 export type FullConversationType = Conversation & {
   messages: Message[];

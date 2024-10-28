@@ -34,7 +34,7 @@ export default async function ConversationWithIdPage({
 
       <MessageList
         currentUser={session.user}
-        messages={conversation?.messages}
+        messages={conversation.messages}
       />
     </div>
   );

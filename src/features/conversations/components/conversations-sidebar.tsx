@@ -8,12 +8,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { find } from "lodash";
 import { Button } from "@/components/ui/button";
-import { Conversation, Message, User } from "@prisma/client";
 import ConversationItem from "./conversation-item";
 import { FullConversationType } from "@/lib/types";
+import { useGetConversationId } from "../hooks/use-get-conversation-id";
 
 type SidebarProps = {
   conversations: FullConversationType[];
@@ -25,6 +25,7 @@ export default function ConversationSidebar({
   conversations: initialConversations,
 }: SidebarProps) {
   const [conversations, setConversations] = useState(initialConversations);
+  const conversationId = useGetConversationId();
 
   // useEffect(() => {
   //   if (!socket) return;

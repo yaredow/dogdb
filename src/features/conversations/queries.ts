@@ -1,12 +1,9 @@
 import prisma from "@/lib/prisma";
 import { Conversation, Message, User } from "@prisma/client";
 
-export const getConversations = async (): Promise<
-  FullConversationType[] | null
-> => {
+export const getConversations = async () => {
   try {
-    const conversations =
-      (await prisma.conversation.findMany()) as FullConversationType[];
+    const conversations = await prisma.conversation.findMany();
 
     if (!conversations) {
       return null;

@@ -1,6 +1,7 @@
 import ConversationsSidebar from "@/features/conversations/components/conversations-sidebar";
 import { getConversations } from "@/features/conversations/queries";
 import { auth } from "@/lib/auth";
+import { FullConversationType } from "@/lib/types";
 import { headers } from "next/headers";
 
 type ConversationsLayoutProps = {
@@ -13,7 +14,7 @@ export default async function ConversationsLayout({
   const session = await auth.api.getSession({
     headers: headers(),
   });
-  const conversations = await getConversations();
+  const conversations = (await getConversations()) as FullConversationType[];
 
   if (!conversations) {
     return <div>No conversations</div>;

@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import ConversationBottombar from "./conversation-bottom-bar";
 import MessageItem from "./message-item";
-import { Message } from "@prisma/client";
 import { User } from "better-auth";
 import { useGetConversationId } from "../hooks/use-get-conversation-id";
 import { FullMessageType } from "@/lib/types";

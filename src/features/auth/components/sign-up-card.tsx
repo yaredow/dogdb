@@ -41,32 +41,34 @@ export default function SignupCard() {
       name: "",
       email: "",
       password: "",
-      breed: [],
+      breeds: [],
     },
   });
 
   const onSubmit = async (values: SignupData) => {
-    await authClient.signUp.email(values, {
-      onRequest: () => {
-        setIsLoading(true);
-      },
-      onResponse: () => {
-        setIsLoading(false);
-      },
-      onError: (ctx) => {
-        setIsLoading(false);
-        toast({
-          variant: "destructive",
-          description: ctx.error.message,
-        });
-      },
-      onSuccess: () => {
-        toast({
-          description: "Account created successfully.",
-        });
-        router.push("/signin");
-      },
-    });
+    console.log({ values });
+
+    // await authClient.signUp.email(values, {
+    //   onRequest: () => {
+    //     setIsLoading(true);
+    //   },
+    //   onResponse: () => {
+    //     setIsLoading(false);
+    //   },
+    //   onError: (ctx) => {
+    //     setIsLoading(false);
+    //     toast({
+    //       variant: "destructive",
+    //       description: ctx.error.message,
+    //     });
+    //   },
+    //   onSuccess: () => {
+    //     toast({
+    //       description: "Account created successfully.",
+    //     });
+    //     router.push("/signin");
+    //   },
+    // });
   };
 
   return (

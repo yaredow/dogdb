@@ -25,7 +25,9 @@ export const SignupSchema = z.object({
     .min(8, { message: "Password must be at least 8 characters long" })
     .regex(/[A-Za-z]/, { message: "Password must contain at least one letter" })
     .regex(/\d/, { message: "Password must contain at least one number" }),
-  breed: z.array(z.object({ value: z.string(), label: z.string() })).optional(),
+  breeds: z
+    .array(z.object({ value: z.string(), label: z.string() }))
+    .optional(),
 });
 
 export type SignupData = z.infer<typeof SignupSchema>;
