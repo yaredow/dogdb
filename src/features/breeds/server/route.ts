@@ -27,50 +27,52 @@ const app = new Hono()
 
     return c.json({ data: breed });
   })
-  .get(
-    "/breed-owners/:breedId",
-    SessionMiddleware,
-    zValidator("query", z.object({ email: z.string().email() })),
-    async (c) => {
-      const { breedId } = c.req.param();
-      const { email } = c.req.valid("query");
-      const user = c.get("user");
+  .get("/breed-owners/:slug", SessionMiddleware, async (c) => {
+    const { slug } = c.req.param();
+    const user = c.get("user");
 
-      if (!user) {
-        return c.json({ error: "Unautherized" }, 404);
-      }
+    if (!user) {
+      return c.json({ error: "Unautherized" }, 404);
+    }
 
-      const breedOwners = await prisma.user.findMany({
-        where: {
-          breeds: {
-            some: {
-              breedId,
-            },
-          },
-          email: {
-            not: email,
+    const breed = await prisma.breed.findFirst({
+      where: { slug },
+    });
+
+    if (!breed) {
+      return c.json({ error: "Breed not found" }, 404);
+    }
+
+    const breedOwners = await prisma.user.findMany({
+      where: {
+        breeds: {
+          some: {
+            breedId: breed.id,
           },
         },
-        include: {
-          breeds: {
-            include: {
-              breed: {
-                select: {
-                  breedName: true,
-                  slug: true,
-                },
+        email: {
+          not: user.email,
+        },
+      },
+      include: {
+        breeds: {
+          include: {
+            breed: {
+              select: {
+                breedName: true,
+                slug: true,
               },
             },
           },
         },
-      });
+      },
+    });
 
-      if (!breedOwners) {
-        c.json({ error: "No breed owners found" }, 404);
-      }
+    if (!breedOwners) {
+      c.json({ error: "No breed owners found" }, 404);
+    }
 
-      return c.json({ data: breedOwners });
-    },
-  );
+    return c.json({ data: breedOwners });
+  });
 
 export default app;

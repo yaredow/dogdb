@@ -6,12 +6,20 @@ import { useGetBreed } from "../api/use-get-breed";
 import { useGetSlug } from "../hooks/use-get-slug";
 import DogBreedChatWidget from "./breed-chat-widget";
 import { Loader2 } from "lucide-react";
+import { useGetBreedOwners } from "@/features/users/api/use-get-breed-owners";
 
 export default function BreedDetails() {
   const slug = useGetSlug();
-  const { breed, isFetching } = useGetBreed({ slug });
+  const { breed, isPending: isGetBreedPending } = useGetBreed({ slug });
+  const { breedOwners, isPending: isGetBreedOwnerPending } = useGetBreedOwners({
+    slug,
+  });
 
-  if (isFetching) {
+  console.log({ breedOwners });
+
+  const isPending = isGetBreedPending || isGetBreedOwnerPending;
+
+  if (isPending) {
     return (
       <div className="flex items-center justify-center h-screen animate-spin">
         <Loader2 className="size-6" />

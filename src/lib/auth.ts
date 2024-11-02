@@ -4,15 +4,6 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "./prisma";
 
 export const auth = betterAuth({
-  user: {
-    additionalFields: {
-      breed: {
-        type: "string[]",
-        required: false,
-        input: true,
-      },
-    },
-  },
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
@@ -28,5 +19,8 @@ export const auth = betterAuth({
       clientId: process.env.FACEBOOK_CLIENT_ID!,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     },
+  },
+  emailVerification: {
+    sendVerificationEmail: async (user, url, token) => {},
   },
 });

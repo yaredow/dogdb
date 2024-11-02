@@ -3,7 +3,7 @@ import BreedGrid from "@/features/breeds/components/breed-grid";
 
 export default function Page() {
   return (
-    <main className="flex flex-col gap-y-6">
+    <main className="flex min-h-screen flex-col gap-y-6">
       <Hero />
       <BreedGrid />
     </main>

@@ -6,7 +6,7 @@ type UseGetBreedProps = {
 };
 
 export const useGetBreed = ({ slug }: UseGetBreedProps) => {
-  const { data: breed, isFetching } = useQuery({
+  const { data: breed, isPending } = useQuery({
     queryKey: ["breed", slug],
     queryFn: async () => {
       const response = await client.api.breeds[":slug"].$get({
@@ -27,5 +27,5 @@ export const useGetBreed = ({ slug }: UseGetBreedProps) => {
     enabled: !!slug,
   });
 
-  return { breed, isFetching };
+  return { breed, isPending };
 };

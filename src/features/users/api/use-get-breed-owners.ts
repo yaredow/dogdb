@@ -2,15 +2,15 @@ import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseGetBreedProps = {
-  breedId: string;
+  slug: string;
 };
 
-export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
-  const { data: breedOwners, isFetching } = useQuery({
-    queryKey: ["breed", breedId],
+export const useGetBreedOwners = ({ slug }: UseGetBreedProps) => {
+  const { data: breedOwners, isPending } = useQuery({
+    queryKey: ["breed", slug],
     queryFn: async () => {
-      const response = await client.api.users["breed-owners"][":breedId"].$get({
-        param: { breedId },
+      const response = await client.api.breeds["breed-owners"][":slug"].$get({
+        param: { slug },
       });
 
       if (!response.ok) {
@@ -20,8 +20,8 @@ export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
       const data = await response.json();
       return data.data;
     },
-    enabled: !!breedId,
+    enabled: !!slug,
   });
 
-  return { breedOwners, isFetching };
+  return { breedOwners, isPending };
 };

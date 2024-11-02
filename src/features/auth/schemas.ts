@@ -31,3 +31,14 @@ export const SignupSchema = z.object({
 });
 
 export type SignupData = z.infer<typeof SignupSchema>;
+
+export const PostSignupSchema = z.object({
+  breed: z.array(
+    z.object({
+      value: z.string(),
+      label: z.string(),
+    }),
+  ),
+});
+
+export type PostSignupSchemaData = z.infer<typeof PostSignupSchema>;

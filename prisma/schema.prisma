@@ -72,7 +72,7 @@ model UserBreed {
   userId  String
   breedId String
 
-  user  User  @relation(fields: [userId], references: [id])
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   breed Breed @relation(fields: [breedId], references: [id])
 
   @@unique([userId, breedId])

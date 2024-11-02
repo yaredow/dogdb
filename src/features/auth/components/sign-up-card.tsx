@@ -12,7 +12,6 @@ import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupData, SignupSchema } from "../schemas";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "@/hooks/use-toast";
 import {
   Card,
   CardContent,
@@ -28,8 +27,7 @@ import {
   FormItem,
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
-import MultipleSelector from "@/components/ui/mutli-select";
-import { dogBreeds } from "@/features/breeds/constants";
+import { toast } from "@/hooks/use-toast";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,29 +44,27 @@ export default function SignupCard() {
   });
 
   const onSubmit = async (values: SignupData) => {
-    console.log({ values });
-
-    // await authClient.signUp.email(values, {
-    //   onRequest: () => {
-    //     setIsLoading(true);
-    //   },
-    //   onResponse: () => {
-    //     setIsLoading(false);
-    //   },
-    //   onError: (ctx) => {
-    //     setIsLoading(false);
-    //     toast({
-    //       variant: "destructive",
-    //       description: ctx.error.message,
-    //     });
-    //   },
-    //   onSuccess: () => {
-    //     toast({
-    //       description: "Account created successfully.",
-    //     });
-    //     router.push("/signin");
-    //   },
-    // });
+    await authClient.signUp.email(values, {
+      onRequest: () => {
+        setIsLoading(true);
+      },
+      onResponse: () => {
+        setIsLoading(false);
+      },
+      onError: (ctx) => {
+        setIsLoading(false);
+        toast({
+          variant: "destructive",
+          description: ctx.error.message,
+        });
+      },
+      onSuccess: () => {
+        toast({
+          description: "Account created successfully.",
+        });
+        router.push("/post-signup");
+      },
+    });
   };
 
   return (
@@ -139,28 +135,6 @@ export default function SignupCard() {
                       type="password"
                       placeholder="Enter your password"
                       {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="breed"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <MultipleSelector
-                      {...field}
-                      defaultOptions={dogBreeds}
-                      placeholder="Select a dog breed you own"
-                      emptyIndicator={
-                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
-                          no results found.
-                        </p>
-                      }
                     />
                   </FormControl>
                   <FormMessage />
