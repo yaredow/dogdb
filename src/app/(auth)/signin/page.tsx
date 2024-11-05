@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Sign up",
-  description: "Sign up page",
+  description: "Sign up pages",
 };
 
 export default async function Page() {
