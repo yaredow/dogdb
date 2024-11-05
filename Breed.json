@@ -12,7 +12,7 @@
     ],
     "traits": ["friendly", "outgoing", "gentle", "energetic", "intelligent"],
     "diseases": [
-      "Hip Dysplasia",
+      "Hip Dysplasiaa",
       "Elbow Dysplasia",
       "Obesity",
       "Progressive Retinal Atrophy",
@@ -22,7 +22,7 @@
     "averageHeight": 57,
     "averageWeight": 29,
     "lifeExpectancy": 12,
-    "temperament": "Friendly, outgoing",
+    "temperament": "Friendly, outgoing"
     "hairShedding": "Minimal shedding, regular grooming needed",
     "activity": "High activity level, requires regular exercise",
     "sociability": "Highly sociable, loves to be around people",
