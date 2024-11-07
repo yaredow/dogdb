@@ -10,6 +10,7 @@ import Logo from "@/assets/images/logo-light.svg";
 import { authClient } from "@/lib/auth-client";
 import { Button } from "./ui/button";
 import ConversationToggle from "@/features/conversations/components/conversation-toggle";
+import { ModeToggle } from "./mode-toggle";
 
 export default function NavBar() {
   const { data: session, isRefetching, isPending } = authClient.useSession();
@@ -35,8 +36,9 @@ export default function NavBar() {
         ))}
 
         <div className="flex items-center gap-x-6 ml-8">
-          {session && <ConversationToggle />}
           <MobileNavbar />
+          {session && <ConversationToggle />}
+          <ModeToggle />
           {!session && !isRefetching ? (
             <Button asChild>
               <Link href="/signin">Sign in</Link>
