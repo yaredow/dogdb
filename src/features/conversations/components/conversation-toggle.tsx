@@ -7,7 +7,7 @@ export default function ConversationToggle() {
     <div>
       <Link href="/conversations">
         <Button className="rounded-full size-10" size="icon" variant="outline">
-          <MessageSquareMoreIco className="size-12" />
+          <MessageSquareMoreIcon className="size-12" />
         </Button>
       </Link>
     </div>
