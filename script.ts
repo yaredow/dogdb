@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
 
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const prisma = new PrismaClient();
 
 async function main() {

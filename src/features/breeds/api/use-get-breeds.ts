@@ -12,6 +12,7 @@ export const useGetBreeds = () => {
       }
 
       const data = await response.json();
+
       return data.data;
     },
   });
