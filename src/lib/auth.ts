@@ -24,10 +24,8 @@ export const auth = betterAuth({
     sendVerificationEmail: async (user, url, token) => {},
   },
   account: {
-    account: {
-      accountLinking: {
-        enabled: true,
-      },
+    accountLinking: {
+      enabled: true,
     },
   },
 });
