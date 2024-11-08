@@ -13,8 +13,7 @@ import ConversationToggle from "@/features/conversations/components/conversation
 import { ModeToggle } from "./mode-toggle";
 
 export default function NavBar() {
-  const { data: session, isRefetching, isPending } = authClient.useSession();
-  const isLoading = isRefetching || isPending;
+  const { data: session, isRefetching } = authClient.useSession();
 
   return (
     <nav className="w-full sticky left-0 top-0 bg-background z-10 px-6 py-4 flex items-center justify-between border-b">

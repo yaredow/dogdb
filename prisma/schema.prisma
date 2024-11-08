@@ -27,6 +27,8 @@ model User {
   messages      Message[]
   conversations Conversation[] @relation("UserConversations")
   seenMessages  Message[]      @relation("SeenMessages")
+  following     Follow[]       @relation("Following")
+  followers     Follow[]       @relation("Followers")
 
   @@map("users")
 }
@@ -107,6 +109,16 @@ model Message {
   sender   User   @relation(fields: [senderId], references: [id], onDelete: Cascade)
 
   @@map("messages")
+}
+
+model Follow {
+  followerId  String
+  follower    User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@map("follows")
 }
 
 model Breed {
