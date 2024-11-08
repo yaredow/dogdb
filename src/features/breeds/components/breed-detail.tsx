@@ -6,18 +6,11 @@ import { useGetBreed } from "../api/use-get-breed";
 import { useGetSlug } from "../hooks/use-get-slug";
 import DogBreedChatWidget from "./breed-chat-widget";
 import { Loader2 } from "lucide-react";
-import { useGetBreedOwners } from "@/features/users/api/use-get-breed-owners";
+import BreedOwner from "@/features/users/components/breed-owner";
 
 export default function BreedDetails() {
   const slug = useGetSlug();
-  const { breed, isPending: isGetBreedPending } = useGetBreed({ slug });
-  const { breedOwners, isPending: isGetBreedOwnerPending } = useGetBreedOwners({
-    slug,
-  });
-
-  console.log({ breedOwners });
-
-  const isPending = isGetBreedPending || isGetBreedOwnerPending;
+  const { breed, isPending } = useGetBreed({ slug });
 
   if (isPending) {
     return (
@@ -142,6 +135,7 @@ export default function BreedDetails() {
             </div>
           </div>
         </div>
+        <BreedOwner />
       </div>
     </section>
   );

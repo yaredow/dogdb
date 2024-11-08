@@ -1,8 +1,5 @@
 import prisma from "@/lib/prisma";
-import { SessionMiddleware } from "@/lib/session-middleware";
 import { Hono } from "hono";
-import { z } from "zod";
-import { zValidator } from "@hono/zod-validator";
 
 const app = new Hono()
   .get("/", async (c) => {
@@ -27,14 +24,8 @@ const app = new Hono()
 
     return c.json({ data: breed });
   })
-  .get("/breed-owners/:slug", SessionMiddleware, async (c) => {
+  .get("/breed-owners/:slug", async (c) => {
     const { slug } = c.req.param();
-    const user = c.get("user");
-
-    if (!user) {
-      return c.json({ error: "Unautherized" }, 404);
-    }
-
     const breed = await prisma.breed.findFirst({
       where: { slug },
     });
@@ -49,9 +40,6 @@ const app = new Hono()
           some: {
             breedId: breed.id,
           },
-        },
-        email: {
-          not: user.email,
         },
       },
       include: {
@@ -68,7 +56,7 @@ const app = new Hono()
       },
     });
 
-    if (!breedOwners) {
+    if (!breedOwners.length) {
       c.json({ error: "No breed owners found" }, 404);
     }
 

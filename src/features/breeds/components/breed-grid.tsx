@@ -6,8 +6,6 @@ import BreedSkeleton from "./breed-skeleton";
 
 export default function BreedGrid() {
   const { breeds, isFetching } = useGetBreeds();
-  console.log({breeds});
-  
 
   if (isFetching) {
     return (

@@ -1,3 +1,5 @@
+"use client";
+
 import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 
@@ -14,13 +16,13 @@ export const useGetBreedOwners = ({ slug }: UseGetBreedProps) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to fetch breed");
+        throw new Error("Something went wrong while fetching dog owners");
       }
 
       const data = await response.json();
+
       return data.data;
     },
-    enabled: !!slug,
   });
 
   return { breedOwners, isPending };
