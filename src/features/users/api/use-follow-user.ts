@@ -16,7 +16,7 @@ type RequestType = InferRequestType<
 >;
 
 export const useFollowUser = ({ userId }: UseFollowUser) => {
-  const { mutate: startConversation, isPending } = useMutation<
+  const { mutate: follow, isPending } = useMutation<
     ResponseType,
     Error,
     RequestType
@@ -47,5 +47,5 @@ export const useFollowUser = ({ userId }: UseFollowUser) => {
       });
     },
   });
-  return { startConversation, isPending };
+  return { follow, isPending };
 };

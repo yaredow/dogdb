@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
+import { cache } from "react";
 
-export const getUser = async (userId: string) => {
+export const getUser = cache(async (userId: string) => {
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -17,4 +18,4 @@ export const getUser = async (userId: string) => {
     console.error(error);
     return null;
   }
-};
+});
