@@ -94,7 +94,7 @@ const app = new Hono()
     });
 
     const data = {
-      followers: user?._count.followers,
+      followers: user?._count.followers ?? 0,
       isFollowedByUser: !!user?.followers.length,
     };
 
