@@ -135,7 +135,7 @@ export default function BreedDetails() {
             </div>
           </div>
         </div>
-        <BreedOwner />
+        <BreedOwner breedId={breed.id} />
       </div>
     </section>
   );

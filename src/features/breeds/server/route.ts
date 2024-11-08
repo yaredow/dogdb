@@ -24,43 +24,31 @@ const app = new Hono()
 
     return c.json({ data: breed });
   })
-  .get("/breed-owners/:slug", async (c) => {
-    const { slug } = c.req.param();
-    const breed = await prisma.breed.findFirst({
-      where: { slug },
-    });
+  .get("/breed-owners/:breedId", async (c) => {
+    const { breedId } = c.req.param();
 
-    if (!breed) {
-      return c.json({ error: "Breed not found" }, 404);
-    }
-
-    const breedOwners = await prisma.user.findMany({
+    const owners = await prisma.user.findMany({
       where: {
         breeds: {
           some: {
-            breedId: breed.id,
+            breedId,
           },
         },
       },
       include: {
         breeds: {
           include: {
-            breed: {
-              select: {
-                breedName: true,
-                slug: true,
-              },
-            },
+            breed: true,
           },
         },
       },
     });
 
-    if (!breedOwners.length) {
+    if (!owners.length) {
       c.json({ error: "No breed owners found" }, 404);
     }
 
-    return c.json({ data: breedOwners });
+    return c.json({ data: owners });
   });
 
 export default app;

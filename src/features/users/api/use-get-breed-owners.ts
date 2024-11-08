@@ -4,16 +4,18 @@ import { client } from "@/lib/rpc";
 import { useQuery } from "@tanstack/react-query";
 
 type UseGetBreedProps = {
-  slug: string;
+  breedId: string;
 };
 
-export const useGetBreedOwners = ({ slug }: UseGetBreedProps) => {
+export const useGetBreedOwners = ({ breedId }: UseGetBreedProps) => {
   const { data: breedOwners, isPending } = useQuery({
-    queryKey: ["breed", slug],
+    queryKey: ["breed", breedId],
     queryFn: async () => {
-      const response = await client.api.breeds["breed-owners"][":slug"].$get({
-        param: { slug },
-      });
+      const response = await client.api.breeds["breed-owners"][":breedId"].$get(
+        {
+          param: { breedId },
+        },
+      );
 
       if (!response.ok) {
         throw new Error("Something went wrong while fetching dog owners");

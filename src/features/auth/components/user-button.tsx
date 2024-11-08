@@ -5,22 +5,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Check,
-  Loader2,
-  LogOutIcon,
-  Monitor,
-  Moon,
-  Sun,
-  UserIcon,
-} from "lucide-react";
+import { Loader2, LogOutIcon, UserIcon } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./user-avatar";
@@ -35,8 +23,6 @@ export default function UserButton({ className }: UserButtonProps) {
   const { data: session, isRefetching, isPending } = authClient.useSession();
   const { name, image, id } = session?.user || {};
   const isLoading = isRefetching || isPending;
-
-  const { theme, setTheme } = useTheme();
 
   if (isLoading || !session) {
     return (

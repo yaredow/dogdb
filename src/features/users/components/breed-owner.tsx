@@ -4,9 +4,7 @@ import DefaultPfp from "@/../public/images/Default_pfp.svg";
 import Link from "next/link";
 import { Avatar, AvatarImage } from "../../../components/ui/avatar";
 import { useGetBreedOwners } from "../api/use-get-breed-owners";
-import { useGetSlug } from "@/features/breeds/hooks/use-get-slug";
 import { Loader2 } from "lucide-react";
-import { isArray } from "lodash";
 
 type BreedOwnerProps = {
   name: string;
@@ -17,7 +15,7 @@ type BreedOwnerProps = {
 function BreedOwnerCard({ name, image, id }: BreedOwnerProps) {
   return (
     <Link
-      href={`/profile/${id}`}
+      href={`/users/${id}`}
       className="flex flex-row items-center justify-center gap-6 rounded-lg border py-2 hover:bg-muted"
     >
       <Avatar>
@@ -35,9 +33,12 @@ function BreedOwnerCard({ name, image, id }: BreedOwnerProps) {
   );
 }
 
-export default function BreedOwner() {
-  const slug = useGetSlug();
-  const { breedOwners, isPending } = useGetBreedOwners({ slug });
+type BreedOwnerType = {
+  breedId: string;
+};
+
+export default function BreedOwner({ breedId }: BreedOwnerType) {
+  const { breedOwners, isPending } = useGetBreedOwners({ breedId });
 
   if (isPending) {
     return (
