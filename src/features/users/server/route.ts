@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { SessionMiddleware } from "@/lib/session-middleware";
 import { Hono } from "hono";
 import { Session } from "node:inspector/promises";
+import { useId } from "react";
 
 const app = new Hono()
   .get("/:userId", async (c) => {
@@ -140,6 +141,50 @@ const app = new Hono()
     });
 
     return c.json({ success: true });
-  });
+  })
+  .post("/block/:blockedId", SessionMiddleware, async (c) => {
+    const { blockedId } = c.req.param();
+    const user = c.get("user");
 
+    if (!user) {
+      return c.json({ error: "Unauthorized" }, 400);
+    }
+
+    const blockRecord = await prisma.block.upsert({
+      where: {
+        blockerId_blockedId: {
+          blockerId: user.id,
+          blockedId: blockedId,
+        },
+      },
+      create: {
+        blockerId: user.id,
+        blockedId: blockedId,
+      },
+      update: {},
+    });
+
+    const data = {
+      isBlocked: !!blockRecord,
+    };
+
+    return c.json(data);
+  })
+  .delete("/unblock/:blockedId", SessionMiddleware, async (c) => {
+    const { blockedId } = c.req.param();
+    const user = c.get("user");
+
+    if (!user) {
+      return c.json({ error: "Unauthorized" }, 401);
+    }
+
+    await prisma.block.deleteMany({
+      where: {
+        blockerId: user.id,
+        blockedId,
+      },
+    });
+
+    return c.json({ success: true });
+  });
 export default app;

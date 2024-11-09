@@ -4,48 +4,48 @@ import { useMutation } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { toast } from "@/hooks/use-toast";
 
-type UseUnfollowUserProps = {
+type UseUnblockUserProps = {
   userId: string;
 };
 
 type ResponseType = InferResponseType<
-  (typeof client.api.users)["unfollow"][":userId"]["$delete"]
+  (typeof client.api.users)["unblock"][":blockedId"]["$delete"]
 >;
 type RequestType = InferRequestType<
-  (typeof client.api.users)["unfollow"][":userId"]["$delete"]
+  (typeof client.api.users)["unblock"][":blockedId"]["$delete"]
 >;
 
-export const useUnfollowUser = ({ userId }: UseUnfollowUserProps) => {
-  const { mutate: unfollow, isPending } = useMutation<
+export const useUnblock = ({ userId }: UseUnblockUserProps) => {
+  const { mutate: unblock, isPending } = useMutation<
     ResponseType,
     Error,
     RequestType
   >({
     mutationFn: async () => {
-      const response = await client.api.users["unfollow"][":userId"].$delete({
+      const response = await client.api.users["unblock"][":blockedId"].$delete({
         param: {
-          userId,
+          blockedId: userId,
         },
       });
 
       if (!response.ok) {
-        throw new Error("Failed to unfollow user");
+        throw new Error("Failed to unblock user");
       }
 
       return await response.json();
     },
     onSuccess: () => {
       toast({
-        description: "You unfollowed this user",
+        description: "You unblocked this user",
       });
     },
     onError: (error) => {
       console.error(error);
       toast({
-        description: "Error unfollowing this user",
+        description: "Error unblocking this user",
         variant: "destructive",
       });
     },
   });
-  return { unfollow, isPending };
+  return { unblock, isPending };
 };

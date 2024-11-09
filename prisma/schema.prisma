@@ -29,6 +29,8 @@ model User {
   seenMessages  Message[]      @relation("SeenMessages")
   following     Follow[]       @relation("Following")
   followers     Follow[]       @relation("Followers")
+  blockedUsers  Block[]        @relation("blocker")
+  blockedBy     Block[]        @relation("blocked")
 
   @@map("users")
 }
@@ -119,6 +121,20 @@ model Follow {
 
   @@unique([followerId, followingId])
   @@map("follows")
+}
+
+model Block {
+  id String @id @default(cuid())
+
+  blockerId String
+  blocker   User   @relation("blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+
+  blockedId String
+  blocked   User   @relation("blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([blockerId, blockedId])
 }
 
 model Breed {
