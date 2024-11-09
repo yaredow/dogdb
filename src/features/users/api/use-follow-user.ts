@@ -1,6 +1,6 @@
 import { InferRequestType, InferResponseType } from "hono";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { toast } from "@/hooks/use-toast";
 
@@ -16,6 +16,7 @@ type RequestType = InferRequestType<
 >;
 
 export const useFollowUser = ({ userId }: UseFollowUser) => {
+  const queryClient = useQueryClient();
   const { mutate: follow, isPending } = useMutation<
     ResponseType,
     Error,
@@ -47,5 +48,6 @@ export const useFollowUser = ({ userId }: UseFollowUser) => {
       });
     },
   });
+
   return { follow, isPending };
 };

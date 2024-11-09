@@ -15,7 +15,7 @@ type RequestType = InferRequestType<
   (typeof client.api.users)["unblock"][":blockedId"]["$delete"]
 >;
 
-export const useUnblock = ({ userId }: UseUnblockUserProps) => {
+export const useUnblockUser = ({ userId }: UseUnblockUserProps) => {
   const { mutate: unblock, isPending } = useMutation<
     ResponseType,
     Error,

@@ -22,9 +22,10 @@ import {
 import { Button } from "@/components/ui/button";
 import useCopyToClipboard from "@/utils/hook/useCopyToClipoard";
 import { usePathname } from "next/navigation";
-import useUnblockUser from "@/utils/hook/useUnblockuser";
-import useBlockUser from "@/utils/hook/useBlockUser";
 import { User } from "better-auth";
+import { useUnblockUser } from "../api/use-unblock-user";
+import { useUserId } from "../hooks/use-user-id";
+import { useBlockUser } from "../api/use-block-user";
 
 type UserProfileMenuProps = {
   user: User;
@@ -38,19 +39,24 @@ export default function ProfileMenu({
   debounceBlockStatus,
 }: UserProfileMenuProps) {
   const path = usePathname();
+  const userId = useUserId();
   const userProfileUrl = `http://localhost:3000${path}`;
   const { copytoClipboard } = useCopyToClipboard(userProfileUrl);
-  const { unblock, isPending: unblockPending } = useUnblockUser();
-  const { block, isPending: blockPending } = useBlockUser();
+  const { unblock, isPending: unblockPending } = useUnblockUser({ userId });
+  const { block, isPending: blockPending } = useBlockUser({ userId });
 
   const handleBlockUser = () => {
-    block(user.id);
-    debounceBlockStatus();
+    block({
+      param: { blockedId: userId },
+    });
   };
 
   const handleUnblockUser = () => {
-    unblock(user.id);
-    debounceBlockStatus();
+    unblock({
+      param: {
+        blockedId: userId,
+      },
+    });
   };
 
   return (

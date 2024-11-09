@@ -1,8 +1,6 @@
 import prisma from "@/lib/prisma";
 import { SessionMiddleware } from "@/lib/session-middleware";
 import { Hono } from "hono";
-import { Session } from "node:inspector/promises";
-import { useId } from "react";
 
 const app = new Hono()
   .get("/:userId", async (c) => {
@@ -94,9 +92,25 @@ const app = new Hono()
       },
     });
 
+    const blockRecord = await prisma.block.findFirst({
+      where: {
+        OR: [
+          {
+            blockerId: currentUser.id,
+            blockedId: userId,
+          },
+          {
+            blockerId: userId,
+            blockedId: currentUser.id,
+          },
+        ],
+      },
+    });
+
     const data = {
       followers: user?._count.followers ?? 0,
       isFollowedByUser: !!user?.followers.length,
+      isBlocked: !!blockRecord,
     };
 
     return c.json(data);
