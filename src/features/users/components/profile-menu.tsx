@@ -1,6 +1,6 @@
 "use client";
 
-import { Ban, Ellipsis, Link, Upload } from "lucide-react";
+import { Ban, CircleSlash, Ellipsis, Link, Upload } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,6 +27,8 @@ import { useUnblockUser } from "../api/use-unblock-user";
 import { useUserId } from "../hooks/use-user-id";
 import { useBlockUser } from "../api/use-block-user";
 import { copyToClipboard } from "@/lib/utils";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useGetFollowers } from "@/features/users/api/use-get-followers";
 
 type UserProfileMenuProps = {
   user: AuthType | PrismaType;
@@ -37,116 +39,82 @@ export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
   const path = usePathname();
   const userId = useUserId();
   const userProfileUrl = `http://localhost:3000${path}`;
-  const { unblock, isPending: unblockPending } = useUnblockUser({ userId });
-  const { block, isPending: blockPending } = useBlockUser({ userId });
+  const { data } = useGetFollowers({ userId });
+  const { unblock, isPending: isUnblockPending } = useUnblockUser({ userId });
+  const { block, isPending: isBlockPending } = useBlockUser({ userId });
 
-  const handleBlockUser = () => {
-    block({
-      param: { blockedId: userId },
-    });
+  const [UnblockUserDialog, confirmUnblock] = useConfirm({
+    title: "Unblock user",
+    message: "This will unblock the user",
+    variant: "secondary",
+  });
+  const [BlockUserDialog, confirmBlock] = useConfirm({
+    title: "Block user",
+    message: "This will block the user",
+    variant: "destructive",
+  });
+
+  const handleBlockUser = async () => {
+    const ok = await confirmBlock();
+    if (ok) {
+      block({
+        param: { blockedId: userId },
+      });
+    }
   };
 
-  const handleUnblockUser = () => {
-    unblock({
-      param: {
-        blockedId: userId,
-      },
-    });
+  const handleUnblockUser = async () => {
+    const ok = await confirmUnblock();
+
+    if (ok) {
+      unblock({
+        param: {
+          blockedId: userId,
+        },
+      });
+    }
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost">
-          <Ellipsis className="h-5 w-5" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="flex flex-col items-start justify-start">
-        {!isBlocked ? (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  e.preventDefault();
-                }}
-                className="flex flex-row items-center justify-center gap-2"
-              >
-                <Ban size={16} />
-                <span>{`Block @${user.name.split(" ")[0]?.toLowerCase()}`}</span>{" "}
-              </DropdownMenuItem>
-            </AlertDialogTrigger>
-
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  {`Unblock @${user.name.split(" ")[0]?.toLowerCase()}?`}
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  {`They will not be able to follow you or view your posts, and you will not see posts or notifications from @${user.userName?.toLowerCase()}. `}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleBlockUser}
-                  disabled={blockPending}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        ) : (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <DropdownMenuItem
-                onSelect={(e) => {
-                  e.preventDefault();
-                }}
-                className="flex flex-row items-center justify-center gap-2"
-              >
-                <Ban size={16} />
-                <span>{`Unblock @${user.name.split(" ")[0]?.toLowerCase()}`}</span>
-              </DropdownMenuItem>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  {`Unblock @${user.name.split(" ")[0]?.toLowerCase()}?`}
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  They will be able to follow you and view your posts.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleUnblockUser}
-                  disabled={unblockPending}
-                >
-                  Continue
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
-        <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex items-center justify-center gap-2">
-          <Upload size={16} />
-          <span>Share profile via...</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={(Event: React.MouseEvent) => {
-            Event.stopPropagation();
-            copyToClipboard(userProfileUrl);
-          }}
-          className="flex items-center justify-center gap-2"
-        >
-          <Link size={16} />
-          <span>Copy link to profile</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className="flex flex-col gap-y-2">
+      <BlockUserDialog />
+      <UnblockUserDialog />
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost">
+            <Ellipsis className="h-5 w-5" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="flex flex-col items-start justify-start">
+          {!data?.isBlocked ? (
+            <DropdownMenuItem
+              onClick={handleBlockUser}
+              disabled={isBlockPending}
+            >
+              <Ban size={16} />
+              <span>Block</span>
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onClick={handleUnblockUser}
+              disabled={isUnblockPending}
+            >
+              <CircleSlash size={16} />
+              <span>Unblock</span>
+            </DropdownMenuItem>
+          )}
+          <DropdownMenuItem
+            onClick={(Event: React.MouseEvent) => {
+              Event.stopPropagation();
+              copyToClipboard(userProfileUrl);
+            }}
+            className="flex items-center justify-center gap-2"
+          >
+            <Link size={16} />
+            <span>Copy link to profile</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }
