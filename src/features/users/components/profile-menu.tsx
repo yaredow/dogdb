@@ -75,6 +75,7 @@ export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
                 <span>{`Block @${user.name.split(" ")[0]?.toLowerCase()}`}</span>{" "}
               </DropdownMenuItem>
             </AlertDialogTrigger>
+
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle>

@@ -64,9 +64,13 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
               {!isCurrentUser && (
                 <>
                   <FollowButton />
-                  <Button variant="outline" onClick={handleStartConversation}>
-                    Message
-                  </Button>
+
+                  {!data?.isBlocked && (
+                    <Button variant="outline" onClick={handleStartConversation}>
+                      Message
+                    </Button>
+                  )}
+
                   <ProfileMenu isBlocked={data?.isBlocked} user={user} />
                 </>
               )}
