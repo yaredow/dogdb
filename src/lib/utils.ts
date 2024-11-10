@@ -1,3 +1,4 @@
+import { toast } from "@/hooks/use-toast";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -17,3 +18,14 @@ export function formatDate(dateStr: any) {
     minute: "2-digit",
   }).format(new Date(dateStr));
 }
+
+export const copyToClipboard = async (path: string) => {
+  try {
+    await navigator.clipboard.writeText(path);
+    toast({
+      description: "Link copied to clipboard",
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};

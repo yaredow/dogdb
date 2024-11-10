@@ -11,6 +11,8 @@ import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import ProfileMenu from "./profile-menu";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -19,7 +21,10 @@ type UserProfileProps = {
 
 export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
   const userId = useUserId();
+  const router = useRouter();
   const { data } = useGetFollowers({ userId });
+
+  const handleStartConversation = () => {};
 
   return (
     <div className="mx-auto max-w-6xl md:p-4">
@@ -38,8 +43,8 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
             </div>
           </div>
 
-          <div className="mt-6 p-4 items-center md:justify-between justify-start flex">
-            <div className="flex flex-col md:justify-between justify-start gap-4">
+          <div className="mt-6 flex items-center justify-start p-4 md:justify-between">
+            <div className="flex flex-col justify-start gap-4 md:justify-between">
               <div className="mt-2 flex flex-col gap-1">
                 <h2 className="text-xl font-bold md:text-2xl">{`${user.name}`}</h2>
                 {/* <p className="text-sm text-muted-foreground">{`${user.breed.breedName} owner`}</p> */}
@@ -55,12 +60,17 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
               </div>
             </div>
 
-            {!isCurrentUser ? (
-              <div className="flex flex-col md:flex-row items-center gap-2">
-                <FollowButton />
-                <Button variant="secondary">Message</Button>
-              </div>
-            ) : null}
+            <div className="flex flex-col items-center gap-2 md:flex-row">
+              {!isCurrentUser && (
+                <>
+                  <FollowButton />
+                  <Button variant="outline" onClick={handleStartConversation}>
+                    Message
+                  </Button>
+                  <ProfileMenu isBlocked={data?.isBlocked} user={user} />
+                </>
+              )}
+            </div>
           </div>
         </div>
 

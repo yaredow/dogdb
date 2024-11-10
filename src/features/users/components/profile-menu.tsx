@@ -20,28 +20,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import useCopyToClipboard from "@/utils/hook/useCopyToClipoard";
 import { usePathname } from "next/navigation";
-import { User } from "better-auth";
+import { User as AuthType } from "better-auth";
+import { User as PrismaType } from "@prisma/client";
 import { useUnblockUser } from "../api/use-unblock-user";
 import { useUserId } from "../hooks/use-user-id";
 import { useBlockUser } from "../api/use-block-user";
+import { copyToClipboard } from "@/lib/utils";
 
 type UserProfileMenuProps = {
-  user: User;
-  isBlocked: boolean;
-  debounceBlockStatus: () => void;
+  user: AuthType | PrismaType;
+  isBlocked: boolean | undefined;
 };
 
-export default function ProfileMenu({
-  user,
-  isBlocked,
-  debounceBlockStatus,
-}: UserProfileMenuProps) {
+export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
   const path = usePathname();
   const userId = useUserId();
   const userProfileUrl = `http://localhost:3000${path}`;
-  const { copytoClipboard } = useCopyToClipboard(userProfileUrl);
   const { unblock, isPending: unblockPending } = useUnblockUser({ userId });
   const { block, isPending: blockPending } = useBlockUser({ userId });
 
@@ -143,7 +138,7 @@ export default function ProfileMenu({
         <DropdownMenuItem
           onClick={(Event: React.MouseEvent) => {
             Event.stopPropagation();
-            copytoClipboard();
+            copyToClipboard(userProfileUrl);
           }}
           className="flex items-center justify-center gap-2"
         >

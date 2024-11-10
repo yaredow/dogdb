@@ -37,5 +37,9 @@ export default async function UserProfilePage({
   const isCurrentUser = session.user.id === params.userId;
   const user = isCurrentUser ? session.user : otherUser;
 
-  return <UserProfile user={user} isCurrentUser={isCurrentUser} />;
+  return (
+    <main className="min-h-screen">
+      <UserProfile user={user} isCurrentUser={isCurrentUser} />
+    </main>
+  );
 }
