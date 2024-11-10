@@ -36,6 +36,7 @@ export const useFollowUser = ({ userId }: UseFollowUser) => {
       return await response.json();
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
       toast({
         description: "Follow successful",
       });

@@ -34,7 +34,7 @@ export default async function UserProfilePage({
     return <div>No user found</div>;
   }
 
-  const isCurrentUser = session?.user.id === params.userId;
+  const isCurrentUser = session.user.id === params.userId;
   const user = isCurrentUser ? session.user : otherUser;
 
   return <UserProfile user={user} isCurrentUser={isCurrentUser} />;

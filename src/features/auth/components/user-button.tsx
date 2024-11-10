@@ -13,7 +13,6 @@ import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import UserAvatar from "./user-avatar";
 import Link from "next/link";
-import { useTheme } from "next-themes";
 
 type UserButtonProps = {
   className: string;

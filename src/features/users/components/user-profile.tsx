@@ -8,6 +8,8 @@ import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
 import { MailIcon, MapPinIcon, UsersIcon } from "lucide-react";
 import FollowButton from "./follow-button";
 import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
+import { useGetFollowers } from "../api/use-get-followers";
+import { useUserId } from "../hooks/use-user-id";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -15,7 +17,8 @@ type UserProfileProps = {
 };
 
 export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
-  const isBlocked = false;
+  const userId = useUserId();
+  const { data } = useGetFollowers({ userId });
 
   return (
     <div className="mx-auto max-w-6xl md:p-4">
@@ -83,7 +86,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
         </div>
       </div>
 
-      {!isBlocked ? (
+      {!data?.isBlocked ? (
         <div>
           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
             <div className="rounded-lg p-4 shadow">

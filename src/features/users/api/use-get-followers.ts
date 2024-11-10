@@ -9,6 +9,8 @@ type UseGetBreedProps = {
 };
 
 export const useGetFollowers = ({ userId }: UseGetBreedProps) => {
+  console.log({ userId });
+
   const { data, isPending } = useQuery<FollowerInfo>({
     queryKey: ["user", userId],
     queryFn: async () => {
@@ -17,7 +19,7 @@ export const useGetFollowers = ({ userId }: UseGetBreedProps) => {
       });
 
       if (!response.ok) {
-        throw new Error("Something went wrong while fetching dog owners");
+        throw new Error("Something went wrong");
       }
 
       const data: FollowerInfo = await response.json();

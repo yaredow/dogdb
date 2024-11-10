@@ -1,6 +1,6 @@
 import { InferRequestType, InferResponseType } from "hono";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 import { toast } from "@/hooks/use-toast";
 
@@ -16,6 +16,7 @@ type RequestType = InferRequestType<
 >;
 
 export const useBlockUser = ({ userId }: UseBlockUserProps) => {
+  const queryClient = useQueryClient();
   const { mutate: block, isPending } = useMutation<
     ResponseType,
     Error,
@@ -35,6 +36,7 @@ export const useBlockUser = ({ userId }: UseBlockUserProps) => {
       return await response.json();
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user", userId] });
       toast({
         description: "User blocked successful",
       });
