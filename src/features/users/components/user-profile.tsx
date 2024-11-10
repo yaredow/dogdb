@@ -10,6 +10,7 @@ import FollowButton from "./follow-button";
 import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
+import { Button } from "@/components/ui/button";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -37,11 +38,11 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
             </div>
           </div>
 
-          <div className="mt-6 p-4">
-            <div className="flex flex-col justify-start gap-4">
+          <div className="mt-6 p-4 items-center md:justify-between justify-start flex">
+            <div className="flex flex-col md:justify-between justify-start gap-4">
               <div className="mt-2 flex flex-col gap-1">
                 <h2 className="text-xl font-bold md:text-2xl">{`${user.name}`}</h2>
-                {/*  <p className="text-sm text-muted-foreground">{`${user.breed.breedName} owner`}</p> */}
+                {/* <p className="text-sm text-muted-foreground">{`${user.breed.breedName} owner`}</p> */}
               </div>
 
               <div className="flex items-center gap-2">
@@ -52,8 +53,14 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                   <span className="text-blue-500">12</span> following
                 </div>
               </div>
-              {!isCurrentUser ? <FollowButton /> : null}
             </div>
+
+            {!isCurrentUser ? (
+              <div className="flex flex-col md:flex-row items-center gap-2">
+                <FollowButton />
+                <Button variant="secondary">Message</Button>
+              </div>
+            ) : null}
           </div>
         </div>
 
