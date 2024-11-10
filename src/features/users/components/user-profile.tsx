@@ -5,14 +5,21 @@ import { User as AuthUser } from "better-auth";
 import Image from "next/image";
 import UserAvatar from "./user-avatar";
 import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
-import { MailIcon, MapPinIcon, UsersIcon } from "lucide-react";
+import {
+  Mail,
+  MailIcon,
+  MapPinIcon,
+  MessageCircleIcon,
+  SearchIcon,
+  UsersIcon,
+} from "lucide-react";
 import FollowButton from "./follow-button";
 import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import ProfileMenu from "./profile-menu";
+import { useMedia } from "react-use";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -20,30 +27,64 @@ type UserProfileProps = {
 };
 
 export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
+  const isDesktop = useMedia("(min-width: 1024px)", true);
   const userId = useUserId();
-  const router = useRouter();
   const { data } = useGetFollowers({ userId });
 
   const handleStartConversation = () => {};
 
   return (
-    <div className="mx-auto max-w-6xl md:p-4">
+    <div className="mx-auto max-w-6xl p-0 md:p-4">
+      {!isDesktop && (
+        <div className="flex justify-end">
+          <Button variant="ghost" size="icon">
+            <SearchIcon />
+          </Button>
+          <ProfileMenu user={user} isBlocked={data?.isBlocked} />
+        </div>
+      )}
+
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="col-span-2 overflow-hidden rounded-lg shadow">
-          <div className="relative w-full">
-            <Image
-              src={BannerPlaceholder}
-              alt="Cover"
-              className="h-48 w-full object-cover"
-              width="800"
-              height="200"
-            />
-            <div className="absolute -bottom-10 left-4">
-              <UserAvatar avatarUrl={user.image} size={80} />
+        <div className="col-span-2 overflow-hidden shadow">
+          <div>
+            <div className="relative w-full">
+              <Image
+                src={BannerPlaceholder}
+                alt="Cover"
+                className="h-40 w-full rounded-md object-cover md:h-44"
+                width="800"
+                height="200"
+              />
+              <div className="absolute -bottom-10 left-4">
+                <UserAvatar avatarUrl={user.image} size={80} />
+              </div>
+            </div>
+
+            <div className="m-2 flex flex-row items-center justify-end gap-x-2 md:flex-row">
+              {!isCurrentUser && (
+                <>
+                  {!data?.isBlocked && (
+                    <Button
+                      variant="outline"
+                      size="icon"
+                      className="rounded-full"
+                      onClick={handleStartConversation}
+                    >
+                      <Mail size={20} />
+                    </Button>
+                  )}
+
+                  <FollowButton />
+
+                  {isDesktop && (
+                    <ProfileMenu isBlocked={data?.isBlocked} user={user} />
+                  )}
+                </>
+              )}
             </div>
           </div>
 
-          <div className="mt-6 flex flex-col items-center justify-start gap-y-3 p-4 md:flex-row md:justify-between">
+          <div className="flex flex-col justify-start gap-y-3 px-4 pb-4 md:flex-row md:justify-between">
             <div className="flex flex-col gap-y-2">
               <div className="mt-2 flex flex-col gap-1">
                 <h2 className="text-xl font-bold md:text-2xl">{`${user.name}`}</h2>
@@ -57,22 +98,6 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                   <span className="text-blue-500">12</span> following
                 </div>
               </div>
-            </div>
-
-            <div className="flex flex-row items-center gap-2 md:flex-row">
-              {!isCurrentUser && (
-                <>
-                  <FollowButton />
-
-                  {!data?.isBlocked && (
-                    <Button variant="outline" onClick={handleStartConversation}>
-                      Message
-                    </Button>
-                  )}
-
-                  <ProfileMenu isBlocked={data?.isBlocked} user={user} />
-                </>
-              )}
             </div>
           </div>
         </div>

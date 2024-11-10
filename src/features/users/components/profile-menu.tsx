@@ -1,6 +1,13 @@
 "use client";
 
-import { Ban, CircleSlash, Ellipsis, Link, Upload } from "lucide-react";
+import {
+  Ban,
+  CircleSlash,
+  Ellipsis,
+  EllipsisVertical,
+  Link,
+  Upload,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +25,7 @@ import { useBlockUser } from "../api/use-block-user";
 import { copyToClipboard } from "@/lib/utils";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useGetFollowers } from "@/features/users/api/use-get-followers";
+import { useMedia } from "react-use";
 
 type UserProfileMenuProps = {
   user: AuthType | PrismaType;
@@ -27,6 +35,7 @@ type UserProfileMenuProps = {
 export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
   const path = usePathname();
   const userId = useUserId();
+  const isDesktop = useMedia("(min-width: 1024px)", true);
   const userProfileUrl = `http://localhost:3000${path}`;
   const { data } = useGetFollowers({ userId });
   const { unblock, isPending: isUnblockPending } = useUnblockUser({ userId });
@@ -65,13 +74,17 @@ export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
   };
 
   return (
-    <div className="flex flex-col gap-y-2">
+    <div className="flex flex-col">
       <BlockUserDialog />
       <UnblockUserDialog />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost">
-            <Ellipsis className="h-5 w-5" />
+            {isDesktop ? (
+              <Ellipsis className="size-5" />
+            ) : (
+              <EllipsisVertical className="size-5" />
+            )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="flex flex-col items-start justify-start">

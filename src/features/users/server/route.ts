@@ -186,6 +186,7 @@ const app = new Hono()
       });
     }
 
+    // Block user
     const blockRecord = await prisma.block.upsert({
       where: {
         blockerId_blockedId: {
