@@ -23,7 +23,7 @@ export const copyToClipboard = async (path: string) => {
   try {
     await navigator.clipboard.writeText(path);
     toast({
-      description: "Link copied to clipboard",
+      description: "Copied to clipboard",
     });
   } catch (error) {
     console.error(error);

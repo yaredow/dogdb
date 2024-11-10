@@ -43,11 +43,10 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-start p-4 md:justify-between">
-            <div className="flex flex-col justify-start gap-4 md:justify-between">
+          <div className="mt-6 flex flex-col items-center justify-start gap-y-3 p-4 md:flex-row md:justify-between">
+            <div className="flex flex-col gap-y-2">
               <div className="mt-2 flex flex-col gap-1">
                 <h2 className="text-xl font-bold md:text-2xl">{`${user.name}`}</h2>
-                {/* <p className="text-sm text-muted-foreground">{`${user.breed.breedName} owner`}</p> */}
               </div>
 
               <div className="flex items-center gap-2">
@@ -60,7 +59,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
               </div>
             </div>
 
-            <div className="flex flex-col items-center gap-2 md:flex-row">
+            <div className="flex flex-row items-center gap-2 md:flex-row">
               {!isCurrentUser && (
                 <>
                   <FollowButton />

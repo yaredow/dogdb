@@ -2,17 +2,6 @@
 
 import { Ban, CircleSlash, Ellipsis, Link, Upload } from "lucide-react";
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -103,6 +92,7 @@ export default function ProfileMenu({ user, isBlocked }: UserProfileMenuProps) {
               <span>Unblock</span>
             </DropdownMenuItem>
           )}
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={(Event: React.MouseEvent) => {
               Event.stopPropagation();

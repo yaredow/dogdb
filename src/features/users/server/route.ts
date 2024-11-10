@@ -164,6 +164,28 @@ const app = new Hono()
       return c.json({ error: "Unauthorized" }, 400);
     }
 
+    // find any follow relationship between the users
+    const followRecords = await prisma.follow.findMany({
+      where: {
+        OR: [
+          { followerId: user.id, followingId: blockedId },
+          { followerId: blockedId, followingId: user.id },
+        ],
+      },
+    });
+
+    // Delete the follow relationship
+    if (followRecords.length > 0) {
+      await prisma.follow.deleteMany({
+        where: {
+          OR: [
+            { followerId: user.id, followingId: blockedId },
+            { followerId: blockedId, followingId: user.id },
+          ],
+        },
+      });
+    }
+
     const blockRecord = await prisma.block.upsert({
       where: {
         blockerId_blockedId: {
@@ -192,6 +214,7 @@ const app = new Hono()
       return c.json({ error: "Unauthorized" }, 401);
     }
 
+    // Unblock the user
     await prisma.block.deleteMany({
       where: {
         blockerId: user.id,
