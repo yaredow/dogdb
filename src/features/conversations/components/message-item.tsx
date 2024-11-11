@@ -5,13 +5,12 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import DefaultPfp from "@/../public/images/Default_pfp.svg";
 import { CheckCheck } from "lucide-react";
 import Image from "next/image";
-import { Message, User } from "@prisma/client";
-import { FullMessageType } from "@/lib/types";
+import { FullMessageType, UserType } from "@/lib/types";
 
 type MessageItemProps = {
   message: FullMessageType;
-  currentUser: User;
-  selectedUser: User;
+  currentUser: UserType;
+  selectedUser: UserType;
   isLast: boolean;
 };
 

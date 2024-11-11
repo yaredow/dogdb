@@ -36,11 +36,6 @@ export const useStartConversation = ({ userId }: UseStartConversationProps) => {
 
       return await response.json();
     },
-    onSuccess: () => {
-      toast({
-        description: "Workspace created successfully",
-      });
-    },
     onError: (error) => {
       console.error(error);
       toast({

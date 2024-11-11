@@ -1,42 +1,25 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import ConversationBottombar from "./conversation-bottom-bar";
 import MessageItem from "./message-item";
-import { User } from "better-auth";
 import { useGetConversationId } from "../hooks/use-get-conversation-id";
-import { FullMessageType } from "@/lib/types";
+import { FullMessageType, UserType } from "@/lib/types";
 
 interface ChatListProps {
+  currentUser: UserType;
   messages: FullMessageType[];
-  currentUser: User;
+  selectedUser: UserType;
 }
 
 export default function MessageList({
-  messages: initialMessages,
+  messages,
   currentUser,
+  selectedUser,
 }: ChatListProps) {
   const conversationId = useGetConversationId();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
-  const [messages, setMessage] = useState(initialMessages);
-
-  // useEffect(() => {
-  //   if (!socket) return;
-  //
-  //   socket.emit("joinConversation", conversationId);
-  //
-  //   const handleMessage = (newMessage: FullMessageType) => {
-  //     console.log("message received", newMessage);
-  //     setMessage((prevMessages) => [...prevMessages, newMessage]);
-  //   };
-  //
-  //   socket.on("messageRecived", handleMessage);
-  //
-  //   return () => {
-  //     socket.off("messageRecived", handleMessage);
-  //   };
-  // }, [conversationId]);
 
   useEffect(() => {
     const container = messagesContainerRef.current;
@@ -61,8 +44,8 @@ export default function MessageList({
                 key={index}
                 message={message}
                 currentUser={currentUser}
-                selectedUser={selectedUser}
                 isLast={isLast}
+                selectedUser={selectedUser}
               />
             );
           })}

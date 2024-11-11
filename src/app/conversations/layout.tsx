@@ -15,6 +15,7 @@ export default async function ConversationsLayout({
     headers: headers(),
   });
   const conversations = (await getConversations()) as FullConversationType[];
+  console.log({ conversations });
 
   if (!conversations) {
     return <div>No conversations</div>;

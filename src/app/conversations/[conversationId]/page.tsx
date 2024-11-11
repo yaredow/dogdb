@@ -2,6 +2,7 @@ import ConversationTopbar from "@/features/conversations/components/conversation
 import MessageList from "@/features/conversations/components/message-list";
 import { getConversationsWithId } from "@/features/conversations/queries";
 import { auth } from "@/lib/auth";
+import { FullConversationType, UserType } from "@/lib/types";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
@@ -22,11 +23,17 @@ export default async function ConversationWithIdPage({
     redirect("/signin");
   }
 
-  const conversation = await getConversationsWithId(params.conversationId);
+  const conversation = (await getConversationsWithId(
+    params.conversationId,
+  )) as FullConversationType;
 
   if (!conversation) {
     return <div>No conversation yet</div>;
   }
+
+  const selectedUser = conversation?.users.find(
+    (user) => user.id !== session.user.id,
+  ) as UserType;
 
   return (
     <div className="flex h-[95vh] w-full flex-col justify-between md:h-[80vh]">
@@ -35,6 +42,7 @@ export default async function ConversationWithIdPage({
       <MessageList
         currentUser={session.user}
         messages={conversation.messages}
+        selectedUser={selectedUser}
       />
     </div>
   );

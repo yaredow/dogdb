@@ -22,6 +22,8 @@ import FollowButton from "./follow-button";
 import ProfileMenu from "./profile-menu";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
+import { useStartConversation } from "@/features/conversations/api/use-start-conversation";
+import { useRouter } from "next/navigation";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -32,8 +34,19 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
   const isDesktop = useMedia("(min-width: 1024px)", true);
   const userId = useUserId();
   const { data } = useGetFollowers({ userId });
+  const { startConversation, isPending } = useStartConversation({ userId });
+  const router = useRouter();
 
-  const handleStartConversation = () => {};
+  const handleStartConversation = () => {
+    startConversation(
+      { query: { userId } },
+      {
+        onSuccess: (data) => {
+          router.push(`/conversations/${data.data.id}`);
+        },
+      },
+    );
+  };
 
   return (
     <div className="mx-auto max-w-6xl p-0 md:p-4">
@@ -71,6 +84,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                       size="icon"
                       className="rounded-full"
                       onClick={handleStartConversation}
+                      disabled={isPending}
                     >
                       <Mail size={20} />
                     </Button>

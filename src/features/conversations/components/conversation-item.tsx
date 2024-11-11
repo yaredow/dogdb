@@ -2,8 +2,6 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import DefaultPf from "@/../public/images/Default_pfp.svg";
 import { cn, formatDate } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { User } from "better-auth";
 import { FullConversationType } from "@/lib/types";
 
 type ConversationItemProps = {
@@ -12,39 +10,14 @@ type ConversationItemProps = {
   isSelectedConversation: boolean;
 };
 export default function ConversationItem({
-  conversation: initialConversation,
+  conversation,
   currentLoggedInUserId,
   isSelectedConversation,
 }: ConversationItemProps) {
-  const [conversation, setConversation] =
-    useState<FullConversationType>(initialConversation);
-
   const otherUser = conversation.users.find(
-    (user: User) => user.id !== currentLoggedInUserId,
+    (user) => user.id !== currentLoggedInUserId,
   );
   const lastMessage = conversation.messages[conversation.messages.length - 1];
-
-  // useEffect(() => {
-  //   if (!socket) return;
-  //
-  //   socket.emit("joinConversation", conversation.id);
-  //
-  //   const handleUpdateConversation = (updatedMessage: Message) => {
-  //     if (conversation.id === updatedMessage.conversationId) {
-  //       setConversation((prevConversation: FullConversationType) => ({
-  //         ...prevConversation,
-  //         messages: [...prevConversation.messages, updatedMessage],
-  //       }));
-  //     }
-  //   };
-  //
-  //   socket.on("conversationUpdated", handleUpdateConversation);
-  //
-  //   return () => {
-  //     socket.off("conversationUpdated", handleUpdateConversation);
-  //   };
-  // }, [conversation.id]);
-  //
 
   return (
     <Link

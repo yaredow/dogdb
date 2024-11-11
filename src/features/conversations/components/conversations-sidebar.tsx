@@ -8,8 +8,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useState } from "react";
-import { find } from "lodash";
 import { Button } from "@/components/ui/button";
 import ConversationItem from "./conversation-item";
 import { FullConversationType } from "@/lib/types";
@@ -22,32 +20,9 @@ type SidebarProps = {
 
 export default function ConversationSidebar({
   currentUserId,
-  conversations: initialConversations,
+  conversations,
 }: SidebarProps) {
-  const [conversations, setConversations] = useState(initialConversations);
   const conversationId = useGetConversationId();
-
-  // useEffect(() => {
-  //   if (!socket) return;
-  //
-  //   const handleConversationStarted = (
-  //     updatedConversation: FullConversationType,
-  //   ) => {
-  //     setConversations((prevConversations: FullConversationType[]) => {
-  //       if ((find(prevConversations), { id: updatedConversation.id })) {
-  //         return prevConversations;
-  //       }
-  //
-  //       return [...prevConversations, updatedConversation];
-  //     });
-  //   };
-  //
-  //   socket.on("conversationStarted", handleConversationStarted);
-  //
-  //   return () => {
-  //     socket.off("conversationStarted", handleConversationStarted);
-  //   };
-  // }, [currentUserId]);
 
   return (
     <div className="group relative hidden min-h-[80vh] flex-col gap-4 border-r md:flex md:w-[28%]">
