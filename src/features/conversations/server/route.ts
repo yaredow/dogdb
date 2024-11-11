@@ -13,7 +13,7 @@ const app = new Hono().post(
     const user = c.get("user");
 
     if (!user) {
-      c.json({ error: "Unautherized" }, 401);
+      return c.json({ error: "Unautherized" }, 401);
     }
 
     const existingConversation = await prisma.conversation.findMany({
@@ -36,7 +36,11 @@ const app = new Hono().post(
         ],
       },
       include: {
-        users: true,
+        users: {
+          select: {
+            id: true,
+          },
+        },
         messages: {
           select: {
             seen: true,
@@ -65,7 +69,11 @@ const app = new Hono().post(
           },
         },
         include: {
-          users: true,
+          users: {
+            select: {
+              id: true,
+            },
+          },
           messages: {
             select: {
               seen: true,

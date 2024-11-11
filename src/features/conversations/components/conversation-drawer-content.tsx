@@ -13,11 +13,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { CalendarIcon, ClockIcon, Trash } from "lucide-react";
 import DefaultPfp from "@/../public/images/Default_pfp.svg";
-import { User } from "better-auth";
 import { formatDate } from "@/lib/utils";
+import { UserType } from "@/lib/types";
 
 type ConversationDrawerContentProps = {
-  selectedUser: User;
+  selectedUser: UserType;
   onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 

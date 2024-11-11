@@ -14,8 +14,8 @@ export default async function ConversationsLayout({
   const session = await auth.api.getSession({
     headers: headers(),
   });
+
   const conversations = (await getConversations()) as FullConversationType[];
-  console.log({ conversations });
 
   if (!conversations) {
     return <div>No conversations</div>;
@@ -26,12 +26,9 @@ export default async function ConversationsLayout({
   }
 
   return (
-    <div className="flex h-full rounded-lg md:mx-6 md:border">
-      <ConversationsSidebar
-        currentUserId={session?.user.id}
-        conversations={conversations}
-      />
-      <div className="flex-grow">{children}</div>;
+    <div className="flex h-full items-center rounded-lg md:m-6 md:border">
+      <ConversationsSidebar conversations={conversations} />
+      <div className="flex-grow">{children}</div>
     </div>
   );
 }

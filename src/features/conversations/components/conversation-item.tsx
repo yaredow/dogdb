@@ -3,21 +3,24 @@ import Link from "next/link";
 import DefaultPf from "@/../public/images/Default_pfp.svg";
 import { cn, formatDate } from "@/lib/utils";
 import { FullConversationType } from "@/lib/types";
+import { authClient } from "@/lib/auth-client";
 
 type ConversationItemProps = {
   conversation: FullConversationType;
-  currentLoggedInUserId: string;
   isSelectedConversation: boolean;
 };
 export default function ConversationItem({
   conversation,
-  currentLoggedInUserId,
   isSelectedConversation,
 }: ConversationItemProps) {
-  const otherUser = conversation.users.find(
-    (user) => user.id !== currentLoggedInUserId,
+  const { data: session } = authClient.useSession();
+  const otherUser = conversation.users?.find(
+    (user) => user.id !== session?.user.id,
   );
-  const lastMessage = conversation.messages[conversation.messages.length - 1];
+
+  const lastMessage = conversation.messages?.length
+    ? conversation.messages[conversation.messages.length - 1]
+    : null;
 
   return (
     <Link
@@ -46,9 +49,9 @@ export default function ConversationItem({
 
           <div className="flex w-full flex-col">
             <span>{otherUser?.name}</span>
-            {conversation.messages.length > 0 ? (
+            {conversation.messages?.length > 0 ? (
               <span className="max-w-28 truncate text-ellipsis whitespace-nowrap text-xs text-muted-foreground">
-                {lastMessage.body}
+                {lastMessage?.body}
               </span>
             ) : (
               <span className="truncate text-xs text-muted-foreground">

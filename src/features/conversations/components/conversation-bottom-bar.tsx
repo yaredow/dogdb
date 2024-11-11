@@ -29,7 +29,7 @@ export default function ConversationBottombar({
   conversationId,
 }: ConversationBottombarProps) {
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -143,7 +143,6 @@ export default function ConversationBottombar({
       <AnimatePresence initial={false}>
         <motion.div
           key="input"
-          className="relative w-full"
           layout
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -168,14 +167,14 @@ export default function ConversationBottombar({
             className="flex h-9 w-full resize-none items-center overflow-hidden rounded-full border bg-background"
           ></Textarea>
           <div className="absolute bottom-0.5 right-2">
-            {/* <EmojiPicker */}
-            {/*   onChange={(value) => { */}
-            {/*     setMessage(message + value); */}
-            {/*     if (inputRef.current) { */}
-            {/*       inputRef.current.focus(); */}
-            {/*     } */}
-            {/*   }} */}
-            {/* /> */}
+            {/* <EmojiPicker
+              onChange={(value) => {
+                setMessage(message + value);
+                if (inputRef.current) {
+                  inputRef.current.focus();
+                }
+              }}
+            /> */}
           </div>
         </motion.div>
 

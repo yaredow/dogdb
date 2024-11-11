@@ -44,10 +44,6 @@ export default function MessageItem({
         originX: 0.5,
         originY: 0.5,
       }}
-      className={cn(
-        "flex flex-col gap-2 whitespace-pre-wrap p-4",
-        isMessageFromCurrentUser ? "items-end" : "items-start",
-      )}
     >
       <div className="flex items-center gap-3">
         {!isMessageFromCurrentUser && (

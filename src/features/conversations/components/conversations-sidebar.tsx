@@ -15,13 +15,9 @@ import { useGetConversationId } from "../hooks/use-get-conversation-id";
 
 type SidebarProps = {
   conversations: FullConversationType[];
-  currentUserId: string;
 };
 
-export default function ConversationSidebar({
-  currentUserId,
-  conversations,
-}: SidebarProps) {
+export default function ConversationSidebar({ conversations }: SidebarProps) {
   const conversationId = useGetConversationId();
 
   return (
@@ -58,7 +54,6 @@ export default function ConversationSidebar({
             {conversations.map((conversation, index) => (
               <li key={index} className="w-full">
                 <ConversationItem
-                  currentLoggedInUserId={currentUserId}
                   conversation={conversation}
                   isSelectedConversation={conversationId === conversation.id}
                 />

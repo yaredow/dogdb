@@ -5,10 +5,10 @@ import { Ellipsis, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import ConversationDrawerContent from "./conversation-drawer-content";
-import { User } from "@/types";
+import { UserType } from "@/lib/types";
 
 type ConversationDropdownMenuProps = {
-  selectedUser: User;
+  selectedUser: UserType;
   onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 

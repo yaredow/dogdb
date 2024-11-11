@@ -9,7 +9,8 @@ type UseStartConversationProps = {
 };
 
 type ResponseType = InferResponseType<
-  (typeof client.api.conversations)["start-conversation"]["$post"]
+  (typeof client.api.conversations)["start-conversation"]["$post"],
+  200
 >;
 type RequestType = InferRequestType<
   (typeof client.api.conversations)["start-conversation"]["$post"]
@@ -35,6 +36,11 @@ export const useStartConversation = ({ userId }: UseStartConversationProps) => {
       }
 
       return await response.json();
+    },
+    onSuccess: () => {
+      toast({
+        description: "Workspace created successfully",
+      });
     },
     onError: (error) => {
       console.error(error);
