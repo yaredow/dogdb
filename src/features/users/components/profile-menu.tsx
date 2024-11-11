@@ -6,7 +6,6 @@ import {
   Ellipsis,
   EllipsisVertical,
   Link,
-  Upload,
 } from "lucide-react";
 import {
   DropdownMenu,

@@ -2,7 +2,7 @@ import NewConversation from "@/features/conversations/components/start-conversat
 
 export default function NewConversationPage() {
   return (
-    <main className="flex items-center justify-center mx-auto">
+    <main className="mx-auto flex items-center justify-center">
       <NewConversation />
     </main>
   );

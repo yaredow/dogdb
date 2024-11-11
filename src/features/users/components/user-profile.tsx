@@ -1,25 +1,27 @@
 "use client";
 
-import { User as PrismsUser } from "@prisma/client";
-import { User as AuthUser } from "better-auth";
 import Image from "next/image";
-import UserAvatar from "./user-avatar";
-import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
+
+import { User as AuthUser } from "better-auth";
 import {
   Mail,
   MailIcon,
   MapPinIcon,
-  MessageCircleIcon,
   SearchIcon,
   UsersIcon,
 } from "lucide-react";
-import FollowButton from "./follow-button";
+import { useMedia } from "react-use";
+import { User as PrismsUser } from "@prisma/client";
+
+import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
 import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+
+import UserAvatar from "./user-avatar";
+import FollowButton from "./follow-button";
+import ProfileMenu from "./profile-menu";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
-import { Button } from "@/components/ui/button";
-import ProfileMenu from "./profile-menu";
-import { useMedia } from "react-use";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
