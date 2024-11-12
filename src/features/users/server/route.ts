@@ -115,6 +115,7 @@ const app = new Hono()
 
     return c.json(data);
   })
+
   .post("/follow/:userId", SessionMiddleware, async (c) => {
     const { userId } = c.req.param();
     const currentUser = c.get("user");

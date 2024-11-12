@@ -1,23 +1,25 @@
+import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { createNodeWebSocket } from "@hono/node-ws";
+import { WebSocketServer } from "ws";
 
 const app = new Hono();
 
-const { upgradeWebSocket } = createNodeWebSocket({ app });
+app.get("/", (c) => {
+  return c.json({ message: "Hello from server" });
+});
 
-export const wsApp = app.get(
-  "/ws",
-  upgradeWebSocket((c) => {
-    return {
-      onMessage(event, ws) {
-        console.log(`message from client" ${event.data}`);
-        ws.send("Hello from server");
-      },
-      onClose: () => {
-        console.log("Connection closed");
-      },
-    };
-  }),
-);
+const server = serve(app, (info) => {
+  console.log(`Listening on http://localhost:${info.port}`);
+});
 
-export default app;
+const wss = new WebSocketServer({ server });
+
+wss.on("connection", function connection(ws) {
+  ws.on("error", console.error);
+
+  ws.on("message", function message(data) {
+    console.log("received: %s", data);
+  });
+
+  ws.send("something");
+});

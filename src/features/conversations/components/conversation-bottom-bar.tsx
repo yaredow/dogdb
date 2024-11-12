@@ -1,5 +1,7 @@
 "use client";
 
+import React, { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   FileImage,
   Mic,
@@ -8,19 +10,15 @@ import {
   ThumbsUp,
 } from "lucide-react";
 
-import React, { useRef, useState } from "react";
+import { socket } from "@/lib/socket";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import EmojiPicker from "@emoji-mart/react";
-import { Emoji } from "@emoji-mart/data";
 
 type ConversationBottombarProps = {
   conversationId: string;
@@ -69,7 +67,17 @@ export default function ConversationBottombar({
 
   const handleThumbsUp = async () => {};
 
-  const handleSendMessage = async () => {};
+  const handleSendMessage = async () => {
+    if (!socket) return;
+
+    if (message.trim()) {
+      socket.emit("hello", "Hello from client");
+
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  };
 
   return (
     <div className="flex w-full items-center justify-between gap-2 md:p-2">
@@ -142,6 +150,7 @@ export default function ConversationBottombar({
       <AnimatePresence initial={false}>
         <motion.div
           key="input"
+          className="relative w-full"
           layout
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -165,16 +174,6 @@ export default function ConversationBottombar({
             placeholder="Aa"
             className="flex h-9 w-full resize-none items-center overflow-hidden rounded-full border bg-background"
           ></Textarea>
-          <div className="absolute bottom-0.5 right-2">
-            <EmojiPicker
-              onChange={(value: Emoji) => {
-                setMessage(message + value);
-                if (inputRef.current) {
-                  inputRef.current.focus();
-                }
-              }}
-            />
-          </div>
         </motion.div>
 
         {message.trim() ? (
