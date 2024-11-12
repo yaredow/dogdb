@@ -24,6 +24,7 @@ import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
 import { useStartConversation } from "@/features/conversations/api/use-start-conversation";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -50,14 +51,12 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
 
   return (
     <div className="mx-auto max-w-6xl p-0 md:p-4">
-      {!isDesktop && (
-        <div className="flex justify-end">
-          <Button variant="ghost" size="icon">
-            <SearchIcon />
-          </Button>
-          <ProfileMenu user={user} isBlocked={data?.isBlocked} />
-        </div>
-      )}
+      <div className={cn("flex justify-end", { hidden: isDesktop })}>
+        <Button variant="ghost" size="icon">
+          <SearchIcon />
+        </Button>
+        <ProfileMenu user={user} isBlocked={data?.isBlocked} />
+      </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="col-span-2 overflow-hidden shadow">
@@ -76,7 +75,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
             </div>
 
             <div className="m-2 flex flex-row items-center justify-end gap-x-2 md:flex-row">
-              {!isCurrentUser && (
+              {!isCurrentUser ? (
                 <>
                   {!data?.isBlocked && (
                     <Button
@@ -96,6 +95,8 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                     <ProfileMenu isBlocked={data?.isBlocked} user={user} />
                   )}
                 </>
+              ) : (
+                <Button variant="outline">Edit profile</Button>
               )}
             </div>
           </div>

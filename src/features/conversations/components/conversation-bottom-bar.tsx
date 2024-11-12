@@ -142,7 +142,6 @@ export default function ConversationBottombar({
       <AnimatePresence initial={false}>
         <motion.div
           key="input"
-          className="relative w-full"
           layout
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -168,7 +167,7 @@ export default function ConversationBottombar({
           ></Textarea>
           <div className="absolute bottom-0.5 right-2">
             <EmojiPicker
-              onChange={(value) => {
+              onChange={(value: Emoji) => {
                 setMessage(message + value);
                 if (inputRef.current) {
                   inputRef.current.focus();

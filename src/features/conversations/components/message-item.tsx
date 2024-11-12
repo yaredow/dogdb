@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { CheckCheck } from "lucide-react";
 
-import { cn, formatDate } from "@/lib/utils";
+import { formatDate } from "@/lib/utils";
 import { FullMessageType, UserType } from "@/lib/types";
 
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -46,10 +46,6 @@ export default function MessageItem({
         originX: 0.5,
         originY: 0.5,
       }}
-      className={cn(
-        "flex flex-col gap-2 whitespace-pre-wrap p-4",
-        isMessageFromCurrentUser ? "items-end" : "items-start",
-      )}
     >
       <div className="flex items-center gap-3">
         {!isMessageFromCurrentUser && (
