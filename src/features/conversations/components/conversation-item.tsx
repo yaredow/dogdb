@@ -1,9 +1,11 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import DefaultPf from "@/../public/images/Default_pfp.svg";
+
+import { authClient } from "@/lib/auth-client";
 import { cn, formatDate } from "@/lib/utils";
 import { FullConversationType } from "@/lib/types";
-import { authClient } from "@/lib/auth-client";
+
+import DefaultPf from "@/assets/images/Default_pfp.svg";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 type ConversationItemProps = {
   conversation: FullConversationType;

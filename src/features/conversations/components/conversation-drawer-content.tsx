@@ -1,3 +1,11 @@
+import { CalendarIcon, ClockIcon, Trash } from "lucide-react";
+
+import { formatDate } from "@/lib/utils";
+import { UserType } from "@/lib/types";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import DefaultPfp from "@/assets/images/Default_pfp.svg";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,12 +17,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { CalendarIcon, ClockIcon, Trash } from "lucide-react";
-import DefaultPfp from "@/../public/images/Default_pfp.svg";
-import { formatDate } from "@/lib/utils";
-import { UserType } from "@/lib/types";
 
 type ConversationDrawerContentProps = {
   selectedUser: UserType;

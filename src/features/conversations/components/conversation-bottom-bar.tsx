@@ -9,15 +9,18 @@ import {
 } from "lucide-react";
 
 import React, { useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Textarea } from "@/components/ui/textarea";
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import EmojiPicker from "@emoji-mart/react";
+import { Emoji } from "@emoji-mart/data";
 
 type ConversationBottombarProps = {
   conversationId: string;
@@ -29,7 +32,7 @@ export default function ConversationBottombar({
   conversationId,
 }: ConversationBottombarProps) {
   const [message, setMessage] = useState("");
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -64,13 +67,9 @@ export default function ConversationBottombar({
     }
   };
 
-  const handleThumbsUp = async () => {
-    console.log("log");
-  };
+  const handleThumbsUp = async () => {};
 
-  const handleSendMessage = async () => {
-    console.log("log");
-  };
+  const handleSendMessage = async () => {};
 
   return (
     <div className="flex w-full items-center justify-between gap-2 md:p-2">
@@ -143,6 +142,7 @@ export default function ConversationBottombar({
       <AnimatePresence initial={false}>
         <motion.div
           key="input"
+          className="relative w-full"
           layout
           initial={{ opacity: 0, scale: 1 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -167,14 +167,14 @@ export default function ConversationBottombar({
             className="flex h-9 w-full resize-none items-center overflow-hidden rounded-full border bg-background"
           ></Textarea>
           <div className="absolute bottom-0.5 right-2">
-            {/* <EmojiPicker
+            <EmojiPicker
               onChange={(value) => {
                 setMessage(message + value);
                 if (inputRef.current) {
                   inputRef.current.focus();
                 }
               }}
-            /> */}
+            />
           </div>
         </motion.div>
 

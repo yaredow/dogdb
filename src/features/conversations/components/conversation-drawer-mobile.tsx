@@ -4,10 +4,10 @@ import { EllipsisVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ConversationDrawerContent from "./conversation-drawer-content";
-import { User } from "better-auth";
+import { UserType } from "@/lib/types";
 
 type ConversationDrawerMobileProps = {
-  selectedUser: User;
+  selectedUser: UserType;
   onDelete: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 

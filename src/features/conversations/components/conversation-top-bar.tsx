@@ -1,23 +1,22 @@
 "use client";
 
-import React from "react";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import DefaultPfp from "@/../public/images/Default_pfp.svg";
-import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa6";
-import { User } from "better-auth";
+import Link from "next/link";
+import React from "react";
+
+import { UserType } from "@/lib/types";
+
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import DefaultPfp from "@/assets/images/Default_pfp.svg";
+
 import ConversationDrawerMobile from "./conversation-drawer-mobile";
-import { useGetConversationId } from "../hooks/use-get-conversation-id";
 
 interface ChatTopbarProps {
-  selectedUser: User;
+  selectedUser: UserType;
 }
 
 export default function ConversationTopbar({ selectedUser }: ChatTopbarProps) {
-  const conversationId = useGetConversationId();
-  const handleConversationDelete = () => {
-    console.log("log");
-  };
+  const handleConversationDelete = () => {};
 
   return (
     <div className="flex h-14 w-full items-center justify-between border-b md:h-20 md:p-4">

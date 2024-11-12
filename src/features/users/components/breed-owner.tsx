@@ -1,10 +1,12 @@
 "use client";
 
-import DefaultPfp from "@/../public/images/Default_pfp.svg";
 import Link from "next/link";
-import { Avatar, AvatarImage } from "../../../components/ui/avatar";
-import { useGetBreedOwners } from "../api/use-get-breed-owners";
 import { Loader2 } from "lucide-react";
+
+import DefaultPfp from "@/assets/images/Default_pfp.svg";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
+import { useGetBreedOwners } from "../api/use-get-breed-owners";
 
 type BreedOwnerProps = {
   name: string;
@@ -42,7 +44,7 @@ export default function BreedOwner({ breedId }: BreedOwnerType) {
 
   if (isPending) {
     return (
-      <Loader2 className="flex items-center justify-center animate-spin" />
+      <Loader2 className="flex animate-spin items-center justify-center" />
     );
   }
 

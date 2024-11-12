@@ -26,7 +26,7 @@ export default async function ConversationsLayout({
   }
 
   return (
-    <div className="flex h-full items-center rounded-lg md:m-6 md:border">
+    <div className="flex h-full items-center rounded-lg md:mx-6 md:border">
       <ConversationsSidebar conversations={conversations} />
       <div className="flex-grow">{children}</div>
     </div>

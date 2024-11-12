@@ -1,10 +1,12 @@
-import ConversationTopbar from "@/features/conversations/components/conversation-top-bar";
-import MessageList from "@/features/conversations/components/message-list";
-import { getConversationsWithId } from "@/features/conversations/queries";
-import { auth } from "@/lib/auth";
-import { FullConversationType, UserType } from "@/lib/types";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
+import { auth } from "@/lib/auth";
+import { FullConversationType, UserType } from "@/lib/types";
+
+import ConversationTopbar from "@/features/conversations/components/conversation-top-bar";
+import { getConversationsWithId } from "@/features/conversations/queries";
+import MessageList from "@/features/conversations/components/message-list";
 
 type ConversationWithIdPageProps = {
   params: {
@@ -37,7 +39,7 @@ export default async function ConversationWithIdPage({
 
   return (
     <div className="flex h-[95vh] w-full flex-col justify-between md:h-[80vh]">
-      <ConversationTopbar selectedUser={session.user} />
+      <ConversationTopbar selectedUser={selectedUser} />
 
       <MessageList
         currentUser={session.user}
