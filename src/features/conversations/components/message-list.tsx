@@ -51,7 +51,10 @@ export default function MessageList({
           })}
         </AnimatePresence>
       </div>
-      <ConversationBottombar conversationId={conversationId} />
+      <ConversationBottombar
+        conversationId={conversationId}
+        selectedUser={selectedUser}
+      />
     </div>
   );
 }

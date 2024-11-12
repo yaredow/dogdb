@@ -10,8 +10,6 @@ import {
   ThumbsUp,
 } from "lucide-react";
 
-import { socket } from "@/lib/socket";
-
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -19,20 +17,28 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useSendMessage } from "@/features/messages/api/use-send-message";
+import { UserType } from "@/lib/types";
 
 type ConversationBottombarProps = {
+  selectedUser: UserType;
   conversationId: string;
 };
 
 export const BottombarIcons = [{ icon: FileImage }, { icon: Mic }];
 
 export default function ConversationBottombar({
+  selectedUser,
   conversationId,
 }: ConversationBottombarProps) {
   const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { sendMessage, isPending } = useSendMessage({
+    conversationId,
+    userId: selectedUser.id,
+    body: message,
+  });
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === "Enter" && !event.shiftKey) {
@@ -68,15 +74,17 @@ export default function ConversationBottombar({
   const handleThumbsUp = async () => {};
 
   const handleSendMessage = async () => {
-    if (!socket) return;
-
-    if (message.trim()) {
-      socket.emit("hello", "Hello from client");
-
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }
+    sendMessage(
+      {
+        param: { userId: selectedUser.id },
+        query: { body: message, conversationId },
+      },
+      {
+        onSuccess: () => {
+          setMessage("");
+        },
+      },
+    );
   };
 
   return (
@@ -166,7 +174,7 @@ export default function ConversationBottombar({
           <Textarea
             autoComplete="off"
             value={message}
-            disabled={isLoading}
+            disabled={isPending}
             ref={inputRef}
             onKeyDown={handleKeyPress}
             onChange={handleInputChange}
