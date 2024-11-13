@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { AnimatePresence } from "framer-motion";
 import ConversationBottombar from "./conversation-bottom-bar";
 import MessageItem from "./message-item";
-import { useGetConversationId } from "../hooks/use-get-conversation-id";
+import { useConversationId } from "../hooks/use-conversation-id";
 import { FullMessageType, UserType } from "@/lib/types";
 
 interface ChatListProps {
@@ -18,7 +18,7 @@ export default function MessageList({
   currentUser,
   selectedUser,
 }: ChatListProps) {
-  const conversationId = useGetConversationId();
+  const conversationId = useConversationId();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -6,13 +6,13 @@ export const getConversations = async () => {
     const conversations = await prisma.conversation.findMany();
 
     if (!conversations) {
-      return null;
+      return [];
     }
 
     return conversations;
   } catch (error) {
     console.log(error);
-    return null;
+    return [];
   }
 };
 

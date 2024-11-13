@@ -17,7 +17,7 @@ export default async function ConversationsLayout({
 
   const conversations = (await getConversations()) as FullConversationType[];
 
-  if (!conversations) {
+  if (!conversations.length) {
     return <div>No conversations</div>;
   }
 

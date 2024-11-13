@@ -47,60 +47,66 @@ export default function MessageItem({
         originY: 0.5,
       }}
     >
-      <div className="flex items-center gap-3">
-        {!isMessageFromCurrentUser && (
-          <Avatar className="flex items-center justify-center">
+      <div className="mx-4">
+        <div
+          className={`flex items-start gap-2 ${isMessageFromCurrentUser ? "flex-row-reverse" : "flex-row"}`}
+        >
+          <Avatar className="mt-1 flex-shrink-0">
             <AvatarImage
-              src={selectedUser.image || DefaultPfp}
-              alt={selectedUser.name || ""}
-              width={6}
-              height={6}
+              src={
+                isMessageFromCurrentUser
+                  ? currentUser.image || DefaultPfp.src
+                  : selectedUser.image || DefaultPfp.src
+              }
+              alt={
+                isMessageFromCurrentUser
+                  ? currentUser.name || ""
+                  : selectedUser.name || ""
+              }
+              width={24}
+              height={24}
             />
           </Avatar>
-        )}
 
-        {message.body ? (
-          <div className="flex flex-col gap-2">
-            <span className="max-w-xs rounded-md bg-accent p-3">
-              {message.body}
-            </span>
-            <div className="flex flex-row items-center justify-between">
-              <span className="text-xs">
-                {formatDate(message.createdAt).split(",")[1]}
-              </span>
+          <div
+            className={`flex flex-col ${isMessageFromCurrentUser ? "items-end" : "items-start"}`}
+          >
+            {message.body ? (
+              <>
+                <span
+                  className={`max-w-xs rounded-md p-3 ${isMessageFromCurrentUser ? "bg-primary text-primary-foreground" : "bg-accent"}`}
+                >
+                  {message.body}
+                </span>
 
-              {isLast &&
-                isMessageFromCurrentUser &&
-                isMessageSeenByOtherUser && (
-                  <span className="text-xs">
-                    <CheckCheck size={16} />
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground">
+                    {formatDate(message.createdAt).split(",")[1]}
                   </span>
-                )}
-            </div>
-          </div>
-        ) : (
-          message.image && (
-            <div className="relative aspect-square h-48">
-              <Image
-                src={message.image}
-                alt={message.id}
-                fill
-                className="border-primary-800 border-r object-cover"
-              />
-            </div>
-          )
-        )}
 
-        {isMessageFromCurrentUser && (
-          <Avatar className="flex items-center justify-center">
-            <AvatarImage
-              src={currentUser.image || DefaultPfp.src}
-              alt={currentUser.name || ""}
-              width={6}
-              height={6}
-            />
-          </Avatar>
-        )}
+                  {isLast &&
+                    isMessageFromCurrentUser &&
+                    isMessageSeenByOtherUser && (
+                      <span className="text-xs text-muted-foreground">
+                        <CheckCheck size={16} />
+                      </span>
+                    )}
+                </div>
+              </>
+            ) : (
+              message.image && (
+                <div className="relative aspect-square h-48 overflow-hidden rounded-md">
+                  <Image
+                    src={message.image}
+                    alt={message.id}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )
+            )}
+          </div>
+        </div>
       </div>
     </motion.div>
   );

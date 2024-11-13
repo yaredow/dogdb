@@ -10,15 +10,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import ConversationItem from "./conversation-item";
+import { useConversationId } from "../hooks/use-conversation-id";
 import { FullConversationType } from "@/lib/types";
-import { useGetConversationId } from "../hooks/use-get-conversation-id";
 
-type SidebarProps = {
+type ConversationSidebarProps = {
   conversations: FullConversationType[];
 };
 
-export default function ConversationSidebar({ conversations }: SidebarProps) {
-  const conversationId = useGetConversationId();
+export default function ConversationSidebar({
+  conversations,
+}: ConversationSidebarProps) {
+  const conversationId = useConversationId();
 
   return (
     <div className="group relative hidden min-h-[80vh] flex-col gap-4 border-r md:flex md:w-[28%]">

@@ -38,7 +38,7 @@ export default async function ConversationWithIdPage({
   ) as UserType;
 
   return (
-    <div className="flex h-[95vh] w-full flex-col justify-between md:h-[80vh]">
+    <div className="flex h-[95vh] w-full flex-col justify-between gap-y-4 md:h-[80vh]">
       <ConversationTopbar selectedUser={selectedUser} />
 
       <MessageList
