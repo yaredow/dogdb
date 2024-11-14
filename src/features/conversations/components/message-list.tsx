@@ -33,7 +33,7 @@ export default function MessageList({
     <div className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden">
       <div
         ref={messagesContainerRef}
-        className="flex h-full w-full flex-col overflow-y-auto overflow-x-hidden"
+        className="flex h-full w-full flex-col gap-y-3 overflow-y-auto overflow-x-hidden"
       >
         <AnimatePresence>
           {messages?.map((message, index) => {

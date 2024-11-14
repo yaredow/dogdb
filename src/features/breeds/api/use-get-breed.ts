@@ -18,10 +18,13 @@ export const useGetBreed = ({ slug }: UseGetBreedProps) => {
       }
 
       const data = await response.json();
+      return data.data;
+    },
+    select: (data) => {
       return {
-        ...data.data,
-        createdAt: new Date(data.data.createdAt),
-        updatedAt: new Date(data.data.updatedAt),
+        ...data,
+        createdAt: new Date(data.createdAt),
+        updatedAt: new Date(data.updatedAt),
       };
     },
     enabled: !!slug,

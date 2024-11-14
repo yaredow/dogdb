@@ -14,7 +14,7 @@ export default function BreedDetails() {
 
   if (isPending) {
     return (
-      <div className="flex items-center justify-center h-screen animate-spin">
+      <div className="flex h-screen animate-spin items-center justify-center">
         <Loader2 className="size-6" />
       </div>
     );
