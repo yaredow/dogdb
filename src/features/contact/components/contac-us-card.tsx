@@ -41,8 +41,8 @@ export default function ContactUsCard() {
   };
 
   return (
-    <Card className="w-full h-full md:w-[487px] border shadow-lg">
-      <CardHeader className=" flex items-center justify-between p-7">
+    <Card className="h-full w-full border shadow-lg md:w-[487px]">
+      <CardHeader className="flex items-center justify-between p-7">
         <CardTitle className="text-2xl">Contact Us</CardTitle>
         <CardDescription>
           Have a question, feedback, or need help? We’re here for you! Fill out
@@ -55,9 +55,9 @@ export default function ContactUsCard() {
       <CardContent className="p-7">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className=" flex flex-col space-y-6">
+            <div className="flex flex-col space-y-6">
               <div className="flex flex-col gap-4 md:flex-row">
-                <div className=" w-full md:w-1/2">
+                <div className="w-full md:w-1/2">
                   <FormField
                     control={form.control}
                     name="name"
@@ -78,7 +78,7 @@ export default function ContactUsCard() {
                   />
                 </div>
 
-                <div className=" w-full md:w-1/2">
+                <div className="w-full md:w-1/2">
                   <FormField
                     control={form.control}
                     name="email"

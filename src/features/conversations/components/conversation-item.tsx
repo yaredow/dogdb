@@ -16,14 +16,12 @@ export default function ConversationItem({
   isSelectedConversation,
 }: ConversationItemProps) {
   const { data: session } = authClient.useSession();
+  console.log({ conversation });
 
   const otherUser = conversation.users?.find(
     (user) => user.id !== session?.user.id,
   );
-
-  const lastMessage =
-    conversation.messages?.length &&
-    conversation.messages[conversation?.messages.length - 1];
+  const lastMessage = conversation.messages[conversation.messages.length - 1];
 
   return (
     <Link

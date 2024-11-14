@@ -24,8 +24,6 @@ const app = new Hono()
       },
     });
 
-    console.log({ conversation });
-
     return c.json({ data: conversation });
   })
   .get("/:conversationId", SessionMiddleware, async (c) => {

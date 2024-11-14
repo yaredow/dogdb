@@ -3,7 +3,17 @@ import { Conversation, Message, User } from "@prisma/client";
 
 export const getConversations = async () => {
   try {
-    const conversations = await prisma.conversation.findMany();
+    const conversations = await prisma.conversation.findMany({
+      include: {
+        users: true,
+        messages: {
+          include: {
+            seen: true,
+            sender: true,
+          },
+        },
+      },
+    });
 
     if (!conversations) {
       return [];

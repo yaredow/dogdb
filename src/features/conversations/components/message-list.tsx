@@ -20,6 +20,7 @@ export default function MessageList({
 }: ChatListProps) {
   const conversationId = useConversationId();
   const messagesContainerRef = useRef<HTMLDivElement>(null);
+  console.log({ messages });
 
   useEffect(() => {
     const container = messagesContainerRef.current;
