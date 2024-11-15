@@ -25,6 +25,7 @@ import { useUserId } from "../hooks/use-user-id";
 import { useStartConversation } from "@/features/conversations/api/use-start-conversation";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useUpdateProfileModal } from "../hooks/use-update-profile-modal";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -37,6 +38,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
   const { data } = useGetFollowers({ userId });
   const { startConversation, isPending } = useStartConversation({ userId });
   const router = useRouter();
+  const { open } = useUpdateProfileModal();
 
   const handleStartConversation = () => {
     startConversation(
@@ -96,7 +98,9 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                   )}
                 </>
               ) : (
-                <Button variant="outline">Edit profile</Button>
+                <Button variant="outline" onClick={open}>
+                  Edit profile
+                </Button>
               )}
             </div>
           </div>

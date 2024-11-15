@@ -6,7 +6,7 @@ type UseGetBreedProps = {
 };
 
 export const useGetUser = ({ userId }: UseGetBreedProps) => {
-  const { data: user, isFetching } = useQuery({
+  const { data: user, isPending } = useQuery({
     queryKey: ["user", userId],
     queryFn: async () => {
       const response = await client.api.users[":userId"].$get({
@@ -20,8 +20,16 @@ export const useGetUser = ({ userId }: UseGetBreedProps) => {
       const data = await response.json();
       return data.data;
     },
+    select: (data) => {
+      return {
+        ...data,
+        createdAt: new Date(data.createdAt),
+        updatedAt: new Date(data.updatedAt),
+        birthDate: new Date(data.birthDate),
+      };
+    },
     enabled: !!userId,
   });
 
-  return { user, isFetching };
+  return { user, isPending };
 };

@@ -1,10 +1,13 @@
+import { SignupSchema } from "@/features/auth/schemas";
 import prisma from "@/lib/prisma";
 import { SessionMiddleware } from "@/lib/session-middleware";
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 
 const app = new Hono()
   .get("/:userId", async (c) => {
     const { userId } = c.req.param();
+
     const user = await prisma.user.findUnique({
       where: {
         id: userId,
@@ -115,7 +118,18 @@ const app = new Hono()
 
     return c.json(data);
   })
+  .post(
+    "/update-profile",
+    SessionMiddleware,
+    zValidator("json", SignupSchema),
+    async (c) => {
+      const user = c.get("user");
 
+      if (!user) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+    },
+  )
   .post("/follow/:userId", SessionMiddleware, async (c) => {
     const { userId } = c.req.param();
     const currentUser = c.get("user");
