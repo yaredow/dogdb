@@ -20,6 +20,20 @@ export const SignupSchema = z.object({
 
   email: z.string().email({ message: "Please enter a valid email address" }),
 
+  birthDate: z
+    .date({
+      required_error: "Birth date is required",
+      invalid_type_error: "Please provide a valid date",
+    })
+    .refine(
+      (date) => {
+        const now = new Date();
+        const age = now.getFullYear() - date.getFullYear();
+        return age >= 18; // Adjust the age as per your requirement
+      },
+      { message: "You must be at least 18 years old" },
+    ),
+
   password: z
     .string()
     .min(8, { message: "Password must be at least 8 characters long" })
