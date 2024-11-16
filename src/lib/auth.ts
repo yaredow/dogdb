@@ -29,4 +29,14 @@ export const auth = betterAuth({
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
     },
   },
+  session: {
+    additionalFields: {
+      birthDate: {
+        type: "date",
+        required: true,
+        input: false,
+        fieldName: "birthDate",
+      },
+    },
+  },
 });

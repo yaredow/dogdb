@@ -3,15 +3,19 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
+import { authClient } from "@/lib/auth-client";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupData, SignupSchema } from "../schemas";
-import { authClient } from "@/lib/auth-client";
+import { Separator } from "@/components/ui/separator";
+import { DatePicker } from "@/components/date-picker";
 import {
   Card,
   CardContent,
@@ -27,9 +31,6 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { Separator } from "@/components/ui/separator";
-import { toast } from "@/hooks/use-toast";
-import { DatePicker } from "@/components/date-picker";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);

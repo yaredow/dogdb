@@ -1,8 +1,10 @@
-import { SignupSchema } from "@/features/auth/schemas";
 import prisma from "@/lib/prisma";
 import { SessionMiddleware } from "@/lib/session-middleware";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { UpdateProfileSchema } from "../schemas";
+import { UploadApiResponse } from "cloudinary";
+import cloudinary from "@/lib/cloudinary";
 
 const app = new Hono()
   .get("/:userId", async (c) => {
@@ -118,16 +120,67 @@ const app = new Hono()
 
     return c.json(data);
   })
-  .post(
-    "/update-profile",
+  .patch(
+    "/update-profile/:userId",
     SessionMiddleware,
-    zValidator("json", SignupSchema),
+    zValidator("form", UpdateProfileSchema),
     async (c) => {
       const user = c.get("user");
+      const { userId } = c.req.param();
+      const { image, bio, name, birthDate } = c.req.valid("form");
 
       if (!user) {
         return c.json({ error: "Unauthorized" }, 401);
       }
+
+      let imageUrl: string | undefined;
+
+      if (image) {
+        const arrayBuffer = await image.arrayBuffer();
+        const buffer = new Uint8Array(arrayBuffer);
+
+        try {
+          const uploadResult = await new Promise<UploadApiResponse | undefined>(
+            (resolve, reject) => {
+              cloudinary.uploader
+                .upload_stream(
+                  {
+                    tags: ["doggo-chat"],
+                    upload_preset: "doggo-chat",
+                  },
+                  (err, result) => {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve(result);
+                    }
+                  },
+                )
+                .end(buffer);
+            },
+          );
+
+          imageUrl = uploadResult?.secure_url;
+        } catch (error) {
+          console.error(error);
+          return c.json({
+            error: "Something went wrong while uploading your image",
+          });
+        }
+      }
+
+      const updatedUser = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          image: imageUrl,
+          birthDate,
+          name,
+          bio,
+        },
+      });
+      return c.json({ data: updatedUser });
     },
   )
   .post("/follow/:userId", SessionMiddleware, async (c) => {

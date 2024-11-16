@@ -9,8 +9,6 @@ type UseGetBreedProps = {
 };
 
 export const useGetFollowers = ({ userId }: UseGetBreedProps) => {
-  console.log({ userId });
-
   const { data, isPending } = useQuery<FollowerInfo>({
     queryKey: ["user", userId],
     queryFn: async () => {

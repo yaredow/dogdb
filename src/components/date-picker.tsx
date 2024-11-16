@@ -43,11 +43,9 @@ export function DatePicker({
       <PopoverContent align="start" className="w-auto p-0">
         <Calendar
           mode="single"
-          captionLayout="dropdown-buttons"
+          dropdown-buttons
           selected={value}
           onSelect={(date) => onChange(date as Date)}
-          fromYear={1960}
-          toYear={2030}
         />
       </PopoverContent>
     </Popover>
