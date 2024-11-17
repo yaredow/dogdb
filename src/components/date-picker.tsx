@@ -1,6 +1,8 @@
 "use client";
 
+import { format } from "date-fns";
 import * as React from "react";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -9,7 +11,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 type DatePickerProps = {
@@ -19,11 +20,11 @@ type DatePickerProps = {
   placeholder?: string;
 };
 
-export function DatePicker({
+export default function DatePicker({
   value,
   onChange,
-  placeholder,
   className,
+  placeholder,
 }: DatePickerProps) {
   return (
     <Popover>
@@ -40,12 +41,15 @@ export function DatePicker({
           {value ? format(value, "PPP") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent align="start" className="w-auto p-0">
+      <PopoverContent className="w-auto p-0" align="start">
         <Calendar
           mode="single"
-          dropdown-buttons
           selected={value}
-          onSelect={(date) => onChange(date as Date)}
+          onSelect={onChange}
+          required
+          autoFocus
+          startMonth={new Date(1960, 0)} // January 1960
+          endMonth={new Date(2025, 2)} // March 2025
         />
       </PopoverContent>
     </Popover>

@@ -14,7 +14,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SignupData, SignupSchema } from "../schemas";
 import { Separator } from "@/components/ui/separator";
-import { DatePicker } from "@/components/date-picker";
 import {
   Card,
   CardContent,
@@ -31,6 +30,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { signIn, signUp } from "@/lib/auth-client";
+import DatePicker from "@/components/date-picker";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
