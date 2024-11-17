@@ -7,7 +7,6 @@ import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-import { authClient } from "@/lib/auth-client";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -31,6 +30,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
+import { signUp } from "@/lib/auth-client";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +47,7 @@ export default function SignupCard() {
   });
 
   const onSubmit = async (values: SignupData) => {
-    await authClient.signUp.email(values, {
+    await signUp.email(values, {
       onRequest: () => {
         setIsLoading(true);
       },

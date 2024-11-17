@@ -1,22 +1,24 @@
 "use client";
 
-import { NavLinks } from "@/lib/constants";
-import NavLink from "./nav-link";
-import MobileNavbar from "./mobile-navbar";
 import Image from "next/image";
-import UserButton from "@/features/auth/components/user-button";
 import Link from "next/link";
-import Logo from "@/assets/images/logo-light.svg";
-import { authClient } from "@/lib/auth-client";
-import { Button } from "./ui/button";
+
 import ConversationToggle from "@/features/conversations/components/conversation-toggle";
+import UserButton from "@/features/auth/components/user-button";
+import Logo from "@/assets/images/logo-light.svg";
+import { NavLinks } from "@/lib/constants";
+
+import { useSession } from "@/lib/auth-client";
+import MobileNavbar from "./mobile-navbar";
 import { ModeToggle } from "./mode-toggle";
+import { Button } from "./ui/button";
+import NavLink from "./nav-link";
 
 export default function NavBar() {
-  const { data: session, isRefetching } = authClient.useSession();
+  const { data: session, isRefetching } = useSession();
 
   return (
-    <nav className="w-full sticky left-0 top-0 bg-background z-10 px-6 py-4 flex items-center justify-between border-b">
+    <nav className="sticky left-0 top-0 z-10 flex w-full items-center justify-between border-b bg-background px-6 py-4">
       <Link href="/" className="flex items-center justify-between space-x-3">
         <Image
           src={Logo}
@@ -27,14 +29,14 @@ export default function NavBar() {
         />
         <h1 className="text-xl font-bold">dogdb</h1>
       </Link>
-      <div className="md:flex hidden flex-row items-center gap-x-4">
+      <div className="hidden flex-row items-center gap-x-4 md:flex">
         {NavLinks.map((link) => (
           <NavLink href={link.path} key={link.path}>
             {link.name}
           </NavLink>
         ))}
 
-        <div className="flex items-center gap-x-6 ml-8">
+        <div className="ml-8 flex items-center gap-x-6">
           <MobileNavbar />
           {session && <ConversationToggle />}
           <ModeToggle />

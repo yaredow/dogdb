@@ -1,11 +1,11 @@
 import Link from "next/link";
 
-import { authClient } from "@/lib/auth-client";
 import { cn, formatDate } from "@/lib/utils";
 import { FullConversationType } from "@/lib/types";
 
 import DefaultPf from "@/assets/images/Default_pfp.svg";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { useSession } from "@/lib/auth-client";
 
 type ConversationItemProps = {
   conversation: FullConversationType;
@@ -15,7 +15,7 @@ export default function ConversationItem({
   conversation,
   isSelectedConversation,
 }: ConversationItemProps) {
-  const { data: session } = authClient.useSession();
+  const { data: session } = useSession();
   console.log({ conversation });
 
   const otherUser = conversation.users?.find(

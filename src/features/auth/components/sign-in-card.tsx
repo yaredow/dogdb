@@ -19,9 +19,9 @@ import {
   FormMessage,
   FormItem,
 } from "@/components/ui/form";
-import { authClient } from "@/lib/auth-client";
 import { toast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
+import { signIn } from "@/lib/auth-client";
 
 export default function SignInCard() {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function SignInCard() {
   });
 
   const onSubmit = async (values: SigninData) => {
-    await authClient.signIn.email(values, {
+    await signIn.email(values, {
       onRequest: () => {
         setIsLoading(true);
       },
@@ -55,8 +55,8 @@ export default function SignInCard() {
   };
 
   return (
-    <Card className=" w-full h-full md:w-[487px] border shadow-lg">
-      <CardHeader className=" flex items-center justify-between p-7">
+    <Card className="h-full w-full border shadow-lg md:w-[487px]">
+      <CardHeader className="flex items-center justify-between p-7">
         <CardTitle className="text-2xl">Welcome Back</CardTitle>
       </CardHeader>
       <div className="px-7">
@@ -64,7 +64,7 @@ export default function SignInCard() {
       </div>
       <CardContent className="p-7">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className=" space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="email"
@@ -109,9 +109,9 @@ export default function SignInCard() {
       </CardContent>
 
       <div className="px-7">
-        <CardContent className="px-7 flex flex-col gap-y-4">
+        <CardContent className="flex flex-col gap-y-4 px-7">
           <Button
-            className="w-full flex flex-row gap-2"
+            className="flex w-full flex-row gap-2"
             disabled={false}
             variant="secondary"
             onClick={() => {
@@ -125,7 +125,7 @@ export default function SignInCard() {
           </Button>
 
           <Button
-            className="w-full flex flex-row gap-2"
+            className="flex w-full flex-row gap-2"
             disabled={false}
             variant="secondary"
             onClick={() => {
@@ -142,11 +142,11 @@ export default function SignInCard() {
         <div className="px-7 py-2">
           <Separator />
         </div>
-        <CardContent className="justify-center flex items-center">
+        <CardContent className="flex items-center justify-center">
           <p>
             Don&apos;t have an account?{" "}
             <Link href="/signup">
-              <span className=" text-blue-700">&nbsp;Sign Up</span>
+              <span className="text-blue-700">&nbsp;Sign Up</span>
             </Link>
           </p>
         </CardContent>
