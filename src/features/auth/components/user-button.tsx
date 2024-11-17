@@ -1,5 +1,11 @@
 "use client";
 
+import { Loader2, LogOutIcon, UserIcon } from "lucide-react";
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+
+import { signOut, useSession } from "@/lib/auth-client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,31 +14,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Loader2, LogOutIcon, UserIcon } from "lucide-react";
-import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
+
 import UserAvatar from "./user-avatar";
-import Link from "next/link";
 
 type UserButtonProps = {
   className: string;
 };
 
 export default function UserButton({ className }: UserButtonProps) {
-  const { data: session, isRefetching, isPending } = authClient.useSession();
+  const { data: session, isRefetching, isPending } = useSession();
   const { name, image, id } = session?.user || {};
   const isLoading = isRefetching || isPending;
 
   if (isLoading || !session) {
     return (
-      <div className="size-10 rounded-full flex items-center justify-center border border-neutral-200 ">
-        <Loader2 className="animate-spin size-4 text-muted-foreground" />
+      <div className="flex size-10 items-center justify-center rounded-full border border-neutral-200">
+        <Loader2 className="size-4 animate-spin text-muted-foreground" />
       </div>
     );
   }
 
   const handleSignOut = async () => {
-    await authClient.signOut();
+    await signOut();
   };
 
   return (

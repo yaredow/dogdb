@@ -30,7 +30,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 
 export default function SignupCard() {
   const [isLoading, setIsLoading] = useState(false);
@@ -178,7 +178,7 @@ export default function SignupCard() {
             disabled={false}
             variant="secondary"
             onClick={async () => {
-              authClient.signIn.social({
+              signIn.social({
                 provider: "google",
                 callbackURL: "/",
               });
@@ -192,7 +192,7 @@ export default function SignupCard() {
             disabled={false}
             variant="secondary"
             onClick={async () => {
-              authClient.signIn.social({
+              signIn.social({
                 provider: "facebook",
                 callbackURL: "/",
               });

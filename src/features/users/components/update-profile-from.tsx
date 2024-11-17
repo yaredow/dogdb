@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { UserType } from "@/lib/types";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,6 +19,7 @@ import { useUserId } from "../hooks/use-user-id";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { DatePicker } from "@/components/date-picker";
+import { UserType } from "@/lib/types";
 
 type UpdateProfileFormProps = {
   user: UserType | undefined;
@@ -38,13 +38,17 @@ export default function UpdateProfileForm({
     defaultValues: {
       bio: "",
       name: "",
+      birthDate: user.birthDate,
       image: undefined,
     },
   });
 
   const onSubmit = (values: UpdateProfileData) => {
     updateProfile({
-      form: values,
+      form: {
+        ...values,
+        birthDate: values.birthDate.toISOString(),
+      },
       param: { userId },
     });
   };
@@ -90,6 +94,20 @@ export default function UpdateProfileForm({
                   <FormLabel>Birth Date</FormLabel>
                   <FormControl>
                     <DatePicker {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Birth Date</FormLabel>
+                  <FormControl>
+                    <Input {...field} placeholder={user.bio} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
