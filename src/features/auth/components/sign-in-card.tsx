@@ -115,7 +115,7 @@ export default function SignInCard() {
             disabled={false}
             variant="secondary"
             onClick={() => {
-              authClient.signIn.social({
+              signIn.social({
                 provider: "google",
                 callbackURL: "/",
               });
@@ -129,7 +129,7 @@ export default function SignInCard() {
             disabled={false}
             variant="secondary"
             onClick={() => {
-              authClient.signIn.social({
+              signIn.social({
                 provider: "facebook",
                 callbackURL: "/",
               });

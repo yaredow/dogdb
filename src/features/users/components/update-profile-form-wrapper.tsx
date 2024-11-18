@@ -15,7 +15,6 @@ export default function UpdateProfileFormWrapper({
 }: UpdateProfileFormWrapperProps) {
   const userId = useUserId();
   const { user, isPending } = useGetUser({ userId });
-  console.log({ isPending });
 
   if (isPending) {
     return (

@@ -230,28 +230,32 @@ const app = new Hono()
 
     return c.json({ success: true });
   })
+
   .patch(
     "/update-profile/:userId",
     SessionMiddleware,
     zValidator("form", UpdateProfileSchema),
     async (c) => {
-      const user = c.get("user");
-      const { userId } = c.req.param();
-      const { image, bio, name, birthDate } = c.req.valid("form");
+      try {
+        const user = c.get("user");
+        const { userId } = c.req.param();
+        const { image, bio, name, birthDate } = c.req.valid("form");
+        console.log({ data: c.req.valid("form") });
 
-      if (!user) {
-        return c.json({ error: "Unauthorized" }, 401);
-      }
+        if (!user) {
+          return c.json({ error: "Unauthorized" }, 401);
+        }
 
-      let imageUrl: string | undefined;
+        let imageUrl: string | undefined;
 
-      if (image) {
-        const arrayBuffer = await image.arrayBuffer();
-        const buffer = new Uint8Array(arrayBuffer);
+        if (image) {
+          const arrayBuffer = await image.arrayBuffer();
+          const buffer = new Uint8Array(arrayBuffer);
 
-        try {
-          const uploadResult = await new Promise<UploadApiResponse | undefined>(
-            (resolve, reject) => {
+          try {
+            const uploadResult = await new Promise<
+              UploadApiResponse | undefined
+            >((resolve, reject) => {
               cloudinary.uploader
                 .upload_stream(
                   {
@@ -267,30 +271,37 @@ const app = new Hono()
                   },
                 )
                 .end(buffer);
-            },
-          );
+            });
 
-          imageUrl = uploadResult?.secure_url;
-        } catch (error) {
-          console.error(error);
-          return c.json({
-            error: "Something went wrong while uploading your image",
-          });
+            imageUrl = uploadResult?.secure_url;
+          } catch (uploadError) {
+            console.error("Image upload error:", uploadError);
+            return c.json(
+              { error: "Something went wrong while uploading your image" },
+              500,
+            );
+          }
         }
-      }
 
-      const updatedUser = await prisma.user.update({
-        where: {
-          id: userId,
-        },
-        data: {
-          image: imageUrl,
-          birthDate,
-          name,
-          bio,
-        },
-      });
-      return c.json({ data: updatedUser });
+        const updatedUser = await prisma.user.update({
+          where: {
+            id: userId,
+          },
+          data: {
+            image: imageUrl,
+            birthDate,
+            name,
+            bio,
+          },
+        });
+        return c.json({ data: updatedUser });
+      } catch (error) {
+        console.error("Unexpected error in update-profile handler:", error);
+        return c.json(
+          { error: "An unexpected error occurred. Please try again later." },
+          500,
+        );
+      }
     },
   );
 

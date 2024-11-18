@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useRef } from "react";
 import { ImageIcon } from "lucide-react";
+import { format } from "date-fns";
 import Image from "next/image";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
+import DatePicker from "@/components/date-picker";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,8 +29,6 @@ import {
 import { UpdateProfileData, UpdateProfileSchema } from "../schemas";
 import useUpdateProfile from "../api/use-update-profile";
 import { useUserId } from "../hooks/use-user-id";
-import DatePicker from "@/components/date-picker";
-import { format } from "date-fns";
 
 type UpdateProfileFormProps = {
   user: UserType | undefined;
