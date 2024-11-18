@@ -29,9 +29,10 @@ import {
 import { UpdateProfileData, UpdateProfileSchema } from "../schemas";
 import useUpdateProfile from "../api/use-update-profile";
 import { useUserId } from "../hooks/use-user-id";
+import { User } from "@prisma/client";
 
 type UpdateProfileFormProps = {
-  user: UserType | undefined;
+  user: User | undefined;
   onCancel: () => void;
 };
 
@@ -191,8 +192,8 @@ export default function UpdateProfileForm({
                     <DatePicker
                       {...field}
                       placeholder={
-                        user.birthFate
-                          ? format(user.birthdate, "PPP")
+                        user?.birthDate
+                          ? format(user.birthDate, "PPP")
                           : "Select your birth date"
                       }
                     />

@@ -1,6 +1,6 @@
 import { Conversation, Message } from "@prisma/client";
 import { User as DBUser } from "@prisma/client";
-import { AuthUser } from "./client";
+import { User as AuthUser } from "better-auth";
 
 export type UserType = AuthUser | DBUser;
 

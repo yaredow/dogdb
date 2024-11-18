@@ -1,5 +1,7 @@
 import NavBar from "@/components/nav-bar";
 import { UpdateProfileModal } from "@/features/users/components/update-profile-modal";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -8,7 +10,13 @@ type MainLayoutProps = {
 export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <main className="min-h-screen">
-      <UpdateProfileModal />
+      <Suspense
+        fallback={
+          <Loader2 className="flex h-screen animate-spin items-center justify-center" />
+        }
+      >
+        <UpdateProfileModal />
+      </Suspense>
       <div className="w-full lg:max-w-screen-2xl">
         <NavBar />
         <main className="h-full px-4 py-4 md:px-6 md:py-8">{children}</main>

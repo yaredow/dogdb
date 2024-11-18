@@ -47,6 +47,7 @@ export default function SignupCard() {
   });
 
   const onSubmit = async (values: SignupData) => {
+    // @ts-expect-error: the extended field birthDate is not being infered correctly
     await signUp.email(values, {
       onRequest: () => {
         setIsLoading(true);

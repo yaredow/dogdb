@@ -2,9 +2,9 @@ import { Loader2 } from "lucide-react";
 
 import { Card, CardContent } from "@/components/ui/card";
 
-import UpdateProfileForm from "./update-profile-from";
 import { useGetUser } from "../api/use-get-user";
 import { useUserId } from "../hooks/use-user-id";
+import UpdateProfileForm from "./update-profile-form";
 
 type UpdateProfileFormWrapperProps = {
   onCancel: () => void;
