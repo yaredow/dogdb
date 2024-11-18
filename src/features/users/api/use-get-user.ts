@@ -28,7 +28,6 @@ export const useGetUser = ({ userId }: UseGetBreedProps) => {
         birthDate: new Date(data.birthDate),
       };
     },
-    enabled: !!userId,
   });
 
   return { user, isPending };

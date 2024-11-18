@@ -28,6 +28,7 @@ import { UpdateProfileData, UpdateProfileSchema } from "../schemas";
 import useUpdateProfile from "../api/use-update-profile";
 import { useUserId } from "../hooks/use-user-id";
 import DatePicker from "@/components/date-picker";
+import { format } from "date-fns";
 
 type UpdateProfileFormProps = {
   user: UserType | undefined;
@@ -160,6 +161,7 @@ export default function UpdateProfileForm({
                 )}
               />
             </div>
+
             <FormField
               control={form.control}
               name="name"
@@ -188,7 +190,11 @@ export default function UpdateProfileForm({
                   <FormControl>
                     <DatePicker
                       {...field}
-                      placeholder="Select your birth date"
+                      placeholder={
+                        user.birthFate
+                          ? format(user.birthdate, "PPP")
+                          : "Select your birth date"
+                      }
                     />
                   </FormControl>
                   <FormMessage />

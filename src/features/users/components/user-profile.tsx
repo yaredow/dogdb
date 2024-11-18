@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
-
 import { User as AuthUser } from "better-auth";
+import { useRouter } from "next/navigation";
+import { useMedia } from "react-use";
+import Image from "next/image";
 import {
   Mail,
   MailIcon,
@@ -10,22 +11,21 @@ import {
   SearchIcon,
   UsersIcon,
 } from "lucide-react";
-import { useMedia } from "react-use";
-import { User as PrismsUser } from "@prisma/client";
 
-import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
+import { cn } from "@/lib/utils";
+
+import { useStartConversation } from "@/features/conversations/api/use-start-conversation";
 import { Tabs, TabsTrigger, TabsContent, TabsList } from "@/components/ui/tabs";
+import BannerPlaceholder from "@/assets/images/banner-placeholder.jpeg";
+import { User as PrismsUser } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 
-import UserAvatar from "./user-avatar";
-import FollowButton from "./follow-button";
-import ProfileMenu from "./profile-menu";
+import { useUpdateProfileModal } from "../hooks/use-update-profile-modal";
 import { useGetFollowers } from "../api/use-get-followers";
 import { useUserId } from "../hooks/use-user-id";
-import { useStartConversation } from "@/features/conversations/api/use-start-conversation";
-import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { useUpdateProfileModal } from "../hooks/use-update-profile-modal";
+import FollowButton from "./follow-button";
+import ProfileMenu from "./profile-menu";
+import UserAvatar from "./user-avatar";
 
 type UserProfileProps = {
   user: PrismsUser | AuthUser;
@@ -33,12 +33,12 @@ type UserProfileProps = {
 };
 
 export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
-  const isDesktop = useMedia("(min-width: 1024px)", true);
   const userId = useUserId();
-  const { data } = useGetFollowers({ userId });
-  const { startConversation, isPending } = useStartConversation({ userId });
   const router = useRouter();
   const { open } = useUpdateProfileModal();
+  const { data } = useGetFollowers({ userId });
+  const isDesktop = useMedia("(min-width: 1024px)", true);
+  const { startConversation, isPending } = useStartConversation({ userId });
 
   const handleStartConversation = () => {
     startConversation(
@@ -98,7 +98,7 @@ export default function UserProfile({ user, isCurrentUser }: UserProfileProps) {
                   )}
                 </>
               ) : (
-                <Button variant="outline" onClick={open}>
+                <Button variant="outline" onClick={() => open()}>
                   Edit profile
                 </Button>
               )}

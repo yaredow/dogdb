@@ -19,10 +19,6 @@ export default function useUpdateProfile() {
     RequestType
   >({
     mutationFn: async ({ form, param }) => {
-      console.log(
-        "URL:",
-        client.api.users["update-profile"][":userId"]["$patch"],
-      );
       const response = await client.api.users["update-profile"][
         ":userId"
       ].$patch({
